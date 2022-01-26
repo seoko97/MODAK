@@ -1,12 +1,6 @@
+import { addDecorator } from "@storybook/react";
+import { withThemesProvider } from "storybook-addon-styled-component-theme";
 import { ThemeProvider } from "styled-components";
-import GlobalStyle from "../src/theme/GlobalStyle";
-import { lightTheme } from "../src/theme";
+import { darkTheme, lightTheme } from "../src/theme";
 
-export const decorator = [
-  (Story) => (
-    <ThemeProvider theme={lightTheme}>
-      <GlobalStyle theme={lightTheme} />
-      <Story />
-    </ThemeProvider>
-  ),
-];
+addDecorator(withThemesProvider([lightTheme, darkTheme]), ThemeProvider);
