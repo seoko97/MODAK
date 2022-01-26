@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
 
       body,
       #__next {
+        transition: 0.3s background-color;
         background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.PRIMARY_COLOR};
       }
 
