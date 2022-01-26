@@ -1,20 +1,44 @@
-import React from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import Head from "next/head";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "@src/theme/GlobalStyle";
-import { lightTheme } from "@src/theme";
+import { darkTheme, lightTheme } from "@src/theme";
 import { wrapper } from "@src/store";
+import cookieParser from "@src/lib/cookieParser";
+import { useCookies } from "react-cookie";
+import DarkModeButton from "@src/components/UI/DarkModeButton";
 
-const App = ({ Component, pageProps }) => {
+const App = ({ Component, pageProps, mode: modeInCookie }) => {
+  const [cookies, setCookies] = useCookies(["mode"]);
+  const mode = useMemo(() => cookies.mode || modeInCookie, [cookies.mode, modeInCookie]);
+
+  useEffect(() => {
+    if (!cookies.mode) setCookies("mode", "light");
+  }, [setCookies, cookies.mode]);
+
+  const onClickDarkMode = useCallback(() => {
+    setCookies("mode", mode === "light" ? "dark" : "light");
+  }, [mode, setCookies]);
+
   return (
     <>
-      <Head></Head>
-      <GlobalStyle theme={lightTheme} />
-      <ThemeProvider theme={lightTheme}>
+      <Head>
+        <title>MODAK</title>
+      </Head>
+      <GlobalStyle theme={mode === "light" ? lightTheme : darkTheme} />
+      <ThemeProvider theme={mode === "light" ? lightTheme : darkTheme}>
         <Component {...pageProps} />
+        <DarkModeButton mode={mode} onClick={onClickDarkMode} />
       </ThemeProvider>
     </>
   );
+};
+
+App.getInitialProps = async ({ ctx }) => {
+  const cookies = ctx.req?.headers?.cookie;
+  const { mode } = cookieParser(cookies);
+
+  return { mode: mode || "light" };
 };
 
 export default wrapper.withRedux(App);
