@@ -1,4 +1,4 @@
-import DarkModeButton from "@components/UI/DarkModeButton";
+import DarkModeButton from "@src/components/UI/molecules/DarkModeButton";
 
 export default {
   title: "Components/UI/DarkModeButton",
