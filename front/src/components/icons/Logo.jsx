@@ -9,7 +9,7 @@ const StyledLogo = styled.svg`
 `;
 
 const Logo = () => (
-  <StyledLogo viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <StyledLogo viewBox="0 0 160 50" fill="none">
     <g id="Group 120">
       <g id="Component 54">
         <rect
