@@ -1,7 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import SunIcon from "@components/icons/SunIcon";
-import MoonIcon from "@components/icons/MoonIcon";
+import SunIcon from "@icons/SunIcon";
+import MoonIcon from "@icons/MoonIcon";
+
+export interface Props {
+  mode: string;
+  onClick: () => void;
+}
 
 const StyledDarkModeButton = styled.div`
   position: fixed;
@@ -14,6 +19,7 @@ const StyledDarkModeButton = styled.div`
   border-radius: 40px;
   box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.4);
 
+  color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   transition: all 0.3s;
   & > div {
     display: flex;
@@ -42,7 +48,7 @@ const StyledDarkModeButton = styled.div`
   }
 `;
 
-const DarkModeButton = ({ mode, onClick }) => {
+const DarkModeButton = ({ mode, onClick }: Props) => {
   return (
     <>
       <StyledDarkModeButton onClick={onClick}>
