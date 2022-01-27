@@ -1,9 +1,10 @@
 import styled from "styled-components";
-/* ${({ theme }) => theme.BAKCGROUND_COLOR.THIRDARY_COLOR} */
 
 const IconBox = styled.div`
+  position: relative;
   width: 60px;
   height: 60px;
+
   @media (max-width: ${({ theme }) => theme.BP.TABLET_Y}) {
     width: 40px;
     height: 40px;

@@ -19,7 +19,7 @@ const SelectIcon = ({ source }) => {
 
   return (
     <OAuthButtonConponent.IconBox>
-      <Image src={imgSrc} alt="" width="100%" height="100%" />
+      <Image src={imgSrc} alt="" layout="fill" objectFit="contain" />
     </OAuthButtonConponent.IconBox>
   );
 };
