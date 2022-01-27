@@ -6,7 +6,8 @@ import { darkTheme, lightTheme } from "@src/theme";
 import { wrapper } from "@src/store";
 import cookieParser from "@src/lib/cookieParser";
 import { useCookies } from "react-cookie";
-import DarkModeButton from "@src/components/UI/DarkModeButton";
+import DarkModeButton from "@src/components/UI/molecules/DarkModeButton";
+import AppLayout from "@src/components/UI/templates/AppLayout";
 
 const App = ({ Component, pageProps, mode: modeInCookie }) => {
   const [cookies, setCookies] = useCookies(["mode"]);
@@ -27,7 +28,9 @@ const App = ({ Component, pageProps, mode: modeInCookie }) => {
       </Head>
       <GlobalStyle theme={mode === "light" ? lightTheme : darkTheme} />
       <ThemeProvider theme={mode === "light" ? lightTheme : darkTheme}>
-        <Component {...pageProps} />
+        <AppLayout>
+          <Component {...pageProps} />
+        </AppLayout>
         <DarkModeButton mode={mode} onClick={onClickDarkMode} />
       </ThemeProvider>
     </>
