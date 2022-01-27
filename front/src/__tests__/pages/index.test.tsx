@@ -1,3 +1,4 @@
+import React from "react";
 import Home from "@src/pages/index";
 import { screen, render } from "@testing-library/react";
 

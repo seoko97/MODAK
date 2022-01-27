@@ -1,9 +1,9 @@
 import React from "react";
-import Document, { Head, Html, Main, NextScript } from "next/document";
+import Document, { DocumentContext, Head, Html, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 
 class MyDocument extends Document {
-  static async getInitialProps(context) {
+  static async getInitialProps(context: DocumentContext) {
     const sheet = new ServerStyleSheet();
     const originalRenderPage = context.renderPage;
 
@@ -35,6 +35,7 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <div id="modal" />
         </body>
       </Html>
     );

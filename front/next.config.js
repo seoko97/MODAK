@@ -1,8 +1,13 @@
+/**
+ * @type {import('next').NextConfig}
+ * */
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 
-module.exports = withBundleAnalyzer({
+const nextConfig = {
   compress: true,
   reactStrictMode: true,
   // babel -> SWC
@@ -25,4 +30,6 @@ module.exports = withBundleAnalyzer({
       ],
     };
   },
-});
+};
+
+module.exports = withBundleAnalyzer(nextConfig);
