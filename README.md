@@ -60,7 +60,7 @@
 
 ### 아키텍처
 
-![image](uploads/e65c8d994470db7e50b3a6dfe4dd6c56/image.png)
+![Architecture](/uploads/ac5a8c006041b8215655f104480d3df2/Architecture.png)
 
 ### 와이어프레임
 
