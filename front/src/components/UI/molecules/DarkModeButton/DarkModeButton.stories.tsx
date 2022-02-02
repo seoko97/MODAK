@@ -4,7 +4,7 @@ import { Story, Meta } from "@storybook/react";
 import { Props } from "./DarkModeButton";
 
 export default {
-  title: "Components/UI/DarkModeButton",
+  title: "Molecules/DarkModeButton",
   component: DarkModeButton,
 } as Meta;
 
