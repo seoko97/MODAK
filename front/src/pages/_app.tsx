@@ -6,6 +6,7 @@ import { darkTheme, lightTheme } from "@theme/.";
 import cookieParser from "@lib/cookieParser";
 import GlobalStyle from "@theme/GlobalStyle";
 import DarkModeButton from "@molecules/DarkModeButton";
+import AppLayout from "@templates/AppLayout";
 
 interface Props extends AppProps {
   mode: string;
@@ -26,8 +27,10 @@ const App = ({ Component, pageProps, mode: modeInCookie }: Props) => {
   return (
     <ThemeProvider theme={mode === "light" ? lightTheme : darkTheme}>
       <GlobalStyle theme={mode === "light" ? lightTheme : darkTheme} />
-      <Component {...pageProps} />
-      <DarkModeButton mode={mode} onClick={onClickDarkMode} />
+      <AppLayout>
+        <Component {...pageProps} />
+        <DarkModeButton mode={mode} onClick={onClickDarkMode} />
+      </AppLayout>
     </ThemeProvider>
   );
 };
