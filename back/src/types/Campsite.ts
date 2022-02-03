@@ -2,16 +2,32 @@ import { Model, PopulatedDoc } from 'mongoose';
 import { IReviewDocument } from './Review';
 import { IUserDocument } from './User';
 
-export interface ICampsiteDTO {
+export interface ICampsite {
 	name: string;
+}
+export interface ICampsiteDTO extends ICampsite {
 	address: string;
-	rating: number;
+	lineIntro: string;
+	intro: string;
+	x: number;
+	y: number;
+	tel: string;
+	reservationUrl: string;
+	animal: string;
+	category: string[];
+	thema: string[];
+	amenities: string[];
+	rental: string[];
+	environment: string[];
 }
 
 export interface ICampsiteDocument extends ICampsiteDTO {
-	pickusers: PopulatedDoc<IUserDocument>[];
+	photos: string[];
 	reviews: PopulatedDoc<IReviewDocument>[];
+	bookmark: PopulatedDoc<IUserDocument>[];
 	views: number;
 }
 
-export type ICampsiteModel = Model<ICampsiteDocument>;
+export interface ICampsiteModel extends Model<ICampsiteDocument> {
+	findOrCreate(camsite: ICampsiteDTO): Promise<ICampsiteDTO>;
+}
