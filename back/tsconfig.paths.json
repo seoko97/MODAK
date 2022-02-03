@@ -7,8 +7,10 @@
 			"@services/*": ["src/services/*"],
 			"@passport/*": ["src/passport/*"],
 			"@routes/*": ["src/routes/*"],
+			"@models/*": ["src/models/*"],
 			"@middlewares/*": ["src/middlewares/*"],
-			"@utils/*": ["src/utils/*"]
+			"@utils/*": ["src/utils/*"],
+			"~types/*": ["src/types/*"]
 		}
 	}
 }
