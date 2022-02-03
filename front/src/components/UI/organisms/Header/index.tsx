@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import Link from "next/link";
 
-import Logo from "@icons/Logo";
 import RowFrame from "@templates/RowFrame";
 import Nav from "@molecules/Nav";
+import Logo from "@icons/Logo";
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -20,6 +21,9 @@ const StyledHeader = styled.header`
     height: 72px;
     & > svg {
       width: 130px;
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 `;
@@ -29,7 +33,9 @@ const Header = () => {
     <>
       <StyledHeader>
         <RowFrame>
-          <Logo />
+          <Link href="/">
+            <Logo />
+          </Link>
           <Nav />
         </RowFrame>
       </StyledHeader>

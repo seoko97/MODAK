@@ -1,5 +1,6 @@
 import React from "react";
 
+import RowFrame from "@templates/RowFrame";
 import GridCamp from ".";
 
 export default {
@@ -8,5 +9,9 @@ export default {
 };
 
 export const Default = () => {
-  return <GridCamp />;
+  return (
+    <RowFrame>
+      <GridCamp />
+    </RowFrame>
+  );
 };
