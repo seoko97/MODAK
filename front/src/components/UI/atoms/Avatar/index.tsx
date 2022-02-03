@@ -26,7 +26,6 @@ const Avatar: FC<Props> = ({ size, url, alt }) => (
 
 Avatar.defaultProps = {
   size: 30,
-  url: "",
 };
 
 export default Avatar;
