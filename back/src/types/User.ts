@@ -1,4 +1,4 @@
-import { Document, Model, PopulatedDoc, Types } from 'mongoose';
+import { Document, Model, PopulatedDoc } from 'mongoose';
 import { ICampsiteDocument } from './Campsite';
 import { IReviewDocument } from './Review';
 
@@ -18,7 +18,7 @@ export interface IUserDTO {
 export interface IUserDocument extends IUserDTO, Document {
 	refreshToken: string | null;
 	reviews: PopulatedDoc<IReviewDocument>[];
-	wannago: PopulatedDoc<ICampsiteDocument>[];
+	bookmark: PopulatedDoc<ICampsiteDocument>[];
 
 	comparePassword(aPassword: string): Promise<boolean>;
 	verifyRefresh(): boolean;

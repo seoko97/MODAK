@@ -1,11 +1,12 @@
 import { Model, PopulatedDoc } from 'mongoose';
+import { ICampsiteDocument } from './Campsite';
 import { IUserDocument } from './User';
 
 export interface IReviewDTO {
 	content: string;
 	photos: string[];
 	author: PopulatedDoc<IUserDocument>;
-	locations: string;
+	locations: PopulatedDoc<ICampsiteDocument>;
 	shopname: string;
 }
 
