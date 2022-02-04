@@ -3,19 +3,23 @@ import styled from "styled-components";
 import HeartIcon from "@icons/HeartIcon";
 
 const StyledContainer = styled.li`
-  max-width: 1100px;
-  margin: auto;
   display: flex;
   flex-wrap: wrap;
   background-color: #f6f6f6;
   padding: 30px;
   justify-content: center;
+
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+  }
 `;
 
 const StyledProfileContainer = styled.div`
   padding: 10px;
   flex-basis: 10%;
   text-align: center;
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    flex-basis: 100%;
+  }
 `;
 
 const StyledProfile = styled.a`
@@ -90,6 +94,7 @@ const StyledReviewIconBox = styled.button`
   }
 
   :hover {
+    color: #161616;
     & svg {
       fill: #bd1e1e;
     }
@@ -106,6 +111,10 @@ const StyledPostIconBox = styled.a`
   align-items: center;
   gap: 5px;
   color: darkgray;
+
+  :hover {
+    color: #161616;
+  }
 `;
 
 const ReviewCard = () => {
