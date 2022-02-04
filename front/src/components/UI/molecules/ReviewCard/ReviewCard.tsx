@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import HeartIcon from "@icons/HeartIcon";
 
 const StyledContainer = styled.li`
@@ -8,9 +8,6 @@ const StyledContainer = styled.li`
   background-color: #f6f6f6;
   padding: 30px;
   justify-content: center;
-
-  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
-  }
 `;
 
 const StyledProfileContainer = styled.div`
@@ -67,7 +64,9 @@ const StyledReviewLikeBox = styled.div`
   padding: 6px;
 `;
 
-const StyledReviewLike = styled.div`
+const LikeAndReportBox = css`
+  border: none;
+  background-color: transparent;
   transition: color 0.1s;
   padding: 5px;
   :hover {
@@ -76,14 +75,33 @@ const StyledReviewLike = styled.div`
   }
 `;
 
-const StyledReviewIconBox = styled.button`
-  border: none;
-  cursor: pointer;
+const StyledLikeBox = styled.button`
+  ${LikeAndReportBox}
+`;
+
+const StyledReportBox = styled.button`
+  ${LikeAndReportBox}
+`;
+
+const IconBox = css`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 5px;
   color: darkgray;
+  :hover {
+    color: #161616;
+  }
+`;
+
+const StyledPostIconBox = styled.a`
+  ${IconBox}
+`;
+
+const StyledReviewIconBox = styled.button`
+  ${IconBox}
+  border: none;
+  cursor: pointer;
   background-color: transparent;
 
   & svg {
@@ -94,7 +112,6 @@ const StyledReviewIconBox = styled.button`
   }
 
   :hover {
-    color: #161616;
     & svg {
       fill: #bd1e1e;
     }
@@ -102,18 +119,6 @@ const StyledReviewIconBox = styled.button`
 
   div + span {
     font-size: 14px;
-  }
-`;
-
-const StyledPostIconBox = styled.a`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  color: darkgray;
-
-  :hover {
-    color: #161616;
   }
 `;
 
@@ -168,8 +173,8 @@ const ReviewCard = () => {
           <p className="createAt">{createAt}</p>
           <p className="description">{subContent}</p>
           <StyledReviewLikeBox>
-            <StyledReviewLike>괜찮아요</StyledReviewLike>
-            <StyledReviewLike>신고하기</StyledReviewLike>
+            <StyledLikeBox>괜찮아요</StyledLikeBox>
+            <StyledReportBox>신고하기</StyledReportBox>
           </StyledReviewLikeBox>
         </StyledReviewContents>
         <StyledReviewPhotos>
