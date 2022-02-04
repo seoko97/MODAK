@@ -4,6 +4,26 @@ import { IUserDocument, IUserDTO } from "@src/types/User";
 
 export class UserService {
   constructor(private readonly userModel: typeof UserModel) {}
+
+  async findOrCreate(userInfo: IUserDTO) {
+    const currentUser = await UserModel.findOne({ email: userInfo.email });
+
+    if (currentUser) {
+      return currentUser;
+    }
+
+    const newUser = await UserModel.create({
+      email: userInfo?.email,
+      firstName: userInfo.firstName,
+      lastName: userInfo.lastName,
+      nickname: userInfo.nickname,
+      profileImg: userInfo.profileImg,
+      source: userInfo.source,
+    });
+
+    return newUser;
+  }
+
   async test() {
     const user = await this.userModel.findOne({ email: "asd" });
     console.log(user);
@@ -11,24 +31,5 @@ export class UserService {
     return "test";
   }
 }
-
-export const findOrCreate = async (user: IUserDTO) => {
-  const currentUser = await UserModel.findOne(user.email);
-
-  if (currentUser) {
-    return currentUser;
-  }
-
-  const newUser = await UserModel.create({
-    email: user?.email,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    nickname: user.nickname,
-    profileImg: user.profileImg,
-    source: user.source,
-  });
-
-  return newUser;
-};
 
 export const userService = new UserService(UserModel);

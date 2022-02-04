@@ -1,5 +1,5 @@
 import { Strategy as GoogleStrategy, StrategyOptions } from "passport-google-oauth20";
-import { findOrCreate } from "../../services/user.service";
+import { userService } from "../../services/user.service";
 import { passportGoogleConfig } from "../../utils/constants";
 
 const passportConfig: StrategyOptions = {
@@ -10,21 +10,23 @@ const passportConfig: StrategyOptions = {
 
 export default new GoogleStrategy(
   passportConfig,
-  async (req, accessToken, refreshToken, profile, done) => {
-    const email = profile.emails[0].value;
-    const firstName = profile.name.givenName;
-    const lastName = profile.name.familyName;
-    const nickname = profile.name;
-    const profileImg = profile.photos[0].value;
-    const source = profile.provider;
-
-    if (source !== "google") {
+  async (accessToken, refreshToken, profile, done) => {
+    if (!profile) {
       return done(null, false, {
-        message: "You have previously signed up with a different signin method",
+        message: "You have previously signed up",
       });
     }
 
-    const user = await findOrCreate({ email, firstName, lastName, nickname, profileImg, source });
+    const userInfo = {
+      email: profile.emails?.[0].value as string,
+      firstName: profile.name?.givenName as string,
+      lastName: profile.name?.familyName as string,
+      nickname: ((profile.name?.familyName as string) + profile.name?.givenName) as string,
+      profileImg: profile.photos?.[0].value as string,
+      source: "Google" as const,
+    };
+
+    const user = await userService.findOrCreate(userInfo);
 
     return done(null, user);
   },

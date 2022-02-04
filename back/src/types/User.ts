@@ -12,7 +12,7 @@ export interface IUserDTO {
   lastName: string;
   nickname: string;
   profileImg: string | null;
-  source: "google" | "Kakao" | "Facebook";
+  source: "Google" | "Kakao" | "Facebook";
 }
 
 export interface IUserDocument extends IUserDTO, Document {
