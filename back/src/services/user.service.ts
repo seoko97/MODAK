@@ -14,8 +14,6 @@ export class UserService {
 
     const newUser = await UserModel.create({
       email: userInfo?.email,
-      firstName: userInfo.firstName,
-      lastName: userInfo.lastName,
       nickname: userInfo.nickname,
       profileImg: userInfo.profileImg,
       source: userInfo.source,

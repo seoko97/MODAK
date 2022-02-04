@@ -19,8 +19,6 @@ export default new GoogleStrategy(
 
     const userInfo = {
       email: profile.emails?.[0].value as string,
-      firstName: profile.name?.givenName as string,
-      lastName: profile.name?.familyName as string,
       nickname: ((profile.name?.familyName as string) + profile.name?.givenName) as string,
       profileImg: profile.photos?.[0].value as string,
       source: "Google" as const,

@@ -10,14 +10,6 @@ export const UserSchema = new Schema<IUserDocument, IUserModel>(
       required: true,
       index: true,
     },
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
-    },
     nickname: {
       type: String,
       required: true,
@@ -50,7 +42,7 @@ export const UserSchema = new Schema<IUserDocument, IUserModel>(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 UserSchema.methods.verifyRefresh = function () {
