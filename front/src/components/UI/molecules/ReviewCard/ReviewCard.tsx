@@ -1,11 +1,10 @@
 import React, { memo } from "react";
 import styled from "styled-components";
-
-const mode = "dark";
-const darkReviewBackground = "#16181A";
-const darkReviewColor = "#F2F2F2";
+import HeartIcon from "@icons/HeartIcon";
 
 const StyledContainer = styled.li`
+  max-width: 1100px;
+  margin: auto;
   display: flex;
   flex-wrap: wrap;
   background-color: #f6f6f6;
@@ -13,10 +12,13 @@ const StyledContainer = styled.li`
   justify-content: center;
 `;
 
-const StyledReviewProfile = styled.div`
+const StyledProfileContainer = styled.div`
   padding: 10px;
   flex-basis: 10%;
   text-align: center;
+`;
+
+const StyledProfile = styled.a`
   & img {
     width: 70px;
     height: 70px;
@@ -27,6 +29,12 @@ const StyledReviewProfile = styled.div`
   }
 `;
 
+const StyledProfileIconBox = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+`;
+
 const StyledReviewCard = styled.div`
   flex-basis: 70%;
   padding: 10px;
@@ -34,7 +42,7 @@ const StyledReviewCard = styled.div`
 
 const StyledReviewContents = styled.div`
   & .createAt {
-    color: #898989;
+    color: #757575;
   }
   & .description {
     padding: 5px;
@@ -43,11 +51,9 @@ const StyledReviewContents = styled.div`
 
 const StyledReviewPhotos = styled.div`
   display: flex;
+  gap: 20px;
   & img {
     width: 30%;
-    + img {
-      margin-left: 20px;
-    }
   }
 `;
 
@@ -56,18 +62,50 @@ const StyledReviewLikeBox = styled.div`
   justify-content: end;
   padding: 6px;
 `;
+
 const StyledReviewLike = styled.div`
-  :hover {
-    color: #f29f05;
-  }
   transition: color 0.1s;
   padding: 5px;
-`;
-const StyledReviewReport = styled.div`
-  padding: 5px;
   :hover {
     color: #f29f05;
+    cursor: pointer;
   }
+`;
+
+const StyledReviewIconBox = styled.button`
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  color: darkgray;
+  background-color: transparent;
+
+  & svg {
+    fill: darkgray;
+    width: 20px;
+    height: 20px;
+    transition: all 0.15s;
+  }
+
+  :hover {
+    & svg {
+      fill: #bd1e1e;
+    }
+  }
+
+  div + span {
+    font-size: 14px;
+  }
+`;
+
+const StyledPostIconBox = styled.a`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  color: darkgray;
 `;
 
 const ReviewCard = () => {
@@ -96,30 +134,38 @@ const ReviewCard = () => {
   // 테스트용 데이터
   const { _id, content, photos, author, createAt } = review;
   const { profile, likes, posts } = user;
-  const subContent = content.substring(0, 2000) + "...더보기";
+  const subContent = content.substring(0, 1000) + "...더보기";
 
   return (
     <StyledContainer>
-      <StyledReviewProfile>
-        <img src={profile} />
-        <p className="author">{author}</p>
-        <p>
-          글{posts}
-          하트{likes}
-        </p>
-      </StyledReviewProfile>
+      <StyledProfileContainer>
+        <StyledProfile href="#">
+          <img src={profile} alt="asd" />
+          <p className="author">{author}</p>
+        </StyledProfile>
+        <StyledProfileIconBox>
+          <StyledPostIconBox href="#">
+            <div>글</div>
+            {posts}
+          </StyledPostIconBox>
+          <StyledReviewIconBox>
+            <HeartIcon></HeartIcon>
+            {likes}
+          </StyledReviewIconBox>
+        </StyledProfileIconBox>
+      </StyledProfileContainer>
       <StyledReviewCard>
         <StyledReviewContents>
           <p className="createAt">{createAt}</p>
           <p className="description">{subContent}</p>
           <StyledReviewLikeBox>
             <StyledReviewLike>괜찮아요</StyledReviewLike>
-            <StyledReviewReport>신고하기</StyledReviewReport>
+            <StyledReviewLike>신고하기</StyledReviewLike>
           </StyledReviewLikeBox>
         </StyledReviewContents>
         <StyledReviewPhotos>
           {photos.map((photo) => (
-            <img src={photo} alt="reviewPhoto" />
+            <img key={1} src={photo} alt="reviewPhoto" />
           ))}
         </StyledReviewPhotos>
       </StyledReviewCard>
