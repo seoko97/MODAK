@@ -22,7 +22,6 @@ interface Props {
 const StyledCampSiteContainer = styled.div`
   position: relative;
   width: 1100px;
-  height: 550px;
 
   display: flex;
   box-sizing: border-box;
@@ -35,8 +34,7 @@ const StyledCampSiteImage = styled.div`
 `;
 
 const StyledCampSiteContentBox = styled.div`
-  width: 50%;
-  height: 100%;
+  flex: 1;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
