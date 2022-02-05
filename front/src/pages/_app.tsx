@@ -7,6 +7,7 @@ import cookieParser from "@lib/cookieParser";
 import GlobalStyle from "@theme/GlobalStyle";
 import DarkModeButton from "@molecules/DarkModeButton";
 import AppLayout from "@templates/AppLayout";
+import wrapper from "@src/store/configureStore";
 
 interface Props extends AppProps {
   mode: string;
@@ -42,4 +43,4 @@ App.getInitialProps = async ({ ctx }: AppContext) => {
   return { mode: mode || "light" };
 };
 
-export default App;
+export default wrapper.withRedux(App);
