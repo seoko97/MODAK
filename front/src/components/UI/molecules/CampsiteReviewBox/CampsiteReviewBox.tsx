@@ -2,12 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import ReviewCard from "../ReviewCard/ReviewCard";
 
-const StyledContainer = styled.section`
-  width: 1100px;
-`;
+const StyledContainer = styled.section``;
 const StyledCountBox = styled.span`
   display: flex;
   justify-content: flex-end;
+  padding: 10px;
+  margin-right: 20px;
 `;
 const StyledButton = styled.button`
   border: none;
@@ -42,10 +42,10 @@ const CampsiteReviewBox = () => {
         <StyledButton>평범해요(3)</StyledButton>
         <StyledButton>최악입니다(2)</StyledButton>
       </StyledCountBox>
-      {/* <ReviewCard></ReviewCard>
       <ReviewCard></ReviewCard>
       <ReviewCard></ReviewCard>
-      <ReviewCard></ReviewCard> */}
+      <ReviewCard></ReviewCard>
+      <ReviewCard></ReviewCard>
     </StyledContainer>
   );
 };
