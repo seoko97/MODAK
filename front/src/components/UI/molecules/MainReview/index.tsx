@@ -78,15 +78,13 @@ const StyledDateLike = styled.div`
 
 const StyledReviewIconBox = styled.div`
   display: flex;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
   align-items: center;
   gap: 5px;
-  color: darkgray;
+  color: #757575;
 
   & svg {
-    fill: darkgray;
-    width: 20px;
-    height: 20px;
+    fill: #757575;
   }
 
   div + span {
@@ -113,7 +111,7 @@ const MainReview = ({ to, author, content, createAt, likes, url }: Props) => {
 
             <StyledReviewInfo>
               <StyledReviewIconBox>
-                <LocationIcon />
+                <LocationIcon size={20} />
                 <span>캠프여주</span>
               </StyledReviewIconBox>
 
@@ -123,12 +121,12 @@ const MainReview = ({ to, author, content, createAt, likes, url }: Props) => {
 
               <StyledDateLike>
                 <StyledReviewIconBox>
-                  <CalendarIcon />
+                  <CalendarIcon size={20} />
                   <span>22.02.03</span>
                 </StyledReviewIconBox>
 
                 <StyledReviewIconBox>
-                  <HeartIcon />
+                  <HeartIcon size={20} />
                   <span>123,456</span>
                 </StyledReviewIconBox>
               </StyledDateLike>
