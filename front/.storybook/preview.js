@@ -1,7 +1,7 @@
 import * as NextImage from "next/image";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import reset from "styled-reset";
-import { lightTheme } from "../src/theme";
+import { lightTheme } from "@src/theme";
 
 const OriginalNextImage = NextImage.default;
 
