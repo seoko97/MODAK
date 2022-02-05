@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Title from "../../atoms/Title";
 
 const StyledContainer = styled.figure`
@@ -7,28 +7,29 @@ const StyledContainer = styled.figure`
   gap: 100px;
   padding: 30px;
 `;
-const StyledImageBox = styled.div`
+
+const ImageBoxStyle = css`
   width: 150px;
   height: 150px;
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     width: 100px;
     height: 100px;
   }
+`;
+
+const StyledImageBox = styled.div`
+  ${ImageBoxStyle}
   @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
     display: none;
   }
 `;
 
 const StyledImage = styled.img`
+  ${ImageBoxStyle}
   position: absolute;
-  width: 150px;
-  height: 150px;
   border-radius: 50%;
-  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    width: 100px;
-    height: 100px;
-  }
 `;
+
 const StyledInfo = styled.figcaption`
   color: gray;
   & h2,
