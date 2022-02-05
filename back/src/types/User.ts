@@ -8,8 +8,6 @@ export interface ITokenUser {
 
 export interface IUserDTO {
   email: string;
-  firstName: string;
-  lastName: string;
   nickname: string;
   profileImg: string | null;
   source: "Google" | "Kakao" | "Facebook";
