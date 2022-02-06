@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import passport from "passport";
 import google from "@passport/strategies/google";
-import facebook from "@passport/strategies/facebook";
 import kakao from "@passport/strategies/kakao";
 //import jwt from "@passport/strategies/jwt";
 
@@ -17,7 +16,6 @@ export default () => {
   });
 
   passport.use("google", google);
-  passport.use("facebook", facebook);
   passport.use("kakao", kakao);
   // passport.use("jwt", jwt);
 };
