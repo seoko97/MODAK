@@ -12,9 +12,8 @@ export default new GoogleStrategy(
   passportConfig,
   async (accessToken, refreshToken, profile, done) => {
     if (!profile) {
-      console.log(profile);
       return done(null, false, {
-        message: "You have previously signed up",
+        message: "Error",
       });
     }
 

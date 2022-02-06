@@ -12,7 +12,7 @@ router.get("/google", passport.authenticate("google", { scope: ["profile", "emai
 router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
-  function (req, res) {
+  (req, res) => {
     // Successful authentication, redirect home.
     res.redirect("/");
   },
@@ -31,10 +31,11 @@ router.get(
 router.get("/kakao", passport.authenticate("kakao"));
 
 router.get(
-  "/kakgo/callback",
-  passport.authenticate("kakao", { failureMessage: "Login failed" }),
-  async (req, res) => {
-    res.redirect("/?redirected=true");
+  "/kakao/callback",
+  passport.authenticate("kakao", { failureRedirect: "/" }),
+  (req, res) => {
+    // Successful authentication, redirect home.
+    res.redirect("/");
   },
 );
 
