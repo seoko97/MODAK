@@ -1,15 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import passport from "passport";
-import googleOAuth from "./strategies/google";
-import facebookOAuth from "./strategies/facebook";
-import kakaoOAuth from "./strategies/kakao";
-import JwtStrategy from "./strategies/jwt";
+import google from "@passport/strategies/google";
+import facebook from "@passport/strategies/facebook";
+import kakao from "@passport/strategies/kakao";
+//import jwt from "@passport/strategies/jwt";
 
 export default () => {
-  passport.use(googleOAuth);
-  passport.use(facebookOAuth);
-  passport.use(kakaoOAuth);
-  passport.use(JwtStrategy);
+  passport.initialize();
 
   passport.serializeUser((user: any, done: any) => {
     done(null, user);
@@ -18,4 +15,9 @@ export default () => {
   passport.deserializeUser((obj: any, done: any) => {
     done(null, obj);
   });
+
+  passport.use("google", google);
+  passport.use("facebook", facebook);
+  passport.use("kakao", kakao);
+  // passport.use("jwt", jwt);
 };

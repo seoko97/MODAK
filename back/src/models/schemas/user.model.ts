@@ -20,7 +20,7 @@ export const UserSchema = new Schema<IUserDocument, IUserModel>(
     },
     source: {
       type: String,
-      enum: ["google", "Kakao", "Facebook"],
+      enum: ["Google", "Kakao", "Facebook"],
       required: true,
     },
     refreshToken: {

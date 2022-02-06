@@ -12,6 +12,7 @@ export default new GoogleStrategy(
   passportConfig,
   async (accessToken, refreshToken, profile, done) => {
     if (!profile) {
+      console.log(profile);
       return done(null, false, {
         message: "You have previously signed up",
       });
@@ -25,7 +26,7 @@ export default new GoogleStrategy(
     };
 
     const user = await userService.findOrCreate(userInfo);
-
+    console.log("Not registered yet", user);
     return done(null, user);
   },
 );
