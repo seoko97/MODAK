@@ -19,7 +19,7 @@ export default new KakaoStrategy(
       }
 
       const userInfo = {
-        email: profile._json?.kakao_account_email as string,
+        email: profile._json.kakao_account.email as string,
         nickname: profile.displayName as string,
         profileImg: profile._json.properties.profile_image as string,
         source: "Kakao" as const,
@@ -27,7 +27,8 @@ export default new KakaoStrategy(
 
       const user = await userService.findOrCreate(userInfo);
       console.log("Kakao profile: ", user);
-      return done(null, user);
+
+      return done(null, userInfo);
     } catch (error) {
       console.error(error);
       done(error);
