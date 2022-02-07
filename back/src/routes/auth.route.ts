@@ -10,7 +10,7 @@ router.get("/google", passport.authenticate("google", { scope: ["profile", "emai
 
 router.get(
   "/google/callback",
-  passport.authenticate("google", { failureRedirect: "/api/auth", successRedirect: "/" }),
+  passport.authenticate("google", { failureRedirect: "/api/auth" }),
   asyncHandler(authController.googleOAuthCallback),
 );
 
@@ -18,7 +18,7 @@ router.get("/kakao", passport.authenticate("kakao"));
 
 router.get(
   "/kakao/callback",
-  passport.authenticate("kakao", { failureRedirect: "/api/auth", successRedirect: "/" }),
+  passport.authenticate("kakao", { failureRedirect: "/api/auth" }),
   asyncHandler(authController.kakaoOAuthCallback),
 );
 

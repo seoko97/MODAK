@@ -21,7 +21,7 @@ export class AuthService {
     const refreshToken = this.jwtService.sign(
       {
         exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 14,
-        data: payload,
+        data: payload.id,
       },
       jwtContents.secret,
     );
