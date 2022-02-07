@@ -1,10 +1,10 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import RowFrame from "@templates/RowFrame";
 import Image from "next/image";
 import LookIcon from "@icons/LookIcon";
 import CommentIcon from "@icons/CommentIcon";
 import HeartIcon from "@icons/HeartIcon";
-import ThumbIcon from "@icons/ThumbIcon";
 import PencilIcon from "@icons/PencilIcon";
 
 interface Props {
@@ -21,16 +21,31 @@ interface Props {
 
 const StyledCampSiteContainer = styled.div`
   position: relative;
-  width: 1100px;
+  width: 100%;
 
   display: flex;
   box-sizing: border-box;
-  border: 1px solid #777;
+
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    flex-direction: column;
+  }
 `;
 
 const StyledCampSiteImage = styled.div`
   position: relative;
-  flex: 1;
+  width: 50%;
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    width: 100%;
+    height: 400px;
+  }
 `;
 
 const StyledCampSiteContentBox = styled.div`
@@ -72,6 +87,17 @@ const CampSiteIcon = css`
       font-size: 14px;
     }
   }
+
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    svg {
+      width: 20px;
+      height: 20px;
+
+      & + span {
+        font-size: 12px;
+      }
+    }
+  }
 `;
 const StyledRowIcon = styled.div`
   ${CampSiteIcon};
@@ -81,6 +107,13 @@ const StyledColIcon = styled.div`
   ${CampSiteIcon};
   flex-direction: column;
   gap: 3px;
+
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    svg {
+      width: 15px;
+      height: 15px;
+    }
+  }
 `;
 
 const StyledAmenityBox = styled.span`
@@ -107,11 +140,12 @@ const StyledCampSiteDetailBox = styled.div`
 const StyledCampSiteDetail = styled.div`
   display: flex;
   justify-content: flex-start;
-
+  /* 이 부분 배치 고민 */
   &>span: first-of-type {
     flex: 1;
     font-weight: 700;
   }
+
   & > span:nth-child(2) {
     flex: 4;
   }
@@ -129,10 +163,10 @@ const CampSiteInfo = ({
   address,
 }: Props) => {
   return (
-    <>
+    <RowFrame>
       <StyledCampSiteContainer>
         <StyledCampSiteImage>
-          <Image alt="Mountains" src="/post.jpg" layout="fill" objectFit="cover" />
+          <img alt="d" src="/post.jpg" />
         </StyledCampSiteImage>
 
         <StyledCampSiteContentBox>
@@ -140,7 +174,7 @@ const CampSiteInfo = ({
             <h2>{name}</h2>
           </StyledCampSiteName>
 
-          {/* 아이콘 */}
+          {/* 아이콘/ 서브택스트 */}
           <StyledIconContainer>
             <StyledIconBox>
               <StyledRowIcon>
@@ -163,7 +197,7 @@ const CampSiteInfo = ({
                 <span>후기작성</span>
               </StyledColIcon>
               <StyledColIcon>
-                <ThumbIcon size={20} />
+                <HeartIcon size={20} />
                 <span>위시리스트 추가</span>
               </StyledColIcon>
             </StyledIconBox>
@@ -177,7 +211,7 @@ const CampSiteInfo = ({
           </StyledAmenityBox>
 
           {/* 소개글 */}
-          <div>{intro}</div>
+          <p>{intro}</p>
 
           {/* 상세정보(주소, 전화번호) */}
           <StyledCampSiteDetailBox>
@@ -196,7 +230,7 @@ const CampSiteInfo = ({
           </StyledCampSiteDetailBox>
         </StyledCampSiteContentBox>
       </StyledCampSiteContainer>
-    </>
+    </RowFrame>
   );
 };
 
