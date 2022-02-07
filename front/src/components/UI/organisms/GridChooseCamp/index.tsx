@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import GridCampInfo from "../../molecules/GridCampInfo";
+import GridCampInfo from "@molecules/GridCampInfo";
 
 const StyledCamp = styled.div`
   width: 100%;
