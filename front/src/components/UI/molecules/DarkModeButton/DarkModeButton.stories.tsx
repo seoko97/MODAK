@@ -1,5 +1,5 @@
 import React from "react";
-import DarkModeButton from "@src/components/UI/molecules/DarkModeButton";
+import DarkModeButton from "@molecules/DarkModeButton";
 import { Story, Meta } from "@storybook/react";
 import { Props } from "./DarkModeButton";
 
