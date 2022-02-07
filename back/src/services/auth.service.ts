@@ -13,7 +13,7 @@ export class AuthService {
     const accessToken = this.jwtService.sign(
       {
         exp: Math.floor(Date.now() / 1000) + 60 * 20,
-        data: payload,
+        data: payload.id,
       },
       jwtContents.secret,
     );
