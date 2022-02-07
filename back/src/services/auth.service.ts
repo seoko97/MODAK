@@ -2,6 +2,7 @@ import JwtService from "jsonwebtoken";
 import { ITokenUser } from "@src/types/User";
 import { jwtContents } from "@src/utils/constants";
 import { userService, UserService } from "./user.service";
+import { encryptValue } from "@src/utils/crypto";
 
 export class AuthService {
   constructor(
@@ -27,7 +28,7 @@ export class AuthService {
     );
 
     await this.userService.updateByQuery({ _id: payload }, { refreshToken });
-    return [accessToken, refreshToken];
+    return [encryptValue(accessToken), encryptValue(refreshToken)];
   }
 
   async verifyRefresh(payload: ITokenUser) {
