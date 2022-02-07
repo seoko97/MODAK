@@ -8,6 +8,7 @@ import helmet from "helmet";
 import PassportConfig from "@passport/.";
 import { url, prod } from "./utils/constants";
 import { connectDB } from "./utils/connectDB";
+import { setBearerToken } from "./middlewares/setBearerToken";
 import routes from "@routes/.";
 
 connectDB();
@@ -30,7 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(passport.initialize());
-
+app.use(setBearerToken);
 app.use("/api", routes);
 
 app.get("/", (_, res) => {
