@@ -19,7 +19,13 @@ export class UserService {
       source: userInfo.source,
     });
 
-    return newUser;
+    return newUser.save();
+  }
+
+  async findByEmail(userInfo: IUserDTO) {
+    const user = await UserModel.findOne({ email: userInfo.email });
+
+    return user;
   }
 
   async test() {
