@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { UserModel } from "@src/models";
 
 import { IUserDocument, IUserDTO } from "@src/types/User";
@@ -22,10 +23,16 @@ export class UserService {
     return newUser.save();
   }
 
-  async findByEmail(userInfo: IUserDTO) {
-    const user = await UserModel.findOne({ email: userInfo.email });
+  async getByEmail(email: string, obj = {}): Promise<IUserDocument | null> {
+    return this.userModel.findOne({ email }, obj);
+  }
 
-    return user;
+  async getById(id: string, obj = {}): Promise<IUserDocument | null> {
+    return this.userModel.findById(id, obj);
+  }
+
+  async updateByQuery(where: any, query: any) {
+    return await this.userModel.updateOne(where, query);
   }
 
   async test() {

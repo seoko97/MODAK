@@ -25,7 +25,7 @@ export default new GoogleStrategy(
     };
 
     const user = await userService.findOrCreate(userInfo);
-    console.log("Not registered yet", user);
+    console.log("Google profile: ", user);
     return done(null, user);
   },
 );

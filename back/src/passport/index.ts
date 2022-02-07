@@ -2,7 +2,7 @@
 import passport from "passport";
 import google from "@passport/strategies/google";
 import kakao from "@passport/strategies/kakao";
-//import jwt from "@passport/strategies/jwt";
+import { Jwt, JwtRefresh } from "@passport/strategies/jwt";
 
 export default () => {
   passport.initialize();
@@ -17,5 +17,6 @@ export default () => {
 
   passport.use("google", google);
   passport.use("kakao", kakao);
-  // passport.use("jwt", jwt);
+  passport.use("jwt", Jwt);
+  passport.use("refreshJwt", JwtRefresh);
 };
