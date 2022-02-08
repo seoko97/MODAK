@@ -1,20 +1,24 @@
-import { CampsiteModel } from '@src/models';
+import { CampsiteModel } from "@src/models";
 
-import { ICampsiteDocument, ICampsiteDTO } from '@src/types/Campsite';
+import { ICampQuery, ICampsiteDocument, ICampsiteDTO } from "@src/types/Campsite";
 
 export class CampsiteService {
-	constructor(private readonly campsiteModel: typeof CampsiteModel) {}
-	async test() {
-		return 'test';
-	}
+  constructor(private readonly campsiteModel: typeof CampsiteModel) {}
+  async test() {
+    return "test";
+  }
 
-	async getUserById() {
-		return this.campsiteModel.findOne({ name: /캠프/ });
-	}
+  async getCampById(id: string) {
+    return this.campsiteModel.findById(id);
+  }
 
-	async create(data: ICampsiteDTO) {
-		return this.campsiteModel.findOrCreate(data);
-	}
+  async getCampsByQuery(query: ICampQuery) {
+    return await this.campsiteModel.find(query).limit(3);
+  }
+
+  async create(data: ICampsiteDTO) {
+    return this.campsiteModel.findOrCreate(data);
+  }
 }
 
 export const campsiteService = new CampsiteService(CampsiteModel);

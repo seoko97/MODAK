@@ -1,17 +1,17 @@
-import { Model, PopulatedDoc } from 'mongoose';
-import { ICampsiteDocument } from './Campsite';
-import { IUserDocument } from './User';
+import { Model, Types } from "mongoose";
+import { ICampsiteDocument } from "./Campsite";
+import { IUserDocument } from "./User";
 
 export interface IReviewDTO {
-	content: string;
-	photos: string[];
-	author: PopulatedDoc<IUserDocument>;
-	locations: PopulatedDoc<ICampsiteDocument>;
-	shopname: string;
+  content: string;
+  photos: string[];
+  author: Types.DocumentArray<IUserDocument>;
+  locations: Types.DocumentArray<ICampsiteDocument>;
+  shopname: string;
 }
 
 export interface IReviewDocument extends IReviewDTO {
-	likes: PopulatedDoc<IUserDocument>[];
+  likes: Types.DocumentArray<IUserDocument>[];
 }
 
 export type IReviewModel = Model<IReviewDocument>;
