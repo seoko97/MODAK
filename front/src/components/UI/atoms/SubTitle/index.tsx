@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import styled from "styled-components";
 
 interface Props {
-  size: number;
+  size?: number;
 }
 
 const StyledSubTitle = styled.h2<Props>`
