@@ -12,7 +12,7 @@ const StyledHeader = styled.header`
   top: -32px;
   padding-top: 32px;
   transition: all 0.3s ease-in-out;
-  z-index: 1;
+  z-index: 10;
 
   & > div {
     display: flex;
