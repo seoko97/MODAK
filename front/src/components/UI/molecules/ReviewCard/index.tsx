@@ -1,28 +1,50 @@
 import React, { memo } from "react";
-import styled, { css } from "styled-components";
 import SubTitle from "@atoms/SubTitle";
-import Link from "next/link";
-import Avatar from "../../atoms/Avatar";
-import Button from "../../atoms/Button";
-import Title from "../../atoms/Title";
-import IconLinkBox from "../IconLinkBox";
+import Avatar from "@atoms/Avatar";
+import Title from "@atoms/Title";
+import HearctIcon from "@icons/HeartIcon";
+import PencilIcon from "@icons/PencilIcon";
+import SmileIcon from "@icons/SmileIcon";
+
 import {
   StyledContainer,
   StyledProfileContainer,
-  StyledReviewLikeBox,
-  StyledReviewContents,
+  StyledReviewEvaluateBox,
   StyledReviewPhotos,
   StyledProfile,
   StyledReviewCard,
   StyledReviewIconBox,
-  StyledPostIconBox,
   StyledProfileIconBox,
+  IconWrapper,
+  RowIconWrapper,
 } from "./style";
 
-const ReviewCard = ({ review }) => {
-  const { _id, content, photos, author, createAt, bookmarks } = review;
+interface Author {
+  _id: string;
+  nickname: string;
+  profile: string;
+  likes: number;
+  posts: number; // 변경될듯
+}
+interface Props {
+  _id: number;
+  content: string;
+  photos?: string[];
+  author: Author;
+  createAt: string;
+}
+
+const Smile = () => {
+  return (
+    <RowIconWrapper>
+      <SmileIcon size={15} />
+      <span>또 가고 싶어요</span>
+    </RowIconWrapper>
+  );
+};
+
+const ReviewCard = ({ _id, content, photos, author, createAt }: Props) => {
   const { nickname, profile, likes, posts } = author;
-  const subContent = content.substring(0, 1000) + "...더보기";
   return (
     <StyledContainer>
       <StyledProfileContainer>
@@ -33,29 +55,48 @@ const ReviewCard = ({ review }) => {
           </>
         </StyledProfile>
         <StyledProfileIconBox>
-          <StyledPostIconBox href="#">
-            <SubTitle>{posts}</SubTitle>
-          </StyledPostIconBox>
-          <StyledReviewIconBox>{likes}</StyledReviewIconBox>
+          <IconWrapper>
+            <PencilIcon size={13} />
+            <span>{posts}</span>
+          </IconWrapper>
+          <StyledReviewIconBox>
+            <HearctIcon size={13} />
+            <span>{likes}</span>
+          </StyledReviewIconBox>
         </StyledProfileIconBox>
       </StyledProfileContainer>
       <StyledReviewCard>
-        <StyledReviewContents>
-          <SubTitle>{createAt}</SubTitle>
-          <p>{subContent}</p>
-          <StyledReviewLikeBox>
-            <Button name="괜찮아요"></Button>
-            <Button name="신고하기"></Button>
-          </StyledReviewLikeBox>
-        </StyledReviewContents>
+        <SubTitle>{createAt}</SubTitle>
+        <p>{content.length > 1000 ? `${content.substring(0, 1000)}...더보기` : content}</p>
         <StyledReviewPhotos>
-          {photos.map((photo) => (
-            <img key={1} src={photo} alt="reviewPhoto" />
+          {photos?.map((photo, idx) => (
+            <img key={idx} src={photo} alt="reviewPhoto" />
           ))}
         </StyledReviewPhotos>
+
+        <StyledReviewEvaluateBox>
+          <Smile />
+          <span>신고하기</span>
+        </StyledReviewEvaluateBox>
       </StyledReviewCard>
     </StyledContainer>
   );
+};
+
+// 테스트용 데이터
+ReviewCard.defaultProps = {
+  _id: 1,
+  content:
+    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa illum corporis dignissimos ducimus cum earum ipsa magnam! Obcaecati nemo, voluptatibus, deleniti nesciunt molestiae, debitis suscipit corporis perspiciatis enim impedit architecto. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa illum corporis dignissimos ducimus cum earum ipsa magnam! Obcaecati nemo, voluptatibus, deleniti nesciunt molestiae, debitis suscipit corporis perspiciatis enim impedit architecto. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa illum corporis dignissimos ducimus cum earum ipsa magnam! Obcaecati nemo, voluptatibus, deleniti nesciunt molestiae, debitis suscipit corporis perspiciatis enim impedit architecto. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa illum corporis dignissimos ducimus cum earum ipsa magnam! Obcaecati nemo, voluptatibus, deleniti nesciunt molestiae, debitis suscipit corporis perspiciatis enim impedit architecto.",
+  photos: ["/post.jpg", "/post.jpg", "/post.jpg"],
+  author: {
+    _id: "2",
+    nickname: "김불멍",
+    profile: "/post.jpg",
+    likes: 123,
+    posts: 13,
+  },
+  createAt: "2022-01-28",
 };
 
 export default memo(ReviewCard);
