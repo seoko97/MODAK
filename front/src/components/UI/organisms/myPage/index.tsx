@@ -5,6 +5,7 @@ import SubTitle from "@atoms/SubTitle";
 import MyPageProfile from "../../molecules/MypageProfile";
 import Title from "../../atoms/Title";
 import HearctIcon from "@src/components/icons/HeartIcon";
+import PencilIcon from "@src/components/icons/PencilIcon";
 
 // --- 전체 컨테이너 ---
 
@@ -20,7 +21,7 @@ const Categories = styled.section`
   display: flex;
   justify-content: center;
   position: relative;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
   & ::after {
     content: "";
     position: absolute;
@@ -37,13 +38,20 @@ const Category = styled.button`
   width: 100px;
   cursor: pointer;
   transition: color 0.1s;
-  :hover {
+  :hover:not(.active) {
     color: orange;
+  }
+  &.active {
+    color: green;
   }
 `;
 
 // --- 내 리뷰 ---
-const Review = styled.section``;
+const Review = styled.section`
+  & p {
+    margin-bottom: 10px;
+  }
+`;
 
 const PhotoBox = styled.div`
   display: flex;
@@ -157,7 +165,7 @@ const MyPage = () => {
       <MyPageProfile></MyPageProfile>
       <Container>
         <Categories>
-          <Category>
+          <Category className="active">
             <Title size={14}>내 리뷰</Title>
           </Category>
           <Category>
@@ -184,6 +192,20 @@ const MyPage = () => {
             ))}
           </PhotoBox>
         </Review>
+        {/* <VisitedCamp>
+          <SubTitle>2022-01-28</SubTitle>
+          <CampInfo>
+            <CampLink href="#">
+              <>@캠핑장 이름/ 주소</>
+            </CampLink>
+            <IconBox>
+              <Icons>
+                <PencilIcon size={13} /> 10
+                <HearctIcon size={13} /> 10
+              </Icons>
+            </IconBox>
+          </CampInfo>
+        </VisitedCamp> */}
         {/* <WishCamp>
           <CampInfo>
             <CampLink href="#">
@@ -191,7 +213,12 @@ const MyPage = () => {
                 <p>@캠핑장 이름/ 주소</p>
               </>
             </CampLink>
-            <p>asdasd</p>
+            <IconBox>
+              <Icons>
+                <PencilIcon size={13} /> 10
+                <HearctIcon size={13} /> 10
+              </Icons>
+            </IconBox>
           </CampInfo>
           <Tags>#가족캠핑 #글램핑</Tags>
           <OtherReview>
@@ -205,17 +232,6 @@ const MyPage = () => {
             </PhotoBox>
           </OtherReview>
         </WishCamp> */}
-        {/* <VisitedCamp>
-        <SubTitle>2022-01-28</SubTitle>
-        <CampInfo>
-          <CampLink href="#">
-            <>
-              <p>@캠핑장 이름/ 주소</p>
-            </>
-          </CampLink>
-          <p>asdasd</p>
-        </CampInfo>
-      </VisitedCamp> */}
       </Container>
     </Main>
   );
