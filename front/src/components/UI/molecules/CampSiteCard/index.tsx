@@ -28,9 +28,9 @@ const CampSiteCard = ({
   return (
     <Link href={toUrl}>
       <CardWrapper>
-        <CardThumbnail>
+        <ImgWrapper>
           <img src={imgUrl} alt={`${name} 사진`} />
-        </CardThumbnail>
+        </ImgWrapper>
         <CampSiteInfo>
           <CardInfoHeader>
             <h1>{name}</h1>
@@ -73,11 +73,11 @@ CampSiteCard.defaultProps = {
 export default CampSiteCard;
 
 const CardWrapper = styled.div`
+  position: relative;
   width: 320px;
   height: 480px;
-  margin-left: 20px;
   border: 1px solid #ebebeb;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 
@@ -90,10 +90,9 @@ const CardWrapper = styled.div`
   }
 `;
 
-const CardThumbnail = styled.div`
+const ImgWrapper = styled.div`
   width: 100%;
   height: 320px;
-  position: relative;
 
   & > img {
     width: 100%;
@@ -103,16 +102,14 @@ const CardThumbnail = styled.div`
 `;
 
 const CampSiteInfo = styled.div`
-  height: 160px;
-  position: relative;
-  padding: 0 8px;
+  padding: 7px 14px;
 `;
 
 const CardInfoHeader = styled.div`
   display: flex;
   align-items: center;
-  height: 44px;
-  border-bottom: 1px dotted #ebebeb;
+  padding-bottom: 3px;
+  border-bottom: 1px dotted #c0c0c0;
 
   & > h1 {
     font-size: 20px;
@@ -133,7 +130,7 @@ const LocationWrapper = styled.div`
 
 const TagsContainer = styled.ul`
   display: flex;
-  min-height: 72px;
+  min-height: 65px;
   padding: 9px 2px;
   font-size: 11px;
 
@@ -148,9 +145,6 @@ const TagsContainer = styled.ul`
 
 const CardInfoFooter = styled.div`
   display: flex;
-  position: absolute;
-  bottom: 0;
-  padding-bottom: 4px;
 `;
 
 const CountWrapper = styled.div`
