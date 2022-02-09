@@ -4,6 +4,7 @@ import React, { memo } from "react";
 import SubTitle from "@atoms/SubTitle";
 import MyPageProfile from "../../molecules/MypageProfile";
 import Title from "../../atoms/Title";
+import HearctIcon from "@src/components/icons/HeartIcon";
 
 // --- 전체 컨테이너 ---
 
@@ -11,9 +12,11 @@ const Main = styled.div``;
 
 // --- 컨테이너 ---
 
-const Container = styled.section``;
+const Container = styled.article``;
 
-const Categories = styled.div`
+// --- 카테고리 ---
+
+const Categories = styled.section`
   display: flex;
   justify-content: center;
   position: relative;
@@ -31,21 +34,16 @@ const Categories = styled.div`
 const Category = styled.button`
   border: none;
   background-color: transparent;
-  width: 20%;
+  width: 100px;
   cursor: pointer;
   transition: color 0.1s;
   :hover {
     color: orange;
   }
 `;
-// --- 내 리뷰 ---
-const Review = styled.div``;
 
-const Desciption = styled.figcaption`
-  & p {
-    padding: 5px;
-  }
-`;
+// --- 내 리뷰 ---
+const Review = styled.section``;
 
 const PhotoBox = styled.div`
   display: flex;
@@ -68,6 +66,7 @@ const VisitedCamp = styled.div``;
 const CampInfo = styled.div`
   display: flex;
   gap: 10px;
+  align-items: baseline;
 `;
 
 const CampLink = styled(Link)`
@@ -95,6 +94,27 @@ const IconBoxStyle = css`
   color: darkgray;
   :hover {
     color: #161616;
+  }
+`;
+
+const IconBox = styled.div`
+  display: flex;
+`;
+
+const Icons = styled.div`
+  display: flex;
+  box-sizing: border-box;
+  padding: 5px;
+  gap: 10px;
+  justify-content: center;
+  align-items: baseline;
+  font-size: 14px;
+  cursor: pointer;
+  :hover {
+    font-weight: bold;
+    & svg {
+      fill: red;
+    }
   }
 `;
 
@@ -147,6 +167,23 @@ const MyPage = () => {
             <Title size={14}>찜한 캠핑장</Title>
           </Category>
         </Categories>
+        <Review>
+          <CampInfo>
+            <SubTitle size={14}>{createAt}</SubTitle>
+            <CampLink href="#">
+              <>@캠핑장 주소</>
+            </CampLink>
+            <Icons>
+              <HearctIcon size={12}></HearctIcon>14
+            </Icons>
+          </CampInfo>
+          <p>{subContent}</p>
+          <PhotoBox>
+            {photos.map((photo) => (
+              <img key={1} src={photo} alt="reviewPhoto" />
+            ))}
+          </PhotoBox>
+        </Review>
         {/* <WishCamp>
           <CampInfo>
             <CampLink href="#">
@@ -179,17 +216,6 @@ const MyPage = () => {
           <p>asdasd</p>
         </CampInfo>
       </VisitedCamp> */}
-        <Review>
-          <Desciption>
-            <SubTitle>{createAt}</SubTitle>
-            <p>{subContent}</p>
-          </Desciption>
-          <PhotoBox>
-            {photos.map((photo) => (
-              <img key={1} src={photo} alt="reviewPhoto" />
-            ))}
-          </PhotoBox>
-        </Review>
       </Container>
     </Main>
   );
