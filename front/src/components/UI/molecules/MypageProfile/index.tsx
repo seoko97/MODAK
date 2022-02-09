@@ -42,11 +42,17 @@ const ProfileInfo = styled.figcaption`
   }
 `;
 
+const UserName = styled.div`
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+`;
+
 const IconBox = styled.div`
   display: flex;
 `;
 
-const Icon = styled.div`
+const Icons = styled.div`
   display: flex;
   box-sizing: border-box;
   padding: 5px;
@@ -54,6 +60,13 @@ const Icon = styled.div`
   justify-content: center;
   align-items: baseline;
   font-size: 14px;
+  cursor: pointer;
+  :hover {
+    font-weight: bold;
+    & svg {
+      fill: red;
+    }
+  }
 `;
 
 const MyPageProfile = () => {
@@ -63,17 +76,21 @@ const MyPageProfile = () => {
         <Img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" />
       </ProfileImage>
       <ProfileInfo>
-        <Title size={14}>닉네임</Title>
+        <UserName>
+          <Title size={14}>닉네임</Title>
+          <PencilIcon size={13} />
+        </UserName>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, possimus. Omnis rerum
           id totam aut laboriosam consequuntur cum, temporibus vero molestiae reiciendis quos quae
           doloribus et, commodi quasi esse est!
         </p>
+
         <IconBox>
-          <Icon>
+          <Icons>
             <PencilIcon size={13} /> 10
             <HearctIcon size={13} /> 10
-          </Icon>
+          </Icons>
         </IconBox>
       </ProfileInfo>
     </Profile>
