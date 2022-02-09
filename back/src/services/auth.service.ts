@@ -11,21 +11,8 @@ export class AuthService {
   ) {}
 
   async signin(payload: ITokenUser) {
-    const accessToken = this.jwtService.sign(
-      {
-        exp: Math.floor(Date.now() / 1000) + 60 * 20,
-        data: payload._id,
-      },
-      jwtContents.secret,
-    );
-
-    const refreshToken = this.jwtService.sign(
-      {
-        exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 14,
-        data: payload._id,
-      },
-      jwtContents.secret,
-    );
+    const accessToken = this.jwtService.sign(payload, jwtContents.secret, { expiresIn: "20m" });
+    const refreshToken = this.jwtService.sign(payload, jwtContents.secret, { expiresIn: "14d" });
 
     await this.userService.updateByQuery({ _id: payload }, { refreshToken });
     return [encryptValue(accessToken), encryptValue(refreshToken)];
