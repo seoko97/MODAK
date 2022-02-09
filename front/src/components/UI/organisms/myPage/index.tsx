@@ -7,16 +7,65 @@ import Title from "../../atoms/Title";
 import HearctIcon from "@src/components/icons/HeartIcon";
 import PencilIcon from "@src/components/icons/PencilIcon";
 
+// --- 공통 ---
+
+// ? 아이콘
+const IconBox = styled.div`
+  display: flex;
+`;
+
+const Icons = styled.div`
+  display: flex;
+  box-sizing: border-box;
+  padding: 5px;
+  gap: 10px;
+  justify-content: center;
+  align-items: baseline;
+  font-size: 14px;
+  cursor: pointer;
+  :hover {
+    font-weight: bold;
+    & svg {
+      fill: red;
+    }
+  }
+`;
+
+// ? 캠핑 정보
+const CampInfo = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+`;
+
+const CampLink = styled(Link)`
+  display: flex;
+  cursor: pointer;
+`;
+
+const PhotoBox = styled.div`
+  display: flex;
+  gap: 20px;
+  & img {
+    width: 30%;
+    @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+      width: 100%;
+      + img {
+        display: none;
+      }
+    }
+  }
+`;
+
 // --- 전체 컨테이너 ---
+const Main = styled.div`
+  padding: 20px;
+`;
 
-const Main = styled.div``;
-
-// --- 컨테이너 ---
-
+// --- 탭 메뉴 컨테이너 ---
 const Container = styled.article``;
 
 // --- 카테고리 ---
-
 const Categories = styled.section`
   display: flex;
   justify-content: center;
@@ -48,39 +97,26 @@ const Category = styled.button`
 
 // --- 내 리뷰 ---
 const Review = styled.section`
+  padding-left: 10px;
+  padding-right: 10px;
   & p {
     margin-bottom: 10px;
   }
 `;
 
-const PhotoBox = styled.div`
-  display: flex;
-  gap: 20px;
-  & img {
-    width: 30%;
-    @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
-      width: 100%;
-      + img {
-        display: none;
-      }
-    }
-  }
+const ReviewPost = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 9;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  line-height: 160%;
 `;
 
 // --- 내 캠핑 기록 ---
 
 const VisitedCamp = styled.div``;
-
-const CampInfo = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: baseline;
-`;
-
-const CampLink = styled(Link)`
-  display: flex;
-  cursor: pointer;
-`;
 
 // --- 찜한 캠핑장 ---
 
@@ -94,38 +130,6 @@ const OtherReview = styled.div``;
 
 const OtherLink = styled(Link)``;
 
-const IconBoxStyle = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  color: darkgray;
-  :hover {
-    color: #161616;
-  }
-`;
-
-const IconBox = styled.div`
-  display: flex;
-`;
-
-const Icons = styled.div`
-  display: flex;
-  box-sizing: border-box;
-  padding: 5px;
-  gap: 10px;
-  justify-content: center;
-  align-items: baseline;
-  font-size: 14px;
-  cursor: pointer;
-  :hover {
-    font-weight: bold;
-    & svg {
-      fill: red;
-    }
-  }
-`;
-
 // @ Styled라고 다 이름 붙이지 않아도
 // @ BEM 패턴으로 작명: 관련된 애들을 묶을 수 있음
 // @ material UI...디자인 라이브러리들이 어떻게 컴포넌트 구성하는지 interface 참고
@@ -138,8 +142,18 @@ const Icons = styled.div`
 const MyPage = () => {
   const review = {
     _id: 1,
-    content:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa illum corporis dignissimos ducimus cum earum ipsa magnam! Obcaecati nemo, voluptatibus, deleniti nesciunt molestiae, debitis suscipit corporis perspiciatis enim impedit architecto. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa illum corporis dignissimos ducimus cum earum ipsa magnam! Obcaecati nemo, voluptatibus, deleniti nesciunt molestiae, debitis suscipit corporis perspiciatis enim impedit architecto. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa illum corporis dignissimos ducimus cum earum ipsa magnam! Obcaecati nemo, voluptatibus, deleniti nesciunt molestiae, debitis suscipit corporis perspiciatis enim impedit architecto. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa illum corporis dignissimos ducimus cum earum ipsa magnam! Obcaecati nemo, voluptatibus, deleniti nesciunt molestiae, debitis suscipit corporis perspiciatis enim impedit architecto.",
+    content: `안녕하세요! 저번 주말 선재도의 트리 캠핑장에 다녀왔습니다.
+      여기는 경기도 지역 오션뷰 캠핑장으로 정말 유명한 곳인데요.
+      홈페이지에서 예약할 때 정보가 별로 없다보니 어떤자리를 예약하는게 좋을지 분간이 잘 안되서 영상을 직접 찍게 되었습니다.
+      
+      이 곳은 정말 숲 속에 있는 분위기에 바다까지 볼 수 있어서 낭만적인 분위기를 연출할 수 있는 곳입니다.
+      또한 겨울에 와서 그런지 벌레도 전혀 없고 한적해서 정말 좋았어요.
+      시도 때도 없이 날아다니는 비행기 소리가 조금 거슬리긴 하지만..
+      인천지역 트리 캠핑장 추천합니다!
+      
+      =======================================================================================================
+      E=MAIL : 88leeq@naver.com
+      인스타그램 : https://www.instagram.com/88_leeq`,
     photos: [
       "https://images.unsplash.com/photo-1594495894542-a46cc73e081a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80",
       "https://images.unsplash.com/photo-1563299796-17596ed6b017?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
@@ -159,7 +173,6 @@ const MyPage = () => {
 
   const { _id, content, photos, author, createAt, bookmarks } = review;
   const { nickname, profile, likes, posts } = author;
-  const subContent = content.substring(0, 1000) + "...더보기";
   return (
     <Main>
       <MyPageProfile></MyPageProfile>
@@ -179,13 +192,28 @@ const MyPage = () => {
           <CampInfo>
             <SubTitle size={14}>{createAt}</SubTitle>
             <CampLink href="#">
-              <>@캠핑장 주소</>
+              <>@장호비치캠핑장</>
             </CampLink>
             <Icons>
               <HearctIcon size={12}></HearctIcon>14
             </Icons>
           </CampInfo>
-          <p>{subContent}</p>
+          <ReviewPost>
+            안녕하세요! 저번 주말 선재도의 트리 캠핑장에 다녀왔습니다.<br></br>
+            여기는 경기도 지역 오션뷰 캠핑장으로 정말 유명한 곳인데요.<br></br>
+            홈페이지에서 예약할 때 정보가 별로 없다보니 어떤자리를 예약하는게 좋을지 분간이 잘
+            안되서 영상을 직접 찍게 되었습니다.<br></br>
+            <br></br>이 곳은 정말 숲 속에 있는 분위기에 바다까지 볼 수 있어서 낭만적인 분위기를
+            연출할 수 있는 곳입니다.<br></br>
+            또한 겨울에 와서 그런지 벌레도 전혀 없고 한적해서 정말 좋았어요.<br></br>
+            시도 때도 없이 날아다니는 비행기 소리가 조금 거슬리긴 하지만..<br></br>
+            인천지역 트리 캠핑장 추천합니다!<br></br>
+            <br></br>
+            =======================================================================================================
+            <br></br>
+            E=MAIL : 88leeq@naver.com<br></br>
+            인스타그램 : https://www.instagram.com/88_leeq
+          </ReviewPost>
           <PhotoBox>
             {photos.map((photo) => (
               <img key={1} src={photo} alt="reviewPhoto" />
