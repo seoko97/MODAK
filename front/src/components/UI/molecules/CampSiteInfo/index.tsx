@@ -82,7 +82,7 @@ const StyledIconContainer = styled.div`
 
 const StyledIconBox = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 15px;
 `;
 
 const CampSiteIcon = css`
@@ -101,8 +101,8 @@ const CampSiteIcon = css`
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     svg {
-      width: 20px;
-      height: 20px;
+      width: 15px;
+      height: 15px;
 
       & + span {
         font-size: 12px;
@@ -269,15 +269,15 @@ const CampSiteInfo = ({
           <StyledIconContainer>
             <StyledIconBox>
               <StyledRowIcon>
-                <LookIcon size={30} />
+                <LookIcon size={20} />
                 <span>{views}</span>
               </StyledRowIcon>
               <StyledRowIcon>
-                <CommentIcon size={30} />
+                <CommentIcon size={20} />
                 <span>{reviews.length}</span>
               </StyledRowIcon>
               <StyledRowIcon>
-                <HeartIcon size={30} />
+                <HeartIcon size={16} />
                 <span>{bookmark.length}</span>
               </StyledRowIcon>
             </StyledIconBox>
