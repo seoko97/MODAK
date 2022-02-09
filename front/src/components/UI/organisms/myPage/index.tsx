@@ -2,13 +2,12 @@ import styled, { css } from "styled-components";
 import Link from "next/link";
 import React, { memo } from "react";
 import SubTitle from "@atoms/SubTitle";
-import MyPageProfile from "../../molecules/MypageProfile/MyPageProfile";
+import MyPageProfile from "../../molecules/MypageProfile";
 import Title from "../../atoms/Title";
 
-const Main = styled.div`
-  background-color: #f6f6f6;
-  padding: 30px;
-`;
+// --- 전체 컨테이너 ---
+
+const Main = styled.div``;
 
 // --- 컨테이너 ---
 
@@ -17,10 +16,22 @@ const Container = styled.section``;
 const Categories = styled.div`
   display: flex;
   justify-content: center;
+  position: relative;
+  margin-bottom: 50px;
+  & ::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    bottom: -20px;
+    background-color: #00010d;
+  }
 `;
 const Category = styled.button`
   border: none;
   background-color: transparent;
+  width: 20%;
   cursor: pointer;
   transition: color 0.1s;
   :hover {
@@ -96,7 +107,28 @@ const IconBoxStyle = css`
 // const Title = styled.h1``;
 // Card.Title = Title;
 
-const MyPage = ({ review }) => {
+const MyPage = () => {
+  const review = {
+    _id: 1,
+    content:
+      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa illum corporis dignissimos ducimus cum earum ipsa magnam! Obcaecati nemo, voluptatibus, deleniti nesciunt molestiae, debitis suscipit corporis perspiciatis enim impedit architecto. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa illum corporis dignissimos ducimus cum earum ipsa magnam! Obcaecati nemo, voluptatibus, deleniti nesciunt molestiae, debitis suscipit corporis perspiciatis enim impedit architecto. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa illum corporis dignissimos ducimus cum earum ipsa magnam! Obcaecati nemo, voluptatibus, deleniti nesciunt molestiae, debitis suscipit corporis perspiciatis enim impedit architecto. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa illum corporis dignissimos ducimus cum earum ipsa magnam! Obcaecati nemo, voluptatibus, deleniti nesciunt molestiae, debitis suscipit corporis perspiciatis enim impedit architecto.",
+    photos: [
+      "https://images.unsplash.com/photo-1594495894542-a46cc73e081a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80",
+      "https://images.unsplash.com/photo-1563299796-17596ed6b017?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+      "https://images.unsplash.com/photo-1475483768296-6163e08872a1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+    ],
+    author: {
+      _id: 2,
+      nickname: "김불멍",
+      profile:
+        "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+      likes: 123,
+      posts: 13,
+    },
+    createAt: "2022-01-28",
+    bookmarks: 173,
+  };
+
   const { _id, content, photos, author, createAt, bookmarks } = review;
   const { nickname, profile, likes, posts } = author;
   const subContent = content.substring(0, 1000) + "...더보기";
@@ -147,17 +179,17 @@ const MyPage = ({ review }) => {
           <p>asdasd</p>
         </CampInfo>
       </VisitedCamp> */}
-        {/* <Review>
-        <S.Desciption>
-          <SubTitle>{createAt}</SubTitle>
-          <p>{subContent}</p>
-        </S.Desciption>
-        <PhotoBox>
-          {photos.map((photo) => (
-            <img key={1} src={photo} alt="reviewPhoto" />
-          ))}
-        </PhotoBox>
-      </Review> */}
+        <Review>
+          <Desciption>
+            <SubTitle>{createAt}</SubTitle>
+            <p>{subContent}</p>
+          </Desciption>
+          <PhotoBox>
+            {photos.map((photo) => (
+              <img key={1} src={photo} alt="reviewPhoto" />
+            ))}
+          </PhotoBox>
+        </Review>
       </Container>
     </Main>
   );
