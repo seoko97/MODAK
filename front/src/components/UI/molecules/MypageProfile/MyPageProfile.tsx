@@ -4,13 +4,13 @@ import Title from "../../atoms/Title";
 
 const StyledContainer = styled.figure`
   display: flex;
-  gap: 100px;
+  gap: 30px;
   padding: 30px;
 `;
 
 const ImageBoxStyle = css`
-  width: 150px;
-  height: 150px;
+  width: 130px;
+  height: 130px;
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     width: 100px;
     height: 100px;
@@ -26,7 +26,6 @@ const StyledImageBox = styled.div`
 
 const StyledImage = styled.img`
   ${ImageBoxStyle}
-  position: absolute;
   border-radius: 50%;
 `;
 
