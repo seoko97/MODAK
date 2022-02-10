@@ -50,7 +50,7 @@ const CampSiteListBox = ({
           </CardInfoHeader>
           <InfoTable>
             <tr>
-              <th>야영장 구분</th>
+              <th>캠핑 타입</th>
               <td>{category}</td>
             </tr>
             <tr>
@@ -88,13 +88,38 @@ CampSiteListBox.defaultProps = {
 
 export default CampSiteListBox;
 
+// 카드 리스트형 디자인
+// const CardWrapper = styled.div`
+//   display: flex;
+//   width: 90%;
+//   height: 250px;
+//   margin: 30px auto 0;
+//   border-radius: 15px;
+//   box-shadow: 3px 4px 5px rgba(0, 0, 0, 0.1);
+//   overflow: hidden;
+
+//   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
+//   transition: 0.3s transform;
+
+//   &:hover {
+//     transform: scale(1.005);
+//     cursor: pointer;
+//   }
+
+//   @media screen and (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+//     width: 396px;
+//     height: 150px;
+//   }
+// `;
+
+// 리스트 디자인
 const CardWrapper = styled.div`
   display: flex;
-  width: 80%;
+  width: 90%;
   height: 250px;
   margin: 30px auto 0;
-  border-radius: 15px;
-  box-shadow: 3px 4px 5px rgba(0, 0, 0, 0.1);
+  padding-bottom: 30px;
+  border-bottom: 1px dotted #c0c0c0;
   overflow: hidden;
 
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
@@ -103,6 +128,11 @@ const CardWrapper = styled.div`
   &:hover {
     transform: scale(1.005);
     cursor: pointer;
+  }
+
+  @media screen and (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    width: 396px;
+    height: 150px;
   }
 `;
 
@@ -114,43 +144,55 @@ const ImgWrapper = styled.div`
     height: 100%;
     object-fit: cover;
   }
+
+  @media screen and (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    min-width: 150px;
+  }
 `;
 
 const CampSiteInfo = styled.div`
-  /* background-color: pink; */
   width: 100%;
   height: 100%;
   position: relative;
-  padding: 20px 24px;
+  padding: 1em 1.5em;
 `;
 
 const CardInfoHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 44px;
-  /* background-color: yellow; */
-  border-bottom: 1px dotted #c0c0c0;
+  /* border-bottom: 1px dotted #c0c0c0; */
+  /* background-color: blue; */
+  margin-bottom: 10px;
 
   & > h3 {
-    font-size: 24px;
+    font-size: 20px;
+    font-weight: 700;
+
+    @media screen and (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+      font-size: 14px;
+      align-items: flex-end;
+    }
   }
 `;
 
 const InfoTable = styled.table`
-  margin: 6px 2px;
-  /* border: 1px solid green; */
   border-collapse: separate;
   border-spacing: 0 5px;
-  width: 100%;
+  /* width: 100%; */
+  /* background-color: yellow; */
 
   & th {
     text-align: left;
-    width: 15%;
+    width: 50%;
   }
 
   & td {
     padding-left: 5px;
+  }
+
+  @media screen and (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    font-size: 12px;
   }
 `;
 
@@ -166,6 +208,9 @@ const TagsContainer = styled.ul`
       content: "#";
     }
   }
+  @media screen and (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    font-size: 12px;
+  }
 `;
 
 const CountsWrapper = styled.div`
@@ -180,5 +225,14 @@ const CountContainer = styled.div`
   & svg {
     margin-right: 2px;
     margin-left: 10px;
+  }
+  @media screen and (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    font-size: 9px;
+    align-items: flex-start;
+
+    & svg {
+      width: 12px;
+      height: 12px;
+    }
   }
 `;

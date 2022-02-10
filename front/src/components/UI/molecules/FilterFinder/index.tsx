@@ -23,13 +23,17 @@ const FilterFinder = () => {
 export default FilterFinder;
 
 const FinderContainer = styled.div`
-margin-top: 1em;
-  border: 1px solid ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-  border-radius: 15px;
+  margin-top: 1em;
+
+  /* 보더 디자인 */
+  /* border: 1px solid ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR}; */
+
+  border: 1px solid #ebebeb;
+  border-radius: 10px;
+  box-shadow: 3px 4px 5px rgba(0, 0, 0, 0.1);
+
   padding: 30px 50px;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-
-  /* box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.1); */ */
 `;
 
 const ButtonContainer = styled.div`

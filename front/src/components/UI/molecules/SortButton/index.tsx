@@ -48,9 +48,11 @@ const DropDownSelect = styled.select`
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  border: none;
-  border-radius: 0.5em;
-  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ebebeb;
+  border-radius: 10px;
+  /* box-shadow: 3px 4px 5px rgba(0, 0, 0, 0.1); */
+  box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1); */
   width: 100%;
   background-color: transparent;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
