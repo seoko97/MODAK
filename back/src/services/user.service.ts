@@ -31,8 +31,8 @@ export class UserService {
     return this.userModel.findById(id, obj);
   }
 
-  async updateByQuery(where: any, query: any) {
-    return await this.userModel.updateOne(where, query);
+  async updateByQuery(where: any, query = {}) {
+    return await this.userModel.findOneAndUpdate(where, query, { new: true });
   }
 
   async test() {
@@ -40,6 +40,10 @@ export class UserService {
 
     return "test";
   }
+
+  // async getBookmarkedCampsiteById(id: string) {
+  //   //const bmk = await this.userModel.findOne({ _id: id });
+  // }
 
   async verifyToken(payload: ITokenUser, prevToken: string) {
     const user = await this.getById(payload._id);

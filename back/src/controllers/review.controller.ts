@@ -12,6 +12,10 @@ try {
   fs.mkdirSync("uploads");
 }
 
+interface MulterRequest extends Request {
+  files: any;
+}
+
 export class ReviewController {
   constructor(
     private readonly reviewService: ReviewService,
