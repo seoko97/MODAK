@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import Link from "next/link";
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import SubTitle from "@atoms/SubTitle";
 import MyPageProfile from "../../molecules/MypageProfile";
 import Title from "../../atoms/Title";
@@ -66,7 +66,7 @@ const Main = styled.div`
 const Container = styled.article``;
 
 // --- 카테고리 ---
-const Categories = styled.section`
+const Categories = styled.ul`
   display: flex;
   justify-content: center;
   position: relative;
@@ -81,9 +81,8 @@ const Categories = styled.section`
     background-color: #00010d;
   }
 `;
-const Category = styled.button`
-  border: none;
-  background-color: transparent;
+const Category = styled.li`
+  text-align: center;
   width: 100px;
   cursor: pointer;
   transition: color 0.1s;
@@ -173,6 +172,7 @@ const MyPage = () => {
 
   const { _id, content, photos, author, createAt, bookmarks } = review;
   const { nickname, profile, likes, posts } = author;
+
   return (
     <Main>
       <MyPageProfile></MyPageProfile>
