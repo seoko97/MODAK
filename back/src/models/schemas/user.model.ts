@@ -1,5 +1,6 @@
 import { verify } from "jsonwebtoken";
 import { Schema } from "mongoose";
+import { jwtContents } from "@utils/constants";
 import { IUserDocument, IUserModel } from "~types/User";
 
 export const UserSchema = new Schema<IUserDocument, IUserModel>(
@@ -47,8 +48,7 @@ export const UserSchema = new Schema<IUserDocument, IUserModel>(
 
 UserSchema.methods.verifyRefresh = function () {
   if (!this.refreshToken) return false;
-  // const result = verify(this.refreshToken, jwtContents.secret);
-  const result = verify(this.refreshToken, "");
+  const result = verify(this.refreshToken, jwtContents.secret);
 
   return Boolean(result);
 };
