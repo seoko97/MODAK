@@ -11,10 +11,10 @@ export class AuthService {
   ) {}
 
   async signin(payload: ITokenUser) {
-    const accessToken = this.jwtService.sign(payload, jwtContents.secret, { expiresIn: "20m" });
+    const accessToken = this.jwtService.sign(payload, jwtContents.secret, { expiresIn: "1h" });
     const refreshToken = this.jwtService.sign(payload, jwtContents.secret, { expiresIn: "14d" });
 
-    await this.userService.updateByQuery({ _id: payload }, { refreshToken });
+    await this.userService.updateByQuery({ _id: payload._id }, { refreshToken });
     return [encryptValue(accessToken), encryptValue(refreshToken)];
   }
 

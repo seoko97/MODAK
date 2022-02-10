@@ -9,6 +9,7 @@ import PassportConfig from "@passport/.";
 import { url, prod } from "./utils/constants";
 import { connectDB } from "./utils/connectDB";
 import { setBearerToken } from "./middlewares/setBearerToken";
+import { errorMiddleware } from "./middlewares/errorMiddleware";
 import routes from "@routes/.";
 
 connectDB();
@@ -32,7 +33,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(setBearerToken);
+
 app.use("/api", routes);
+
+app.use(errorMiddleware);
 
 app.get("/", (_, res) => {
   res.send("Hello Express Server!");

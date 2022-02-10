@@ -1,18 +1,18 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Strategy as JwtStrategy, ExtractJwt, VerifiedCallback } from "passport-jwt";
 import { jwtContents } from "@src/utils/constants";
+import { ITokenUser } from "@src/types/User";
+import { RequestHandler } from "express";
 
 const JwtOpt = {
   secretOrKey: jwtContents.secret,
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 };
 
-const JwtVerify = (payload: any, done: VerifiedCallback) => {
+const JwtVerify = (payload: ITokenUser, done: VerifiedCallback) => {
   try {
-    if (!payload) {
-      return done(null, false, { message: "Login required" });
-    }
-    done(null, { id: payload.id });
+    if (!payload) return done(null, false, { message: "로그인이 필요합니다." });
+
+    done(null, { _id: payload._id });
   } catch (e) {
     done(e, false);
   }
@@ -23,9 +23,9 @@ const RefreshJwtOpt = {
   jwtFromRequest: ExtractJwt.fromHeader("refresh"),
 };
 
-const RefreshJwtVerify = async (payload: any, done: VerifiedCallback) => {
+const RefreshJwtVerify = async (payload: ITokenUser, done: VerifiedCallback) => {
   try {
-    done(null, { id: payload.id });
+    done(null, { _id: payload._id });
   } catch (e) {
     done(e, false);
   }

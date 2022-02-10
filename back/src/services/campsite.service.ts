@@ -12,8 +12,8 @@ export class CampsiteService {
     return this.campsiteModel.findById(id);
   }
 
-  async getCampsByQuery(query: ICampQuery) {
-    return await this.campsiteModel.find(query).limit(3);
+  async getCampsByQuery(query: ICampQuery, target: any) {
+    return await this.campsiteModel.find(query).sort(target).limit(10);
   }
 
   async create(data: ICampsiteDTO) {
