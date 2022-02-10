@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import Link from "next/link";
-import React, { memo, useState } from "react";
+import React, { memo, Props, useState } from "react";
 import SubTitle from "@atoms/SubTitle";
 import MyPageProfile from "../../molecules/MypageProfile";
 import Title from "../../atoms/Title";
@@ -220,7 +220,7 @@ const MyPage = () => {
             ))}
           </PhotoBox>
         </Review>
-        {/* <VisitedCamp>
+        <VisitedCamp>
           <SubTitle>2022-01-28</SubTitle>
           <CampInfo>
             <CampLink href="#">
@@ -233,8 +233,8 @@ const MyPage = () => {
               </Icons>
             </IconBox>
           </CampInfo>
-        </VisitedCamp> */}
-        {/* <WishCamp>
+        </VisitedCamp>
+        <WishCamp>
           <CampInfo>
             <CampLink href="#">
               <>
@@ -259,7 +259,7 @@ const MyPage = () => {
               ))}
             </PhotoBox>
           </OtherReview>
-        </WishCamp> */}
+        </WishCamp>
       </Container>
     </Main>
   );

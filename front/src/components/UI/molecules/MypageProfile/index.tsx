@@ -76,8 +76,12 @@ const EditProfile = styled.button`
   background-color: transparent;
 `;
 
-const MyPageProfile = () => {
-  const [modal, setModal] = useState(false);
+function OpenModal(): React.ReactElement {
+  return <UserChange></UserChange>;
+}
+
+const MyPageProfile = (): React.ReactElement => {
+  const [modal, setModal] = useState<boolean>(false);
   function handleClick() {
     setModal(!modal);
   }
@@ -91,16 +95,15 @@ const MyPageProfile = () => {
         <UserName>
           <Title size={14}>닉네임</Title>
           <EditProfile onClick={handleClick}>
-            {modal && <UserChange />}
             <PencilIcon size={13} />
           </EditProfile>
+          {modal && OpenModal()}
         </UserName>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, possimus. Omnis rerum
           id totam aut laboriosam consequuntur cum, temporibus vero molestiae reiciendis quos quae
           doloribus et, commodi quasi esse est!
         </p>
-
         <IconBox>
           <Icons>
             <PencilIcon size={13} /> 10
