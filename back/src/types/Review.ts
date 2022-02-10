@@ -6,8 +6,8 @@ export interface IReviewDTO {
   content: string;
   photos: string[];
   author: PopulatedDoc<IUserDocument>;
-  locations: PopulatedDoc<ICampsiteDocument>;
-  shopname: string;
+  location: PopulatedDoc<ICampsiteDocument>;
+  rating: string;
 }
 
 export interface IReviewDocument extends IReviewDTO {
