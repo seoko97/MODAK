@@ -18,12 +18,11 @@ const upload = multer({
     },
     filename(req, file, cb) {
       const ext = path.extname(file.originalname);
-      const basenmae = path.basename(file.originalname, ext);
+      const basenmae = encodeURIComponent(path.basename(file.originalname, ext));
       cb(null, basenmae + new Date().getTime().valueOf() + ext);
     },
   }),
   fileFilter(req, file, cb) {
-    console.log("@@fileFilter: ", file.mimetype);
     if (extension.includes(file.mimetype)) cb(null, true);
     else cb(new Error("이미지가 아닙니다."));
   },
