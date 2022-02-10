@@ -78,7 +78,7 @@ const CardWrapper = styled.div`
   height: 480px;
   border: 1px solid #ebebeb;
   border-radius: 10px;
-  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 3px 4px 5px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};

@@ -9,6 +9,7 @@ interface Props {
   toUrl?: string;
   imgUrl: string;
   name: string;
+  category: string[];
   address: string;
   tel: string;
   tagContent: string[];
@@ -20,6 +21,7 @@ const CampSiteListBox = ({
   toUrl,
   imgUrl,
   name,
+  category,
   address,
   tel,
   tagContent,
@@ -48,6 +50,10 @@ const CampSiteListBox = ({
           </CardInfoHeader>
           <InfoTable>
             <tr>
+              <th>야영장 구분</th>
+              <td>{category}</td>
+            </tr>
+            <tr>
               <th>주소</th>
               <td>{tel}</td>
             </tr>
@@ -68,10 +74,11 @@ const CampSiteListBox = ({
 };
 
 CampSiteListBox.defaultProps = {
-  toUrl: "/",
+  toUrl: "/camp/:id",
   imgUrl:
     "https://images.unsplash.com/photo-1607908560428-36ff9e0363b7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1635&q=80",
   name: "엘리스 캠핑장",
+  category: ["일반야영장", "자동차야영장", "카라반"],
   address: "경기도 가평",
   tel: "010-1234-5678",
   tagContent: ["가족캠핑", "반려동물 동반", "wifi"],
@@ -87,10 +94,8 @@ const CardWrapper = styled.div`
   height: 250px;
   margin: 30px auto 0;
   border-radius: 15px;
-  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 3px 4px 5px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-
-  /* border: 1px solid black; */
 
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   transition: 0.3s transform;

@@ -6,7 +6,7 @@ interface Props {
   name: string;
   items: string[];
 }
-const FilterList = ({ name, items }: Props) => {
+const FilterCategory = ({ name, items }: Props) => {
   return (
     <StyledFilterList>
       <h3>{name}</h3>
@@ -17,12 +17,13 @@ const FilterList = ({ name, items }: Props) => {
   );
 };
 
-FilterList.defaultProps = {
+FilterCategory.defaultProps = {
   name: "지역",
   items: ["서울시", "부산시", "대전시", "서울시", "부산시", "대전시", "서울시", "부산시", "대전시"],
 };
 
-export default FilterList;
+export default FilterCategory;
+
 const StyledFilterList = styled.div`
   display: flex;
 
