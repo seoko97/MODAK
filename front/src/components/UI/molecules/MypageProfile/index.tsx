@@ -1,8 +1,9 @@
 import HearctIcon from "@src/components/icons/HeartIcon";
 import PencilIcon from "@src/components/icons/PencilIcon";
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import Title from "../../atoms/Title";
+import UserChange from "../../organisms/Userchange";
 
 // --- 프로필 컨테이너 ---
 const Profile = styled.figure`
@@ -69,7 +70,18 @@ const Icons = styled.div`
   }
 `;
 
+const EditProfile = styled.button`
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+`;
+
 const MyPageProfile = () => {
+  const [modal, setModal] = useState(false);
+  function handleClick() {
+    setModal(!modal);
+  }
+
   return (
     <Profile>
       <ProfileImage>
@@ -78,7 +90,10 @@ const MyPageProfile = () => {
       <ProfileInfo>
         <UserName>
           <Title size={14}>닉네임</Title>
-          <PencilIcon size={13} />
+          <EditProfile onClick={handleClick}>
+            {modal && <UserChange />}
+            <PencilIcon size={13} />
+          </EditProfile>
         </UserName>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, possimus. Omnis rerum
