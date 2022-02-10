@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Request, Response, NextFunction } from "express";
-import { AuthService, authService } from "@src/services/auth.service";
-import { asyncHandler } from "@src/utils/asyncHandler";
-import { ITokenUser } from "@src/types/User";
-import { jwtContents } from "@src/utils/constants";
+import { asyncHandler } from "@utils/asyncHandler";
+import { jwtContents } from "@utils/constants";
+import { AuthService, authService } from "@services/auth.service";
+import { userService, UserService } from "@services/user.service";
+import { ITokenUser } from "~types/User";
 
 const EXPIRED = {
   access: 1000 * 60 * 20,
@@ -11,12 +12,16 @@ const EXPIRED = {
 };
 
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
+  ) {}
 
   googleOAuthCallback = async (req: Request, res: Response, next: NextFunction) => {
     asyncHandler(async (req: Request, res: Response) => {
-      const user = req.user as ITokenUser;
-      const [accessToken, refreshToken] = await this.authService.signin(user);
+      const _user = req.user as ITokenUser;
+      const [accessToken, refreshToken] = await this.authService.signin(_user);
+      const user = this.userService.getById(_user._id, { refreshToken: 0 });
 
       res.cookie(jwtContents.header, accessToken, {
         maxAge: EXPIRED.access,
@@ -28,14 +33,15 @@ export class AuthController {
         httpOnly: true,
       });
 
-      return res.json({ status: true });
+      return res.status(200).json({ status: true, user });
     })(req, res, next);
   };
 
   kakaoOAuthCallback = async (req: Request, res: Response, next: NextFunction) => {
     asyncHandler(async (req: Request, res: Response) => {
-      const user = req.user as ITokenUser;
-      const [accessToken, refreshToken] = await this.authService.signin(user);
+      const _user = req.user as ITokenUser;
+      const [accessToken, refreshToken] = await this.authService.signin(_user);
+      const user = this.userService.getById(_user._id, { refreshToken: 0 });
 
       res.cookie(jwtContents.header, accessToken, {
         maxAge: EXPIRED.access,
@@ -46,9 +52,9 @@ export class AuthController {
         httpOnly: true,
       });
 
-      return res.json({ status: true });
+      return res.status(200).json({ status: true, user });
     })(req, res, next);
   };
 }
 
-export const authController = new AuthController(authService);
+export const authController = new AuthController(authService, userService);
