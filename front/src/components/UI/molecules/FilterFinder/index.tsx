@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import RowFrame from "@templates/RowFrame";
-import FilterList from "@molecules/FilterListItem";
+import FilterCategory from "./FilterCategory";
 
 const FilterFinder = () => {
   return (
     <RowFrame>
       <FinderContainer>
-        <FilterList />
-        <FilterList />
-        <FilterList />
-        <FilterList />
+        <FilterCategory />
+        <FilterCategory />
+        <FilterCategory />
+        <FilterCategory />
         <ButtonContainer>
           <StyledButton>초기화</StyledButton>
           <StyledButton>검색</StyledButton>
@@ -23,8 +23,15 @@ const FilterFinder = () => {
 export default FilterFinder;
 
 const FinderContainer = styled.div`
-  border: 1px solid ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-  border-radius: 5px;
+  margin-top: 1em;
+
+  /* 보더 디자인 */
+  /* border: 1px solid ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR}; */
+
+  border: 1px solid #ebebeb;
+  border-radius: 10px;
+  box-shadow: 3px 4px 5px rgba(0, 0, 0, 0.1);
+
   padding: 30px 50px;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
 `;
