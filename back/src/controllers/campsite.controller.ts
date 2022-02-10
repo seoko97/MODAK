@@ -15,7 +15,7 @@ export class CampsiteController {
   getCamps = async (req: Request, res: Response) => {
     const query = campsQuery(req.query) as ICampQuery;
 
-    const camps = await this.campsiteService.getCampsByQuery(query);
+    const camps = await this.campsiteService.getCampsByQuery(query, {});
 
     res.json(camps);
   };
@@ -27,17 +27,14 @@ export class CampsiteController {
   };
 
   schedule = async () => {
-    try {
-      const camps = await axios.get(serviceKey);
-      await Promise.all(
-        camps.data.response.body.items.item.map((camp: IAxiosSchduleDTO) => {
-          const campsite = getCampData(camp);
-          return this.campsiteService.create(campsite);
-        }),
-      );
-    } catch (e: any) {
-      console.log(e.message);
-    }
+    const camps = await axios.get(serviceKey);
+
+    await Promise.all(
+      camps.data.response.body.items.item.map((camp: IAxiosSchduleDTO) => {
+        const campsite = getCampData(camp);
+        return this.campsiteService.create(campsite);
+      }),
+    );
   };
 }
 
