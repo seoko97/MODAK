@@ -9,6 +9,10 @@ try {
   fs.mkdirSync("uploads");
 }
 
+interface MulterRequest extends Request {
+  files: any;
+}
+
 export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
   test = async (req: Request, res: Response) => {
@@ -19,7 +23,7 @@ export class ReviewController {
 
   create = async (req: Request, res: Response) => {
     const { content, author, locations, shopname } = req.body;
-    const photes = req.files;
+    const photes = (req as MulterRequest).files;
 
     res.send("asd");
   };

@@ -40,6 +40,10 @@ export const UserSchema = new Schema<IUserDocument, IUserModel>(
         ref: "Campsite",
       },
     ],
+    introduce: {
+      type: String,
+      default: null,
+    },
   },
   {
     timestamps: true,
