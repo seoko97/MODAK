@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { UserModel } from "@src/models";
 
-import { IUserDocument, IUserDTO } from "@src/types/User";
+import { ITokenUser, IUserDocument, IUserDTO } from "@src/types/User";
 
 export class UserService {
   constructor(private readonly userModel: typeof UserModel) {}
@@ -37,9 +37,14 @@ export class UserService {
 
   async test() {
     const user = await this.userModel.findOne({ email: "asd" });
-    console.log(user);
 
     return "test";
+  }
+
+  async verifyToken(payload: ITokenUser, prevToken: string) {
+    const user = await this.getById(payload._id);
+    if (!user) return false;
+    return prevToken === user.refreshToken;
   }
 }
 
