@@ -3,28 +3,32 @@ import styled from "styled-components";
 
 const Background = styled.div`
   position: fixed;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: #1d1d1d70;
+  background-color: #0c0c0c7b;
   z-index: 20;
 `;
 
 const Container = styled.div`
   position: absolute;
   background-color: #f7f7f7;
-  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%);
   width: 500px;
-  height: 600px;
   box-sizing: border-box;
   margin: 50px auto;
   box-shadow: grey 0px 1px 3px 0px;
   padding: 50px;
   color: #0c0c0c;
   z-index: 21;
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    width: 100%;
+  }
 `;
 
 const Header = styled.div`
@@ -54,10 +58,7 @@ const EditTitle = styled.div`
   width: 100px;
 `;
 
-const InputBox = styled.div`
-  /* max-width: 400px; */
-  /* flex: 1 0 0px; */
-`;
+const InputBox = styled.div``;
 const Input = styled.input`
   :focus {
     outline: none;
@@ -125,7 +126,6 @@ const ModifyButton = styled.button`
   border-radius: 2px;
   border: none;
   color: #fff;
-  /* margin-left: 100px; */
   cursor: pointer;
 `;
 
