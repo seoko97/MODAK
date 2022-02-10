@@ -5,6 +5,7 @@ import logger from "morgan";
 import cors from "cors";
 import hpp from "hpp";
 import helmet from "helmet";
+import path from "path";
 import PassportConfig from "@passport/.";
 import { url, prod } from "./utils/constants";
 import { connectDB } from "./utils/connectDB";
@@ -28,6 +29,7 @@ app.use(
   }),
 );
 app.use(logger(prod ? "combined" : "dev"));
+app.use("/", express.static(path.join("uploads")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, RequestHandler } from "express";
 import { asyncHandler } from "@utils/asyncHandler";
 import { jwtContents } from "@utils/constants";
 import { AuthService, authService } from "@services/auth.service";
@@ -17,43 +16,49 @@ export class AuthController {
     private readonly userService: UserService,
   ) {}
 
-  googleOAuthCallback = async (req: Request, res: Response, next: NextFunction) => {
-    asyncHandler(async (req: Request, res: Response) => {
-      const _user = req.user as ITokenUser;
-      const [accessToken, refreshToken] = await this.authService.signin(_user);
-      const user = this.userService.getById(_user._id, { refreshToken: 0 });
+  googleOAuthCallback: RequestHandler = async (req, res) => {
+    const _user = req.user as ITokenUser;
+    const [accessToken, refreshToken] = await this.authService.signin(_user);
+    const user = this.userService.getById(_user._id, { refreshToken: 0 });
 
-      res.cookie(jwtContents.header, accessToken, {
-        maxAge: EXPIRED.access,
-        httpOnly: true,
-      });
+    res.cookie(jwtContents.header, accessToken, {
+      maxAge: EXPIRED.access,
+      httpOnly: true,
+    });
 
-      res.cookie(jwtContents.header_refresh, refreshToken, {
-        maxAge: EXPIRED.refresh,
-        httpOnly: true,
-      });
+    res.cookie(jwtContents.header_refresh, refreshToken, {
+      maxAge: EXPIRED.refresh,
+      httpOnly: true,
+    });
 
-      return res.status(200).json({ status: true, user });
-    })(req, res, next);
+    return res.status(200).json({ status: true, user });
   };
 
-  kakaoOAuthCallback = async (req: Request, res: Response, next: NextFunction) => {
-    asyncHandler(async (req: Request, res: Response) => {
-      const _user = req.user as ITokenUser;
-      const [accessToken, refreshToken] = await this.authService.signin(_user);
-      const user = this.userService.getById(_user._id, { refreshToken: 0 });
+  kakaoOAuthCallback: RequestHandler = async (req, res) => {
+    const _user = req.user as ITokenUser;
+    const [accessToken, refreshToken] = await this.authService.signin(_user);
+    const user = this.userService.getById(_user._id, { refreshToken: 0 });
 
-      res.cookie(jwtContents.header, accessToken, {
-        maxAge: EXPIRED.access,
-        httpOnly: true,
-      });
-      res.cookie(jwtContents.header_refresh, refreshToken, {
-        maxAge: EXPIRED.refresh,
-        httpOnly: true,
-      });
+    res.cookie(jwtContents.header, accessToken, {
+      maxAge: EXPIRED.access,
+      httpOnly: true,
+    });
+    res.cookie(jwtContents.header_refresh, refreshToken, {
+      maxAge: EXPIRED.refresh,
+      httpOnly: true,
+    });
 
-      return res.status(200).json({ status: true, user });
-    })(req, res, next);
+    return res.status(200).json({ status: true, user });
+  };
+
+  signout = async (req: Request, res: Response) => {
+    const { _id } = req.user as ITokenUser;
+
+    await this.userService.updateByQuery({ _id }, { refreshToken: null });
+    res.clearCookie(jwtContents.header);
+    res.clearCookie(jwtContents.header_refresh);
+
+    return res.status(201).json({ status: true });
   };
 }
 

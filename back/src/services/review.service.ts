@@ -9,11 +9,11 @@ export class ReviewService {
   }
 
   async getReviewsByQuery(query = {}) {
-    return this.reviewModel.find(query).limit(10);
+    return await this.reviewModel.find(query).limit(10);
   }
 
   async getReviewsByUserId(userId: string, limit: number) {
-    return this.reviewModel.find({ author: userId }).limit(limit);
+    return await this.reviewModel.find({ author: userId }).limit(limit);
   }
 
   async delete(id: string) {
@@ -21,11 +21,21 @@ export class ReviewService {
   }
 
   async create(data: IReviewDTO) {
-    return this.reviewModel.create(data);
+    const review = await this.reviewModel.create(data);
+    await review.populate("author", "-refreshToken -source");
+    await review.populate("location");
+
+    return review;
   }
 
-  async update(id: string, data: any) {
-    return this.reviewModel.findOneAndUpdate({ _id: id }, { $set: data });
+  async update(id: string, data: Partial<IReviewDTO>) {
+    const review = await this.reviewModel.findOneAndUpdate(
+      { _id: id },
+      { $set: data },
+      { new: true },
+    );
+
+    return review;
   }
   async like(id: string, userId: string) {
     await this.reviewModel.updateOne(
