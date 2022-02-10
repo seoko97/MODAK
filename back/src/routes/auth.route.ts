@@ -1,8 +1,8 @@
-// /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Router } from "express";
 import passport from "passport";
 import { asyncHandler } from "@src/utils/asyncHandler";
 import { authController } from "@controllers/auth.controller";
+import { ExpriedJwtAuthGuard, RefreshJwtAuthGuard } from "@src/passport/guards/jwt.guard";
 
 const router = Router();
 
@@ -21,5 +21,7 @@ router.get(
   passport.authenticate("kakao", { failureRedirect: "/api/auth" }),
   asyncHandler(authController.kakaoOAuthCallback),
 );
+
+router.get("/signout", ExpriedJwtAuthGuard, RefreshJwtAuthGuard, authController.signout);
 
 export default router;
