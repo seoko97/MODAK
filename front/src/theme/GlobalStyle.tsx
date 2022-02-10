@@ -3,13 +3,12 @@ import { reset } from "styled-reset";
 
 const GlobalStyle = createGlobalStyle`
     ${reset}
-
       body {
         overflow-y: overlay;
         margin: 0;
+
         font-size: 14px;
         line-height: 1.5715;
-        user-select: none;
       }
 
       body,
@@ -32,8 +31,10 @@ const GlobalStyle = createGlobalStyle`
         text-decoration: none;
         outline: none;
       }
-      & * {
+
+      * {
         font-family: "Quicksand", "Noto Sans KR", sans-serif !important;
+        box-sizing: border-box;
       }
 `;
 

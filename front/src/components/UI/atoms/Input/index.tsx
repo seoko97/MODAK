@@ -9,6 +9,7 @@ interface Props {
 
 const StyledInput = styled.input<Props>`
   font-size: 16px;
+
   /* line-height: 24px; 필요여부 검토 */
   width: 100%;
   max-width: 400px;
@@ -20,7 +21,8 @@ const StyledInput = styled.input<Props>`
   box-sizing: border-box;
 
   &::placeholder {
-  color: #757575;
+    color: #757575;
+  }
 `;
 
 const Input: FC<Props> = ({ placeholder, value }) => (
