@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import Link from "next/link";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -18,12 +17,17 @@ const StyledContainer = styled.div`
 `;
 
 const StyledProfileContainer = styled.article`
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
   min-width: 150px;
+
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
   }
-  text-align: center;
 `;
 
 const StyledReviewEvaluateBox = styled.div`
@@ -59,10 +63,10 @@ const StyledReviewPhotos = styled.div`
 `;
 
 // --- 프로필 컨테이너 ---
-const StyledProfile = styled(Link)`
-  & .author {
-    font-weight: bold;
-  }
+const StyledProfile = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const StyledProfileIconBox = styled.div`
@@ -93,9 +97,14 @@ const IconWrapper = styled.div`
 const RowIconWrapper = styled.div`
   ${IconBox};
   flex-direction: column;
+  margin-top: auto;
 
   svg + span {
-    font-size: 10px;
+    font-size: 12px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    margin-top: 0;
   }
 `;
 

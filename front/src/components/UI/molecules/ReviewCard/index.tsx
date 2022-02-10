@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+import Link from "next/link";
 import SubTitle from "@atoms/SubTitle";
 import Avatar from "@atoms/Avatar";
 import Title from "@atoms/Title";
@@ -37,7 +38,7 @@ interface Props {
 const Smile = () => {
   return (
     <RowIconWrapper>
-      <SmileIcon size={15} />
+      <SmileIcon size={40} />
       <span>또 가고 싶어요</span>
     </RowIconWrapper>
   );
@@ -48,22 +49,25 @@ const ReviewCard = ({ _id, content, photos, author, createAt }: Props) => {
   return (
     <StyledContainer>
       <StyledProfileContainer>
-        <StyledProfile href="#">
-          <>
-            <Avatar size={70} url={profile} alt="설명" />
-            <Title size={14}>{nickname}</Title>
-          </>
+        <StyledProfile>
+          <Link href="#">
+            <>
+              <Avatar size={70} url={profile} alt="유저프로필" />
+              <Title size={14}>{nickname}</Title>
+            </>
+          </Link>
+          <StyledProfileIconBox>
+            <IconWrapper>
+              <PencilIcon size={13} />
+              <span>{posts}</span>
+            </IconWrapper>
+            <StyledReviewIconBox>
+              <HearctIcon size={13} />
+              <span>{likes}</span>
+            </StyledReviewIconBox>
+          </StyledProfileIconBox>
         </StyledProfile>
-        <StyledProfileIconBox>
-          <IconWrapper>
-            <PencilIcon size={13} />
-            <span>{posts}</span>
-          </IconWrapper>
-          <StyledReviewIconBox>
-            <HearctIcon size={13} />
-            <span>{likes}</span>
-          </StyledReviewIconBox>
-        </StyledProfileIconBox>
+        <Smile />
       </StyledProfileContainer>
       <StyledReviewCard>
         <SubTitle>{createAt}</SubTitle>
@@ -75,7 +79,7 @@ const ReviewCard = ({ _id, content, photos, author, createAt }: Props) => {
         </StyledReviewPhotos>
 
         <StyledReviewEvaluateBox>
-          <Smile />
+          {/* <Smile /> */}
           <span>신고하기</span>
         </StyledReviewEvaluateBox>
       </StyledReviewCard>
