@@ -41,21 +41,6 @@ const StyledCheckbox = ({ items }: Props) => {
   );
 };
 
-// const StyledCheckbox = ({ items }: Props) => {
-//   console.log(items);
-
-//   return (
-//     <FilterItemContainer>
-//       {items.map((item) => (
-//         <CheckboxWrapper key={item.indexOf}>
-//           <input type="checkbox" value={item} />
-//           <p>{item}</p>
-//         </CheckboxWrapper>
-//       ))}
-//     </FilterItemContainer>
-//   );
-// };
-
 export default StyledCheckbox;
 
 const FilterItemContainer = styled.li`
@@ -63,40 +48,6 @@ const FilterItemContainer = styled.li`
   flex-wrap: wrap;
 `;
 
-// NOTE: 보더박스 + 선택시 배경색 변경
-// const CheckboxWrapper = styled.label`
-//   display: flex;
-//   &:not(:last-child) {
-//     margin-right: 20px;
-//   }
-
-//   & input {
-//     display: none;
-//     margin-right: 5px;
-//   }
-
-//   & p {
-//     &:hover {
-//       cursor: pointer;
-//     }
-//     /* NOTE: 보더 박스 디자인*/
-//     padding: 5px 10px;
-//     border: 1px solid ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-//     border-radius: 5px;
-//     &::before {
-//       content: "#";
-//     }
-//   }
-
-//   &.isChecked {
-//     & > p {
-//       border-color: transparent;
-//       background-color: #038c5a;
-//     }
-//   }
-// `;
-
-// NOTE: 체크박스 보이는 버전
 const CheckboxWrapper = styled.label`
   display: flex;
   &:not(:last-child) {

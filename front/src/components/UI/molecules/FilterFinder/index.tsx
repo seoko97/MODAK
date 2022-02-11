@@ -1,22 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import RowFrame from "@templates/RowFrame";
+
 import FilterCategory from "./FilterCategory";
 
 const FilterFinder = () => {
   return (
-    <RowFrame>
-      <FinderContainer>
-        <FilterCategory />
-        <FilterCategory />
-        <FilterCategory />
-        <FilterCategory />
-        <ButtonContainer>
-          <StyledButton>초기화</StyledButton>
-          <StyledButton>검색</StyledButton>
-        </ButtonContainer>
-      </FinderContainer>
-    </RowFrame>
+    <FinderContainer>
+      <FilterCategory />
+      <FilterCategory />
+      <FilterCategory />
+      <FilterCategory />
+      <ButtonContainer>
+        <StyledButton>초기화</StyledButton>
+        <StyledButton>검색</StyledButton>
+      </ButtonContainer>
+    </FinderContainer>
   );
 };
 
