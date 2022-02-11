@@ -69,6 +69,11 @@ const StyledProfile = styled.div`
   align-items: center;
 `;
 
+const LinkInner = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 const StyledProfileIconBox = styled.div`
   display: flex;
   justify-content: center;
@@ -145,4 +150,5 @@ export {
   StyledProfileIconBox,
   IconWrapper,
   RowIconWrapper,
+  LinkInner,
 };

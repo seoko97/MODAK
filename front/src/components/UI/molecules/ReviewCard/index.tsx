@@ -5,7 +5,7 @@ import Avatar from "@atoms/Avatar";
 import Title from "@atoms/Title";
 import HearctIcon from "@icons/HeartIcon";
 import PencilIcon from "@icons/PencilIcon";
-import Emotion from "./Emotion";
+import Rating from "./Rating";
 
 import {
   StyledContainer,
@@ -17,6 +17,7 @@ import {
   StyledReviewIconBox,
   StyledProfileIconBox,
   IconWrapper,
+  LinkInner,
 } from "./style";
 
 interface Author {
@@ -32,20 +33,20 @@ interface Props {
   photos?: string[];
   author: Author;
   createAt: string;
-  emotion: string; // "평가 아이콘 관련"
+  rating: string; // "평가 아이콘 관련"
 }
 
-const ReviewCard = ({ _id, content, photos, author, createAt, emotion }: Props) => {
+const ReviewCard = ({ _id, content, photos, author, createAt, rating }: Props) => {
   const { nickname, profile, likes, posts } = author;
   return (
     <StyledContainer>
       <StyledProfileContainer>
         <StyledProfile>
-          <Link href="#">
-            <>
+          <Link href="/user/1">
+            <LinkInner>
               <Avatar size={70} url={profile} alt="유저프로필" />
               <Title size={14}>{nickname}</Title>
-            </>
+            </LinkInner>
           </Link>
           <StyledProfileIconBox>
             <IconWrapper>
@@ -58,7 +59,7 @@ const ReviewCard = ({ _id, content, photos, author, createAt, emotion }: Props) 
             </StyledReviewIconBox>
           </StyledProfileIconBox>
         </StyledProfile>
-        <Emotion emotion={emotion} />
+        <Rating rating={rating} />
       </StyledProfileContainer>
       <StyledReviewCard>
         <SubTitle>{createAt}</SubTitle>
