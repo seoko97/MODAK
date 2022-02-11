@@ -1,21 +1,24 @@
-import { Request, Response } from "express";
+import { RequestHandler } from "express";
 
 import { UserService, userService } from "@services/user.service";
 
-import { ITokenUser, IUserDocument } from "@src/types/User";
+import { ITokenUser } from "@src/types/User";
+import { checkValid } from "@src/utils/checkIdValid";
 
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  getSigninUser = async (req: Request, res: Response) => {
+  getSigninUser: RequestHandler = async (req, res) => {
     const { _id } = req.user as ITokenUser;
     const user = await this.userService.getById(_id, { refreshToken: 0 });
 
     res.status(201).json({ status: true, user });
   };
 
-  getUserInfo = async (req: Request, res: Response) => {
+  getUserInfo: RequestHandler = async (req, res, next) => {
     const { _id } = req.params;
+
+    if (!checkValid(_id)) return next({ message: "존재하지 않는 유저입니다." });
     const user = await this.userService.getById(_id, { refreshToken: 0 });
 
     res.status(201).json({ status: true, user });

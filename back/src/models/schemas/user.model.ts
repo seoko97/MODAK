@@ -28,18 +28,14 @@ export const UserSchema = new Schema<IUserDocument, IUserModel>(
       type: String,
       default: null,
     },
-    reviews: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Review",
-      },
-    ],
-    bookmark: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Campsite",
-      },
-    ],
+    totalLike: {
+      type: Number,
+      default: 0,
+    },
+    reviewCount: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

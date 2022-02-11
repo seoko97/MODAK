@@ -1,5 +1,5 @@
-import { userController } from "@src/controllers/user.controller";
-import { ExpriedJwtAuthGuard, RefreshJwtAuthGuard } from "@src/passport/guards/jwt.guard";
+import { userController } from "@controllers/user.controller";
+import { ExpriedJwtAuthGuard, RefreshJwtAuthGuard } from "@passport/guards/jwt.guard";
 import { Router } from "express";
 
 const router = Router();
