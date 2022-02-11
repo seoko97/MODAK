@@ -5,11 +5,11 @@ import AngryIcon from "@icons/AngryIcon";
 import { RowIconWrapper } from "./style";
 
 interface Props {
-  emotion: string;
+  rating: string;
 }
 
-const Emotion = ({ emotion }: Props) => {
-  switch (emotion) {
+const Rating = ({ rating }: Props) => {
+  switch (rating) {
     case "best":
       return <Smile />;
     case "normal":
@@ -21,7 +21,7 @@ const Emotion = ({ emotion }: Props) => {
   }
 };
 
-export default Emotion;
+export default Rating;
 
 const Smile = () => {
   return (
