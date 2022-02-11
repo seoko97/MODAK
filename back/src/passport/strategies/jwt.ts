@@ -1,7 +1,6 @@
 import { Strategy as JwtStrategy, ExtractJwt, VerifiedCallback } from "passport-jwt";
-import { jwtContents } from "@src/utils/constants";
+import { jwtContents } from "@utils/constants";
 import { ITokenUser } from "@src/types/User";
-import { RequestHandler } from "express";
 
 const JwtOpt = {
   secretOrKey: jwtContents.secret,

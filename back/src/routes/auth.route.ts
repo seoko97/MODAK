@@ -1,8 +1,8 @@
 import { Router } from "express";
 import passport from "passport";
-import { asyncHandler } from "@src/utils/asyncHandler";
+import { ExpriedJwtAuthGuard, RefreshJwtAuthGuard } from "@passport/guards/jwt.guard";
+import { asyncHandler } from "@utils/asyncHandler";
 import { authController } from "@controllers/auth.controller";
-import { ExpriedJwtAuthGuard, RefreshJwtAuthGuard } from "@src/passport/guards/jwt.guard";
 
 const router = Router();
 

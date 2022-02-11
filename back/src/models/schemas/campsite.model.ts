@@ -44,21 +44,26 @@ export const CampsiteSchema = new Schema<ICampsiteDocument, ICampsiteModel>(
     rental: [{ type: String }],
     environment: [{ type: String }],
     photos: [{ type: String }],
-    reviews: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Review",
-      },
-    ],
     bookmark: [
       {
         type: Schema.Types.ObjectId,
         ref: "User",
       },
     ],
+    totalBookmark: {
+      type: Number,
+      defalut: 0,
+      index: true,
+    },
+    totalReview: {
+      type: Number,
+      defalut: 0,
+      index: true,
+    },
     views: {
       type: Number,
       default: 0,
+      index: true,
     },
   },
   {

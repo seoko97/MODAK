@@ -1,6 +1,6 @@
 import { Strategy as KakaoStrategy, StrategyOption } from "passport-kakao";
-import { userService } from "../../services/user.service";
-import { passportKakaoConfig } from "../../utils/constants";
+import { userService } from "@services/user.service";
+import { passportKakaoConfig } from "@utils/constants";
 
 const passportConfig: StrategyOption = {
   clientID: passportKakaoConfig.clientID,

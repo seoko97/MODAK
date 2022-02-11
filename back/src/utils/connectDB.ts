@@ -1,10 +1,8 @@
-import mongoose from 'mongoose';
-import { configs } from './constants';
+import mongoose from "mongoose";
+import { configs } from "./constants";
 
-export const connectDB = () => {
-	const mongoUrl = `mongodb+srv://${configs.DB_ID}:${configs.DB_PASSWORD}@cluster0.tv3fn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+export const connectDB = async () => {
+  if (configs.TEST) return;
 
-	mongoose.connect(mongoUrl, () => {
-		console.log('MongoDB Connected');
-	});
+  await mongoose.connect(configs.DB_URL);
 };

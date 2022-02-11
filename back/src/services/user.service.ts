@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { UserModel } from "@src/models";
+import { UserModel } from "@models/.";
 
 import { ITokenUser, IUserDocument, IUserDTO } from "@src/types/User";
 
@@ -31,19 +30,9 @@ export class UserService {
     return this.userModel.findById(id, obj);
   }
 
-  async updateByQuery(where: any, query = {}) {
-    return await this.userModel.findOneAndUpdate(where, query, { new: true });
+  async updateByQuery(where = {}, query = {}) {
+    return await this.userModel.updateOne(where, query);
   }
-
-  async test() {
-    const user = await this.userModel.findOne({ email: "asd" });
-
-    return "test";
-  }
-
-  // async getBookmarkedCampsiteById(id: string) {
-  //   //const bmk = await this.userModel.findOne({ _id: id });
-  // }
 
   async verifyToken(payload: ITokenUser, prevToken: string) {
     const user = await this.getById(payload._id);

@@ -1,8 +1,8 @@
 import passport from "passport";
 import { RequestHandler } from "express";
-import { userService } from "@src/services/user.service";
-import { jwtContents } from "@src/utils/constants";
-import { authService } from "@src/services/auth.service";
+import { jwtContents } from "@utils/constants";
+import { userService } from "@services/user.service";
+import { authService } from "@services/auth.service";
 import { ITokenUser } from "@src/types/User";
 
 const EXPIRED = {
@@ -67,6 +67,8 @@ export const RefreshJwtAuthGuard: RequestHandler = (req, res, next) => {
         maxAge: EXPIRED.refresh,
         httpOnly: true,
       });
+
+      req.user = _user;
 
       return next();
     })(req, res, next);

@@ -15,9 +15,9 @@ export interface IUserDTO {
 
 export interface IUserDocument extends IUserDTO, Document {
   refreshToken: string | null;
-  reviews: Types.DocumentArray<IReviewDocument>[];
-  bookmark: Types.DocumentArray<ICampsiteDocument>[];
-  introduce: string | null;
+  totalLike: number;
+  reviewCount: number;
+
   comparePassword(aPassword: string): Promise<boolean>;
   verifyRefresh(): boolean;
 }
