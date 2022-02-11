@@ -23,15 +23,12 @@ export interface ICampsiteDTO extends ICampsite {
 
 export interface ICampsiteDocument extends ICampsiteDTO {
   photos: string[];
-  reviews: Types.DocumentArray<IReviewDocument>;
   bookmark: Types.DocumentArray<IUserDocument>[];
+  totalReview: number;
+  totalBookmark: number;
   views: number;
 }
 
 export interface ICampsiteModel extends Model<ICampsiteDocument> {
   findOrCreate(camsite: ICampsiteDTO): Promise<ICampsiteDTO>;
 }
-
-export type ICampQuery = Partial<ICampsiteDTO> & {
-  lastId?: string;
-};
