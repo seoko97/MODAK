@@ -12,6 +12,7 @@ export interface IReviewDTO {
 
 export interface IReviewDocument extends IReviewDTO {
   likes: Types.DocumentArray<IUserDocument>[];
+  count: number;
 }
 
 export type IReviewModel = Model<IReviewDocument>;

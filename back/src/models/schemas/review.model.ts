@@ -30,6 +30,11 @@ export const ReviewSchema = new Schema<IReviewDocument, IReviewModel>(
       type: String,
       enum: ["또 가고 싶어요", "평범해요", "별로에요"],
     },
+    count: {
+      type: Number,
+      default: 0,
+      index: true,
+    },
   },
   {
     timestamps: true,

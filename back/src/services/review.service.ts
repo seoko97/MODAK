@@ -1,27 +1,28 @@
-import { ReviewModel } from "@src/models";
+import { ReviewModel, UserModel } from "@src/models";
 
-import { IReviewDocument, IReviewDTO } from "@src/types/Review";
+import { IReviewDTO } from "@src/types/Review";
 
 export class ReviewService {
-  constructor(private readonly reviewModel: typeof ReviewModel) {}
-  async test() {
-    return "test";
+  constructor(
+    private readonly reviewModel: typeof ReviewModel,
+    private readonly userModel: typeof UserModel,
+  ) {}
+
+  async getReviewsByQuery(query = {}, target = {}, limit: number) {
+    return await this.reviewModel.find(query).sort(target).populate("author").limit(limit);
   }
 
-  async getReviewsByQuery(query = {}) {
+  async getReviewsByUserId(query = {}) {
     return await this.reviewModel.find(query).limit(10);
   }
 
-  async getReviewsByUserId(userId: string, limit: number) {
-    return await this.reviewModel.find({ author: userId }).limit(limit);
-  }
-
   async delete(id: string) {
-    await this.reviewModel.deleteOne({ _id: id });
+    return await this.reviewModel.findOneAndDelete({ _id: id });
   }
 
   async create(data: IReviewDTO) {
     const review = await this.reviewModel.create(data);
+
     await review.populate("author", "-refreshToken -source");
     await review.populate("location");
 
@@ -29,11 +30,7 @@ export class ReviewService {
   }
 
   async update(id: string, data: Partial<IReviewDTO>) {
-    const review = await this.reviewModel.findOneAndUpdate(
-      { _id: id },
-      { $set: data },
-      { new: true },
-    );
+    const review = await this.reviewModel.findOneAndUpdate({ _id: id }, data, { new: true });
 
     return review;
   }
@@ -41,12 +38,20 @@ export class ReviewService {
     await this.reviewModel.updateOne(
       { _id: id },
       {
-        $push: {
-          likes: userId,
-        },
+        $push: { likes: userId },
+        $inc: { count: 1 },
       },
     );
+    await this.userModel.updateOne({ _id: userId }, { $inc: { totalLike: 1 } });
+  }
+
+  async unLike(id: string, userId: string) {
+    await this.reviewModel.updateOne(
+      { _id: id },
+      { $pull: { likes: userId }, $inc: { count: -1 } },
+    );
+    await this.userModel.updateOne({ _id: userId }, { $inc: { totalLike: -1 } });
   }
 }
 
-export const reviewService = new ReviewService(ReviewModel);
+export const reviewService = new ReviewService(ReviewModel, UserModel);
