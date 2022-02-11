@@ -1,6 +1,6 @@
 import { Strategy as GoogleStrategy, StrategyOptions } from "passport-google-oauth20";
-import { userService } from "../../services/user.service";
-import { passportGoogleConfig } from "../../utils/constants";
+import { userService } from "@services/user.service";
+import { passportGoogleConfig } from "@utils/constants";
 
 const passportConfig: StrategyOptions = {
   clientID: passportGoogleConfig.clientID,
