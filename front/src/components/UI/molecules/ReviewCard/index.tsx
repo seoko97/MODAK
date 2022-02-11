@@ -5,7 +5,7 @@ import Avatar from "@atoms/Avatar";
 import Title from "@atoms/Title";
 import HearctIcon from "@icons/HeartIcon";
 import PencilIcon from "@icons/PencilIcon";
-import SmileIcon from "@icons/SmileIcon";
+import Emotion from "./Emotion";
 
 import {
   StyledContainer,
@@ -17,7 +17,6 @@ import {
   StyledReviewIconBox,
   StyledProfileIconBox,
   IconWrapper,
-  RowIconWrapper,
 } from "./style";
 
 interface Author {
@@ -33,18 +32,10 @@ interface Props {
   photos?: string[];
   author: Author;
   createAt: string;
+  emotion: string; // "평가 아이콘 관련"
 }
 
-const Smile = () => {
-  return (
-    <RowIconWrapper>
-      <SmileIcon size={40} />
-      <span>또 가고 싶어요</span>
-    </RowIconWrapper>
-  );
-};
-
-const ReviewCard = ({ _id, content, photos, author, createAt }: Props) => {
+const ReviewCard = ({ _id, content, photos, author, createAt, emotion }: Props) => {
   const { nickname, profile, likes, posts } = author;
   return (
     <StyledContainer>
@@ -67,7 +58,7 @@ const ReviewCard = ({ _id, content, photos, author, createAt }: Props) => {
             </StyledReviewIconBox>
           </StyledProfileIconBox>
         </StyledProfile>
-        <Smile />
+        <Emotion emotion={emotion} />
       </StyledProfileContainer>
       <StyledReviewCard>
         <SubTitle>{createAt}</SubTitle>
@@ -79,7 +70,6 @@ const ReviewCard = ({ _id, content, photos, author, createAt }: Props) => {
         </StyledReviewPhotos>
 
         <StyledReviewEvaluateBox>
-          {/* <Smile /> */}
           <span>신고하기</span>
         </StyledReviewEvaluateBox>
       </StyledReviewCard>

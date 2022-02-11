@@ -13,13 +13,14 @@ const CampsiteReviewBox = () => {
   };
   return (
     <StyledContainer>
+      {/* 추후 select 형식으로 변경될 수 있음 */}
       <Tab current={currTab} onClick={handleClickTab} />
-      <ReviewCard />
-      <ReviewCard />
-      <ReviewCard />
-      <ReviewCard />
-      <ReviewCard />
-      <ReviewCard />
+      <ReviewCard emotion="best" />
+      <ReviewCard emotion="normal" />
+      <ReviewCard emotion="best" />
+      <ReviewCard emotion="angry" />
+      <ReviewCard emotion="best" />
+      <ReviewCard emotion="angry" />
     </StyledContainer>
   );
 };
