@@ -6,10 +6,10 @@ import { Router } from "express";
 const router = Router();
 
 router.get("/", ExpriedJwtAuthGuard, RefreshJwtAuthGuard, userController.getSigninUser);
-router.get("/:_id", userController.getUserInfo);
+router.get("/:id", userController.getUserInfo);
 
-router.patch(
-  "/",
+router.put(
+  "/:id",
   ExpriedJwtAuthGuard,
   RefreshJwtAuthGuard,
   asyncHandler(userController.editUserInformation),
