@@ -19,13 +19,18 @@ describe("campsite test", () => {
     expect(res.statusCode).toEqual(200);
   });
 
+  // 메인 캠핑장의 정보를 받아오는지 확인
+  test("/api/camp", async () => {
+    const res = await request(app).get("/api/camp/main").send();
+    expect(res.statusCode).toEqual(200);
+  });
+
   // 특정 캠핑장의 정보를 받아오는지 확인
   test("/api/camp/:id Success", async () => {
     const res = await request(app)
       .get("/api/camp/" + campsite)
       .send();
 
-    console.log("id test: ", res);
     expect(res.statusCode).toEqual(200);
   });
 
@@ -35,7 +40,6 @@ describe("campsite test", () => {
       .get("/api/camp/" + campsiteError)
       .send();
 
-    console.log("id test: ", res);
     expect(res.statusCode).toEqual(401);
   });
 });
