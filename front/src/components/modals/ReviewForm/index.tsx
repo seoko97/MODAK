@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import styled, { css } from "styled-components";
 import Button from "@atoms/Button";
 import Logo from "@icons/Logo";
@@ -9,8 +9,7 @@ import PhotoIcon from "@icons/PhotoIcon";
 import ModalLayout from "@src/components/modals/ModalLayout";
 // import { Smile, Noraml, Angry } from "@src/components/UI/molecules/ReviewCard/Rating";
 
-// Smile, Noraml, Angry 컴포넌트화
-// 사진 추가, 클릭 시 rating 등이 toggle되게 기능 구현 필요.
+// 사진 추가, 클릭 시 rating 등이 toggle되게 기능 구현 필요(색 변경).
 interface Props {
   camp: string;
   onClick: () => void;
@@ -18,10 +17,15 @@ interface Props {
 
 const ReviewForm = ({ camp, onClick }: Props) => {
   const [review, setReview] = useState("");
+  const [rating, setRating] = useState("");
 
-  const reviewHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const reviewHandler = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReview(e.target.value);
-  };
+  }, []);
+
+  const ratingHandler = useCallback((value: string) => {
+    setRating(value);
+  }, []);
 
   return (
     <ModalLayout onClick={onClick}>
@@ -29,9 +33,9 @@ const ReviewForm = ({ camp, onClick }: Props) => {
         <Logo />
         <span>캠핑장은 어떠셨나요?</span>
         <RatingButtonWrapper>
-          <Smile />
-          <Noraml />
-          <Angry />
+          <Smile onClick={ratingHandler} />
+          <Noraml onClick={ratingHandler} />
+          <Angry onClick={ratingHandler} />
         </RatingButtonWrapper>
         <CampsiteName>{camp}</CampsiteName>
         <ReviewContentWrapper>
@@ -68,11 +72,11 @@ export default ReviewForm;
 const Container = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 30px;
   width: 60vw;
   max-width: 800px;
   height: 80vh;
-  max-height: 1000px;
+  /* max-height: 1000px; */
   padding: 30px;
   z-index: 1002;
   box-sizing: border-box;
@@ -96,6 +100,7 @@ const Container = styled.form`
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     width: 100%;
     height: 100%;
+    border-radius: 0;
   }
 `;
 
@@ -116,29 +121,35 @@ const RowIconWrapper = styled.div`
   }
 `;
 
-const Smile = () => {
+interface Rate {
+  onClick: (value: string) => void;
+}
+const Smile = ({ onClick }: Rate) => {
+  const text = "또 가고 싶어요";
   return (
-    <RowIconWrapper>
+    <RowIconWrapper onClick={() => onClick(text)}>
       <SmileIcon size={40} />
-      <span>또 가고 싶어요</span>
+      <span>{text}</span>
     </RowIconWrapper>
   );
 };
 
-const Noraml = () => {
+const Noraml = ({ onClick }: Rate) => {
+  const text = "평범합니다";
   return (
-    <RowIconWrapper>
+    <RowIconWrapper onClick={() => onClick(text)}>
       <NormalIcon size={40} />
-      <span>평범해요</span>
+      <span>{text}</span>
     </RowIconWrapper>
   );
 };
 
-const Angry = () => {
+const Angry = ({ onClick }: Rate) => {
+  const text = "최악입니다";
   return (
-    <RowIconWrapper>
+    <RowIconWrapper onClick={() => onClick(text)}>
       <AngryIcon size={40} />
-      <span>최악입니다</span>
+      <span>{text}</span>
     </RowIconWrapper>
   );
 };
@@ -157,6 +168,7 @@ const ReviewContent = styled.textarea`
   border: none;
   box-sizing: border-box;
   resize: none;
+  padding: 10px;
 `;
 const ButtonWrapper = css`
   display: flex;
