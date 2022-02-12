@@ -18,6 +18,9 @@ const Container = styled.form`
   }
   @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
     width: 100%;
+    & button {
+      align-self: center;
+    }
   }
 `;
 
@@ -43,12 +46,20 @@ const EditContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin: 30px auto;
+  /* justify-content: space-between; */
+  justify-content: flex-start;
+  margin: 12px auto;
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    flex-direction: column;
+  }
 `;
 
 const EditTitle = styled.div`
   width: 100px;
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    width: 200px;
+    color: #494949;
+  }
 `;
 
 const InputBox = styled.div``;
@@ -64,6 +75,7 @@ const Input = styled.input`
   border-radius: 2px;
   height: 36px;
   color: #1b1b1b;
+  width: 200px;
 `;
 
 const EditImage = styled.div`
@@ -122,11 +134,13 @@ const ModifyButton = styled.button`
   cursor: pointer;
 `;
 
+const ExitModal = styled.button``;
+
 interface Props {
   onClick: () => void;
 }
 
-const UserChange = ({ onClick }: Props) => {
+const UserUpdate = ({ onClick }: Props) => {
   const [user, setUser] = useState({
     id: 1,
     nickname: "김불멍",
@@ -152,7 +166,6 @@ const UserChange = ({ onClick }: Props) => {
   return (
     <ModalLayout onClick={onClick}>
       <Container>
-        <button onClick={onClick}>click</button>
         <Header>
           <HeaderTitle>회원정보수정</HeaderTitle>
           <UserExit>탈퇴하기</UserExit>
@@ -192,10 +205,12 @@ const UserChange = ({ onClick }: Props) => {
             ></Input>
           </InputBox>
         </EditContainer>
-        <ModifyButton>회원 정보 수정</ModifyButton>
+        <EditContainer>
+          <ModifyButton>회원 정보 수정</ModifyButton>
+        </EditContainer>
       </Container>
     </ModalLayout>
   );
 };
 
-export default UserChange;
+export default UserUpdate;
