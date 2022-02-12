@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import Link from "next/link";
 
 import RowFrame from "@templates/RowFrame";
-import Nav from "@molecules/Nav";
 import Logo from "@icons/Logo";
+import Nav from "@molecules/Nav";
+import SearchInput from "@molecules/SearchInput";
+import Link from "@atoms/Link";
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -12,23 +13,23 @@ const StyledHeader = styled.header`
   top: -32px;
   padding-top: 32px;
   transition: all 0.3s ease-in-out;
-  z-index: 1;
+  z-index: 10;
 
   & > div {
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 72px;
-    & > svg {
+    & svg {
       width: 130px;
-      &:hover {
-        cursor: pointer;
-      }
+      cursor: pointer;
     }
   }
 `;
 
 const Header = () => {
+  const [isLogin, setIsLogin] = useState(false);
+
   return (
     <>
       <StyledHeader>
@@ -36,7 +37,8 @@ const Header = () => {
           <Link href="/">
             <Logo />
           </Link>
-          <Nav />
+          <SearchInput />
+          <Nav login={isLogin} />
         </RowFrame>
       </StyledHeader>
     </>
