@@ -1,11 +1,12 @@
 import styled, { css } from "styled-components";
 import Link from "next/link";
-import React, { memo, Props, useState } from "react";
+import React, { memo, Props, ReactComponentElement, ReactElement, useState } from "react";
 import SubTitle from "@atoms/SubTitle";
 import MyPageProfile from "../../molecules/MypageProfile";
 import Title from "../../atoms/Title";
 import HearctIcon from "@src/components/icons/HeartIcon";
 import PencilIcon from "@src/components/icons/PencilIcon";
+import Tab from "./Tab";
 
 // --- 공통 ---
 
@@ -66,7 +67,7 @@ const Main = styled.div`
 const Container = styled.article``;
 
 // --- 카테고리 ---
-const Categories = styled.ul`
+const Tabs = styled.ul`
   display: flex;
   justify-content: center;
   position: relative;
@@ -138,6 +139,12 @@ const OtherLink = styled(Link)``;
 // const Title = styled.h1``;
 // Card.Title = Title;
 
+export type TabList = {
+  "내 리뷰": ReactElement;
+  "나의 캠핑 기록": ReactElement;
+  "찜한 캠핑장": ReactElement;
+};
+
 const MyPage = () => {
   const review = {
     _id: 1,
@@ -173,12 +180,106 @@ const MyPage = () => {
   const { _id, content, photos, author, createAt, bookmarks } = review;
   const { nickname, profile, likes, posts } = author;
 
+  const ReviewComponent = () => (
+    <Review>
+      <CampInfo>
+        <SubTitle size={14}>{createAt}</SubTitle>
+        <CampLink href="#">
+          <>@장호비치캠핑장</>
+        </CampLink>
+        <Icons>
+          <HearctIcon size={12}></HearctIcon>14
+        </Icons>
+      </CampInfo>
+      <ReviewPost>
+        안녕하세요! 저번 주말 선재도의 트리 캠핑장에 다녀왔습니다.<br></br>
+        여기는 경기도 지역 오션뷰 캠핑장으로 정말 유명한 곳인데요.<br></br>
+        홈페이지에서 예약할 때 정보가 별로 없다보니 어떤자리를 예약하는게 좋을지 분간이 잘 안되서
+        영상을 직접 찍게 되었습니다.<br></br>
+        <br></br>이 곳은 정말 숲 속에 있는 분위기에 바다까지 볼 수 있어서 낭만적인 분위기를 연출할
+        수 있는 곳입니다.<br></br>
+        또한 겨울에 와서 그런지 벌레도 전혀 없고 한적해서 정말 좋았어요.<br></br>
+        시도 때도 없이 날아다니는 비행기 소리가 조금 거슬리긴 하지만..<br></br>
+        인천지역 트리 캠핑장 추천합니다!<br></br>
+        <br></br>
+        =======================================================================================================
+        <br></br>
+        E=MAIL : 88leeq@naver.com<br></br>
+        인스타그램 : https://www.instagram.com/88_leeq
+      </ReviewPost>
+      <PhotoBox>
+        {photos.map((photo) => (
+          <img key={1} src={photo} alt="reviewPhoto" />
+        ))}
+      </PhotoBox>
+    </Review>
+  );
+
+  const VisitedComponent = () => (
+    <VisitedCamp>
+      <SubTitle>2022-01-28</SubTitle>
+      <CampInfo>
+        <CampLink href="#">
+          <>@캠핑장 이름/ 주소</>
+        </CampLink>
+        <IconBox>
+          <Icons>
+            <PencilIcon size={13} /> 10
+            <HearctIcon size={13} /> 10
+          </Icons>
+        </IconBox>
+      </CampInfo>
+    </VisitedCamp>
+  );
+
+  const WishComponent = () => (
+    <WishCamp>
+      <CampInfo>
+        <CampLink href="#">
+          <>
+            <p>@캠핑장 이름/ 주소</p>
+          </>
+        </CampLink>
+        <IconBox>
+          <Icons>
+            <PencilIcon size={13} /> 10
+            <HearctIcon size={13} /> 10
+          </Icons>
+        </IconBox>
+      </CampInfo>
+      <Tags>#가족캠핑 #글램핑</Tags>
+      <OtherReview>
+        <Title size={14}>주요 리뷰</Title>
+        <PhotoBox>
+          {photos.map((photo) => (
+            <OtherLink href="#" key={1}>
+              <img src={photo} alt="reviewPhoto" />
+            </OtherLink>
+          ))}
+        </PhotoBox>
+      </OtherReview>
+    </WishCamp>
+  );
+
+  const tabList: TabList = {
+    "내 리뷰": <ReviewComponent />,
+    "나의 캠핑 기록": <VisitedComponent />,
+    "찜한 캠핑장": <WishComponent />,
+  };
+
+  const [tab, setTab] = useState<keyof TabList>("내 리뷰");
+
+  const handleClick = (tab: keyof TabList) => {
+    setTab(tab);
+  };
+
   return (
     <Main>
       <MyPageProfile></MyPageProfile>
       <Container>
-        <Categories>
-          <Category className="active">
+        <Tabs>
+          <Tab current={tab} onClick={handleClick}></Tab>
+          {/* <Category className="active">
             <Title size={14}>내 리뷰</Title>
           </Category>
           <Category>
@@ -186,80 +287,9 @@ const MyPage = () => {
           </Category>
           <Category>
             <Title size={14}>찜한 캠핑장</Title>
-          </Category>
-        </Categories>
-        <Review>
-          <CampInfo>
-            <SubTitle size={14}>{createAt}</SubTitle>
-            <CampLink href="#">
-              <>@장호비치캠핑장</>
-            </CampLink>
-            <Icons>
-              <HearctIcon size={12}></HearctIcon>14
-            </Icons>
-          </CampInfo>
-          <ReviewPost>
-            안녕하세요! 저번 주말 선재도의 트리 캠핑장에 다녀왔습니다.<br></br>
-            여기는 경기도 지역 오션뷰 캠핑장으로 정말 유명한 곳인데요.<br></br>
-            홈페이지에서 예약할 때 정보가 별로 없다보니 어떤자리를 예약하는게 좋을지 분간이 잘
-            안되서 영상을 직접 찍게 되었습니다.<br></br>
-            <br></br>이 곳은 정말 숲 속에 있는 분위기에 바다까지 볼 수 있어서 낭만적인 분위기를
-            연출할 수 있는 곳입니다.<br></br>
-            또한 겨울에 와서 그런지 벌레도 전혀 없고 한적해서 정말 좋았어요.<br></br>
-            시도 때도 없이 날아다니는 비행기 소리가 조금 거슬리긴 하지만..<br></br>
-            인천지역 트리 캠핑장 추천합니다!<br></br>
-            <br></br>
-            =======================================================================================================
-            <br></br>
-            E=MAIL : 88leeq@naver.com<br></br>
-            인스타그램 : https://www.instagram.com/88_leeq
-          </ReviewPost>
-          <PhotoBox>
-            {photos.map((photo) => (
-              <img key={1} src={photo} alt="reviewPhoto" />
-            ))}
-          </PhotoBox>
-        </Review>
-        <VisitedCamp>
-          <SubTitle>2022-01-28</SubTitle>
-          <CampInfo>
-            <CampLink href="#">
-              <>@캠핑장 이름/ 주소</>
-            </CampLink>
-            <IconBox>
-              <Icons>
-                <PencilIcon size={13} /> 10
-                <HearctIcon size={13} /> 10
-              </Icons>
-            </IconBox>
-          </CampInfo>
-        </VisitedCamp>
-        <WishCamp>
-          <CampInfo>
-            <CampLink href="#">
-              <>
-                <p>@캠핑장 이름/ 주소</p>
-              </>
-            </CampLink>
-            <IconBox>
-              <Icons>
-                <PencilIcon size={13} /> 10
-                <HearctIcon size={13} /> 10
-              </Icons>
-            </IconBox>
-          </CampInfo>
-          <Tags>#가족캠핑 #글램핑</Tags>
-          <OtherReview>
-            <Title size={14}>주요 리뷰</Title>
-            <PhotoBox>
-              {photos.map((photo) => (
-                <OtherLink href="#" key={1}>
-                  <img src={photo} alt="reviewPhoto" />
-                </OtherLink>
-              ))}
-            </PhotoBox>
-          </OtherReview>
-        </WishCamp>
+          </Category> */}
+        </Tabs>
+        {tabList[tab]}
       </Container>
     </Main>
   );
