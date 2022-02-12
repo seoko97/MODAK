@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Link from "next/link";
+import Link from "@atoms/Link";
 
 import PinIcon from "@src/components/icons/Pin";
 import BookmarkIcon from "@src/components/icons/BookmarkIcon";

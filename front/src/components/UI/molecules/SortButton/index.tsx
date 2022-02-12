@@ -6,10 +6,8 @@ const SortButton = () => {
   return (
     <BoxArea>
       <SelectBoxWrapper>
-        <DropDownSelect onChange={handleChange}>
-          <DropDownOption value={"latest"} selected>
-            최신순
-          </DropDownOption>
+        <DropDownSelect onChange={handleChange} defaultValue="최신순">
+          <DropDownOption value={"latest"}>최신순</DropDownOption>
           <DropDownOption value={"asc-review"}>리뷰 많은 순</DropDownOption>
           <DropDownOption value={"asc-bookmark"}>인기 많은 순</DropDownOption>
         </DropDownSelect>
