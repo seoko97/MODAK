@@ -1,20 +1,14 @@
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useCallback, useState } from "react";
 
-type CallbackFC = () => void;
-type ReturnTypes = [boolean, CallbackFC, CallbackFC, Dispatch<SetStateAction<boolean>>];
+type CallbackFC = (e: ChangeEvent) => void;
+type ReturnTypes = [string, CallbackFC, Dispatch<SetStateAction<string>>];
 
-const useModal = (): ReturnTypes => {
-  const [isOpen, setter] = useState<boolean>(false);
-
-  const onOpen = useCallback(() => {
-    setter(true);
+const useInput = (initialValue = ""): ReturnTypes => {
+  const [value, setter] = useState<string>(initialValue);
+  const handler = useCallback((e) => {
+    setter(e.terget.value);
   }, []);
-
-  const onClose = useCallback(() => {
-    setter(false);
-  }, []);
-
-  return [isOpen, onOpen, onClose, setter];
+  return [value, handler, setter];
 };
 
-export default useModal;
+export default useInput;
