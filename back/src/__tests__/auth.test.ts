@@ -10,4 +10,13 @@ describe("OAuth login test", () => {
       expect.stringContaining("https://accounts.google.com/o/oauth2/v2/auth"),
     );
   });
+
+  test("Kakao OAuth login page", async () => {
+    const res = await request(app).get("/api/auth/kakao").send();
+
+    expect(res.statusCode).toEqual(302);
+    expect(res.header.location).toEqual(
+      expect.stringContaining("https://kauth.kakao.com/oauth/authorize"),
+    );
+  });
 });
