@@ -1,3 +1,8 @@
+export interface IErrPayload {
+  status: boolean;
+  message: string;
+}
+
 export interface ReducerInit {
   loading: boolean;
   done: boolean;
@@ -16,7 +21,9 @@ export const asyncFulfilled = (state: ReducerInit) => {
   state.error = null;
 };
 
-export const asyncRejected = (state: ReducerInit, message: string) => {
+export const asyncRejected = (state: ReducerInit, payload: IErrPayload) => {
+  const { message } = payload;
+
   state.loading = true;
   state.done = false;
   state.error = message;
