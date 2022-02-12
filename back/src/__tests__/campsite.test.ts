@@ -52,10 +52,22 @@ describe("campsite test", () => {
   // 비 로그인 시, 특정 캠핑장을 북마크했을 때의 반응 테스트
   test("/api/camp/:id/bookmark Failure", async () => {
     console.log("비 로그인 시, 특정 캠핑장을 북마크했을 때를 확인하는 테스트입니다.");
+    const wrongtoken = "wrongtoken";
     const res = await request(app)
       .patch("/api/camp/" + campsite + "/bookmark")
+      .set("authorization", wrongtoken)
       .send();
-    console.log(res.text);
+    expect(res.statusCode).toEqual(401);
+  });
+
+  // 비 로그인 시, 특정 캠핑장의 북마크를 취소했을 때의 반응 테스트
+  test("/api/camp/:id/unBookmark Failure", async () => {
+    console.log("비 로그인 시, 특정 캠핑장의 북마크를 취소했을 때를 확인하는 테스트입니다.");
+    const wrongtoken = "wrongtoken";
+    const res = await request(app)
+      .patch("/api/camp/" + campsite + "/unBookmark")
+      .set("authorization", wrongtoken)
+      .send();
     expect(res.statusCode).toEqual(401);
   });
 
