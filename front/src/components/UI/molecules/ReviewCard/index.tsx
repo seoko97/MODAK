@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import Link from "next/link";
+import Link from "@atoms/Link";
 import SubTitle from "@atoms/SubTitle";
 import Avatar from "@atoms/Avatar";
 import Title from "@atoms/Title";
