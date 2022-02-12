@@ -2,30 +2,23 @@ import React from "react";
 import styled from "styled-components";
 import StyledCheckbox from "./CheckButton";
 
-interface Props {
-  name: string;
-  items: string[];
-}
-const FilterCategory = ({ name, items }: Props) => {
+const FilterCategory = ({ category }) => {
   return (
     <StyledFilterList>
       <FilterName id="mobile-toggle" onClick={clickHandler}>
-        {name}
+        {category.name}
         <div id="burger">
           <div id="line1"></div>
           <div id="line2"></div>
         </div>
       </FilterName>
       <ul>
-        <StyledCheckbox items={items} />
+        {category.options.map((option) => (
+          <StyledCheckbox option={option} key={option} />
+        ))}
       </ul>
     </StyledFilterList>
   );
-};
-
-FilterCategory.defaultProps = {
-  name: "지역",
-  items: ["서울시", "부산시", "대전시", "서울시", "부산시", "대전시", "서울시", "부산시", "대전시"],
 };
 
 export default FilterCategory;
@@ -39,6 +32,7 @@ const StyledFilterList = styled.div`
 
   ul {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
   }
 
