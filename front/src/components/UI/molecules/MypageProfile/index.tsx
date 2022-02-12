@@ -1,9 +1,10 @@
 import HearctIcon from "@src/components/icons/HeartIcon";
 import PencilIcon from "@src/components/icons/PencilIcon";
+import UserUpdate from "@src/components/modals/UserUpdateForm";
+import useModal from "@src/hooks/useInput";
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import Title from "../../atoms/Title";
-import UserChange from "../../organisms/Userchange";
 
 // --- 프로필 컨테이너 ---
 const Profile = styled.figure`
@@ -76,15 +77,8 @@ const EditProfile = styled.button`
   background-color: transparent;
 `;
 
-function OpenModal(): React.ReactElement {
-  return <UserChange></UserChange>;
-}
-
 const MyPageProfile = (): React.ReactElement => {
-  const [modal, setModal] = useState<boolean>(false);
-  function handleClick() {
-    setModal(!modal);
-  }
+  const [isOpen, onOpen, onClose] = useModal();
 
   return (
     <Profile>
@@ -94,16 +88,17 @@ const MyPageProfile = (): React.ReactElement => {
       <ProfileInfo>
         <UserName>
           <Title size={14}>닉네임</Title>
-          <EditProfile onClick={handleClick}>
+          <EditProfile onClick={onOpen}>
             <PencilIcon size={13} />
           </EditProfile>
-          {modal && OpenModal()}
+          {isOpen && <UserUpdate onClick={onClose} />}
         </UserName>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, possimus. Omnis rerum
           id totam aut laboriosam consequuntur cum, temporibus vero molestiae reiciendis quos quae
           doloribus et, commodi quasi esse est!
         </p>
+
         <IconBox>
           <Icons>
             <PencilIcon size={13} /> 10
