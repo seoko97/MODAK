@@ -26,11 +26,13 @@
       "@organisms/*": ["src/components/UI/organisms/*"],
       "@icons/*": ["src/components/icons/*"],
       "@hooks/*": ["src/hooks/*"],
-      "types/*": ["src/types/*"],
+      "@types/*": ["src/types/*"],
       "@lib/*": ["src/lib/*"],
-      "@reducers/*": ["src/reducers/*"]
+      "@reducers/*": ["src/reducers/*"],
+      "@apis/*": ["src/apis/*"]
     }
   },
+  "typeRoots": ["./node_modules/@types", "./src/types"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "jest.config.js"],
   "exclude": ["node_modules"]
 }
