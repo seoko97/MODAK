@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import StyledCheckbox from "./CheckButton";
 
 const FilterCategory = ({ category }) => {
+  const [checkedOptions, setCheckedOptions] = useState([]);
+
+  // TODO: 카테고리별로 잘 담기고 빠지긴 하는데 카테고리별 리스트를 어떻게 한번에 보내줄지 확인
+  const checkedOptionsHandler = (value, isChecked) => {
+    if (isChecked) {
+      setCheckedOptions([...checkedOptions, value]);
+    } else if (!isChecked && checkedOptions.find((one) => one === value)) {
+      const filter = checkedOptions.filter((one) => one !== value);
+      setCheckedOptions([...filter]);
+    }
+  };
+
+  console.log("checkedOptions", checkedOptions);
+
   return (
     <StyledFilterList>
-      <FilterName id="mobile-toggle" onClick={clickHandler}>
+      <FilterName id="mobile-toggle" onClick={toggleHandler}>
         {category.name}
         <div id="burger">
           <div id="line1"></div>
@@ -14,7 +28,12 @@ const FilterCategory = ({ category }) => {
       </FilterName>
       <ul>
         {category.options.map((option) => (
-          <StyledCheckbox option={option} key={option} />
+          <StyledCheckbox
+            option={option}
+            name={category.name}
+            key={option}
+            checkedOptionsHandler={checkedOptionsHandler}
+          />
         ))}
       </ul>
     </StyledFilterList>
@@ -60,7 +79,7 @@ const StyledFilterList = styled.div`
 `;
 
 const FilterName = styled.div`
-  width: 100px;
+  min-width: 100px;
   font-size: 20px;
 
   .burger {
@@ -96,6 +115,6 @@ const FilterName = styled.div`
   }
 `;
 
-const clickHandler = (e) => {
+const toggleHandler = (e) => {
   e.target.classList.toggle("active");
 };

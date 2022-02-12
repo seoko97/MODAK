@@ -19,8 +19,8 @@ const FilterFinder = ({ categories }: Props) => {
         return <FilterCategory key={category.name} category={category} />;
       })}
       <ButtonContainer>
-        <StyledButton>초기화</StyledButton>
-        <StyledButton>검색</StyledButton>
+        <input type="button" value="초기화" />
+        <input type="submit" value="검색" />
       </ButtonContainer>
     </FinderContainer>
   );
@@ -64,7 +64,7 @@ FilterFinder.defaultProps = {
 
 export default FilterFinder;
 
-const FinderContainer = styled.div`
+const FinderContainer = styled.form`
   margin-top: 1em;
   border: 1px solid #ebebeb;
   border-radius: 10px;
@@ -74,18 +74,19 @@ const FinderContainer = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  text-align: right;
-`;
+  display: flex;
+  justify-content: flex-end;
 
-const StyledButton = styled.button`
-  border: none;
-  padding: 10px 20px;
+  input {
+    border: none;
+    padding: 10px 20px;
 
-  &:hover {
-    cursor: pointer;
+    &:hover {
+      cursor: pointer;
+    }
   }
 
-  & + button {
-    margin-left: 20px;
+  input + input {
+    margin-left: 30px;
   }
 `;
