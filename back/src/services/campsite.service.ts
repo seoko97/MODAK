@@ -33,7 +33,6 @@ export class CampsiteService {
 
   async schedule() {
     const camps = await axios.get(APIURL);
-    console.log(camps);
 
     await Promise.all(
       camps.data.response.body.items.item.map((camp: IAxiosSchduleDTO) => {
