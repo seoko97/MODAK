@@ -4,8 +4,10 @@ import RowFrame from "@templates/RowFrame";
 import Title from "@atoms/Title";
 import Button from "@atoms/Button";
 import LookIcon from "@icons/LookIcon";
-import CommentIcon from "@icons/CommentIcon";
+import CommentIcon from "@src/components/icons/CommentIcon";
 import HeartIcon from "@icons/HeartIcon";
+import useModal from "@src/hooks/useInput";
+import ReviewForm from "@src/components/modals/ReviewForm";
 
 interface Props {
   // _id: object;
@@ -43,6 +45,8 @@ const CampSiteInfo = ({
   bookmark,
   views,
 }: Props) => {
+  const [isOpen, onOpen, onClose] = useModal();
+
   return (
     <>
       <StyledCampCoverImgBox photos={photos}>
@@ -71,7 +75,8 @@ const CampSiteInfo = ({
             </StyledIconBox>
 
             <StyledButtonBox>
-              <Button name="후기작성" />
+              <Button onClick={onOpen} name="후기작성" />
+              {isOpen && <ReviewForm onClick={onClose} camp={name} />}
               <Button name="위시리스트 추가" />
             </StyledButtonBox>
           </StyledIconContainer>
@@ -273,7 +278,7 @@ const StyledCampSiteDetail = styled.div`
   display: flex;
   justify-content: flex-start;
 
-  &>span: first-of-type {
+  & > span:first-of-type {
     flex: 1;
     min-width: 100px;
     font-weight: 700;
