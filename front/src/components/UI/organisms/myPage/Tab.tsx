@@ -1,9 +1,10 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { TabList } from ".";
 
 interface Props {
-  current: string;
-  onClick: (tab: string) => void;
+  current: keyof TabList;
+  onClick: (tab: keyof TabList) => void;
 }
 const Container = styled.div`
   display: flex;
@@ -35,7 +36,7 @@ const EachTab = styled.span<{ active: boolean }>`
     `}
 `;
 
-const tabs = ["내 리뷰", "나의 캠핑 기록", "찜한 캠핑장"];
+const tabs: (keyof TabList)[] = ["내 리뷰", "나의 캠핑 기록", "찜한 캠핑장"];
 
 const Tap = ({ current, onClick }: Props) => {
   return (
