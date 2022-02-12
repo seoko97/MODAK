@@ -9,10 +9,9 @@ import RowFrame from "@src/components/UI/templates/RowFrame";
 const CampsiteListPage: NextPage = () => {
   return (
     <>
-      <FilterFinder />
       <RowFrame>
+        <FilterFinder />
         <SortButton />
-        <CampSiteListBox />
         <CampSiteListBox />
         <CampSiteListBox />
         <CampSiteListBox />

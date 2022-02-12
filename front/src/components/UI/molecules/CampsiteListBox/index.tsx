@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import Link from "next/link";
+import Link from "@atoms/Link";
 
 import BookmarkIcon from "@src/components/icons/BookmarkIcon";
 import CommentIcon from "@src/components/icons/CommentIcon";
 
 interface Props {
-  toUrl?: string;
+  toUrl: string;
   imgUrl: string;
   name: string;
   category: string[];
@@ -49,18 +49,20 @@ const CampSiteListBox = ({
             </CountsWrapper>
           </CardInfoHeader>
           <InfoTable>
-            <tr>
-              <th>캠핑 타입</th>
-              <td>{category}</td>
-            </tr>
-            <tr>
-              <th>주소</th>
-              <td>{tel}</td>
-            </tr>
-            <tr>
-              <th>연락처</th>
-              <td>{address}</td>
-            </tr>
+            <tbody>
+              <tr>
+                <th>캠핑 타입</th>
+                <td>{category}</td>
+              </tr>
+              <tr>
+                <th>주소</th>
+                <td>{tel}</td>
+              </tr>
+              <tr>
+                <th>연락처</th>
+                <td>{address}</td>
+              </tr>
+            </tbody>
           </InfoTable>
           <TagsContainer>
             {tagContent.map((tag) => (

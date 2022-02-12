@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@atoms/Link";
 import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
@@ -15,6 +15,64 @@ interface Props {
   likes: number; // string[] (임시)
   url: string;
 }
+
+const MainReview = ({ to, author, content, createAt, likes, url }: Props) => {
+  return (
+    <>
+      <Link href={to}>
+        <StyledMainReviewContainer>
+          {/* 카드 이미지 */}
+          <StyledCardImage>
+            <Image alt="Mountains" src="/post.jpg" layout="fill" objectFit="cover" />
+          </StyledCardImage>
+
+          {/* 카드내용 : 유저정보, 리뷰정보로 구성 */}
+          <StyledCardContentBox>
+            <StyledUserInfo>
+              <Avatar url="/post.jpg" alt="사진" />
+              <span>홍길동홍길동홍길동홍</span>
+            </StyledUserInfo>
+
+            <StyledReviewInfo>
+              <StyledReviewIconBox>
+                <LocationIcon size={20} />
+                <span>캠프여주</span>
+              </StyledReviewIconBox>
+
+              <div>
+                <p>시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.</p>
+              </div>
+
+              <StyledDateLike>
+                <StyledReviewIconBox>
+                  <CalendarIcon size={20} />
+                  <span>22.02.03</span>
+                </StyledReviewIconBox>
+
+                <StyledReviewIconBox>
+                  <HeartIcon size={20} />
+                  <span>123,456</span>
+                </StyledReviewIconBox>
+              </StyledDateLike>
+            </StyledReviewInfo>
+          </StyledCardContentBox>
+        </StyledMainReviewContainer>
+      </Link>
+    </>
+  );
+};
+
+MainReview.defaultProps = {
+  to: "#",
+  author: "홍길동홍길동홍길동홍길동홍길동홍길동홍길동",
+  content:
+    "시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.",
+  createAt: "22.02.03",
+  likes: 123456,
+  url: "/post.jpg",
+};
+
+export default MainReview;
 
 // 리뷰 컨테이너
 const StyledMainReviewContainer = styled.div`
@@ -91,61 +149,3 @@ const StyledReviewIconBox = styled.div`
     font-size: 14px;
   }
 `;
-
-const MainReview = ({ to, author, content, createAt, likes, url }: Props) => {
-  return (
-    <>
-      <Link href={to}>
-        <StyledMainReviewContainer>
-          {/* 카드 이미지 */}
-          <StyledCardImage>
-            <Image alt="Mountains" src="/post.jpg" layout="fill" objectFit="cover" />
-          </StyledCardImage>
-
-          {/* 카드내용 : 유저정보, 리뷰정보로 구성 */}
-          <StyledCardContentBox>
-            <StyledUserInfo>
-              <Avatar url="/post.jpg" alt="사진" />
-              <span>홍길동홍길동홍길동홍</span>
-            </StyledUserInfo>
-
-            <StyledReviewInfo>
-              <StyledReviewIconBox>
-                <LocationIcon size={20} />
-                <span>캠프여주</span>
-              </StyledReviewIconBox>
-
-              <div>
-                <p>시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.</p>
-              </div>
-
-              <StyledDateLike>
-                <StyledReviewIconBox>
-                  <CalendarIcon size={20} />
-                  <span>22.02.03</span>
-                </StyledReviewIconBox>
-
-                <StyledReviewIconBox>
-                  <HeartIcon size={20} />
-                  <span>123,456</span>
-                </StyledReviewIconBox>
-              </StyledDateLike>
-            </StyledReviewInfo>
-          </StyledCardContentBox>
-        </StyledMainReviewContainer>
-      </Link>
-    </>
-  );
-};
-
-MainReview.defaultProps = {
-  to: "#",
-  author: "홍길동홍길동홍길동홍길동홍길동홍길동홍길동",
-  content:
-    "시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.",
-  createAt: "22.02.03",
-  likes: 123456,
-  url: "/post.jpg",
-};
-
-export default MainReview;
