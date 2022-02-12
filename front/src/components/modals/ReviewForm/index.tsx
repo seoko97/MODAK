@@ -5,9 +5,11 @@ import Logo from "@icons/Logo";
 import SmileIcon from "@icons/SmileIcon";
 import NormalIcon from "@icons/NormalIcon";
 import AngryIcon from "@icons/AngryIcon";
+import PhotoIcon from "@icons/PhotoIcon";
 import ModalLayout from "@src/components/modals/ModalLayout";
 // import { Smile, Noraml, Angry } from "@src/components/UI/molecules/ReviewCard/Rating";
 
+// Smile, Noraml, Angry 컴포넌트화
 // 사진 추가, 클릭 시 rating 등이 toggle되게 기능 구현 필요.
 interface Props {
   camp: string;
@@ -24,18 +26,24 @@ const ReviewForm = ({ camp, onClick }: Props) => {
   return (
     <ModalLayout onClick={onClick}>
       <Container>
-        <button onClick={onClick}>x</button>
-        <LogoText />
-        <RatingButton>
+        <Logo />
+        <span>캠핑장은 어떠셨나요?</span>
+        <RatingButtonWrapper>
           <Smile />
           <Noraml />
           <Angry />
-        </RatingButton>
+        </RatingButtonWrapper>
         <CampsiteName>{camp}</CampsiteName>
-        <ReviewContent value={review} onChange={reviewHandler} placeholder="후기를 작성해주세요!" />
+        <ReviewContentWrapper>
+          <ReviewContent
+            value={review}
+            onChange={reviewHandler}
+            placeholder="후기를 작성해주세요!"
+          />
+        </ReviewContentWrapper>
         <BouttonButtonWrapper>
           <PhotoLabel htmlFor="input-file">
-            <SmileIcon size={20} />
+            <PhotoIcon size={20} />
             Add Photo
             <input
               type="file"
@@ -47,7 +55,7 @@ const ReviewForm = ({ camp, onClick }: Props) => {
           </PhotoLabel>
           <WriteButton>
             <Button name="완료" />
-            <Button name="취소" />
+            <Button name="취소" onClick={onClick} />
           </WriteButton>
         </BouttonButtonWrapper>
       </Container>
@@ -61,23 +69,33 @@ const Container = styled.form`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 800px;
+  width: 60vw;
+  max-width: 800px;
+  height: 80vh;
+  max-height: 1000px;
   padding: 30px;
   z-index: 1002;
   box-sizing: border-box;
   background-color: #f7f7f7;
   color: #0c0c0c;
   border-radius: 10px;
-  & > button {
-    align-self: flex-end;
-  }
 
-  svg {
+  & > svg {
     width: 180px;
+    align-self: center;
   }
 
-  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+  & > span {
+    width: 180px;
+    text-align: center;
+    align-self: center;
+    font-weight: bold;
+    color: #757575;
+  }
+
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     width: 100%;
+    height: 100%;
   }
 `;
 
@@ -97,15 +115,6 @@ const RowIconWrapper = styled.div`
     }
   }
 `;
-
-const LogoText = () => {
-  return (
-    <RowIconWrapper>
-      <Logo />
-      <span>캠핑장은 어떠셨나요?</span>
-    </RowIconWrapper>
-  );
-};
 
 const Smile = () => {
   return (
@@ -139,26 +148,43 @@ const CampsiteName = styled.h3`
   color: #038c5a;
 `;
 
+const ReviewContentWrapper = styled.div`
+  flex: 1;
+`;
 const ReviewContent = styled.textarea`
   width: 100%;
-  height: 300px;
+  height: 100%;
   border: none;
+  box-sizing: border-box;
   resize: none;
 `;
 const ButtonWrapper = css`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 20px;
 `;
 
-const RatingButton = styled.div`
+const RatingButtonWrapper = styled.div`
   ${ButtonWrapper};
+
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    & > div {
+      svg {
+        width: 30px;
+        height: 30px;
+      }
+      span {
+        font-size: 12px;
+      }
+    }
+  }
 `;
 
 const BouttonButtonWrapper = styled.div`
   ${ButtonWrapper};
   justify-content: space-between;
+  margin-top: auto;
 `;
 
 const WriteButton = styled.div`
@@ -191,13 +217,13 @@ const PhotoLabel = styled.label`
   align-items: center;
   gap: 5px;
   padding: 8px 15px;
-  background-color: orange;
   border-radius: 5px;
-  color: #fff;
+  background-color: #038c5a20;
+  color: #038c5a;
   cursor: pointer;
 
   svg {
-    fill: #fff;
+    fill: #038c5a;
     width: 20px;
     height: 20px;
   }
