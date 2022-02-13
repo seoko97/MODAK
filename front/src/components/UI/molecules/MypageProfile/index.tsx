@@ -11,6 +11,17 @@ const Profile = styled.figure`
   display: flex;
   gap: 30px;
   padding: 30px;
+  position: relative;
+  & ::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 10px;
+    bottom: 0px;
+    background-color: #dedede;
+  }
+  margin-bottom: 10px;
 `;
 
 // --- 프로필 이미지 ---
@@ -77,6 +88,37 @@ const EditProfile = styled.button`
   background-color: transparent;
 `;
 
+type User = {
+  _id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  nickname: string;
+  profile: string;
+  createAt: string;
+  source: string;
+  reviews?: [] | null;
+  likes: number;
+  special?: boolean;
+  bookmark?: [] | null;
+  introduce: string | null;
+};
+
+const user: User = {
+  _id: 1,
+  firstName: "이",
+  lastName: "태현",
+  email: "asdasd@gmail.com",
+  nickname: "현",
+  profile:
+    "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+  createAt: "1121-11-11",
+  source: "source",
+  likes: 1,
+  introduce:
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eveniet magnam dolor quasi laboriosam, qui facere deleniti, assumenda eius, expedita quisquam sit. Vitae veniam corrupti voluptatum laboriosam culpa, accusantium quia!",
+};
+
 const MyPageProfile = (): React.ReactElement => {
   const [isOpen, onOpen, onClose] = useModal();
 
@@ -98,7 +140,6 @@ const MyPageProfile = (): React.ReactElement => {
           id totam aut laboriosam consequuntur cum, temporibus vero molestiae reiciendis quos quae
           doloribus et, commodi quasi esse est!
         </p>
-
         <IconBox>
           <Icons>
             <PencilIcon size={13} /> 10
