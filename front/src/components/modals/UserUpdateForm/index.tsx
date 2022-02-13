@@ -134,8 +134,6 @@ const ModifyButton = styled.button`
   cursor: pointer;
 `;
 
-const ExitModal = styled.button``;
-
 interface Props {
   onClick: () => void;
 }

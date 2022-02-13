@@ -1,21 +1,16 @@
-import React, { FC, memo } from "react";
+import React, { FC, HTMLProps, memo } from "react";
 import styled from "styled-components";
 
-export type ButtonAlign = "none" | "left" | "right";
-
-interface Props {
+interface Props extends HTMLProps<HTMLButtonElement> {
   name: string;
-  align?: ButtonAlign;
   onClick?: () => void;
   type?: "button" | "submit";
 }
 
-interface StyledProps {
-  align: ButtonAlign;
-}
-
-export const StyledButton = styled.button<StyledProps>`
-  float: ${({ align }) => align};
+export const StyledButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.PRIMARY_COLOR};
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   border: none;
@@ -34,14 +29,13 @@ export const StyledButton = styled.button<StyledProps>`
   }
 `;
 
-const Button: FC<Props> = ({ name, align, onClick, type }) => (
-  <StyledButton align={align as ButtonAlign} onClick={onClick} type={type}>
+const Button: FC<Props> = ({ name, onClick, type }) => (
+  <StyledButton onClick={onClick} type={type}>
     {name}
   </StyledButton>
 );
 
 Button.defaultProps = {
-  align: "none",
   type: "button",
 };
 
