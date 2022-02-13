@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
 
-type ICallback = any;
+type ICallback<T> = (...arg: T[]) => void;
 
-const useThrottle = (callback: ICallback, limit = 100) => {
+const useThrottle = <T>(callback: ICallback<T>, limit = 100) => {
   const [waiting, setWaiting] = useState<boolean>(false);
 
   const onThrottle = useCallback(
