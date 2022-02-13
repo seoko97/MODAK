@@ -1,13 +1,4 @@
-export interface IErrPayload {
-  status: boolean;
-  message: string;
-}
-
-export interface ReducerInit {
-  loading: boolean;
-  done: boolean;
-  error: string | null;
-}
+import { IErrPayload, ReducerInit } from "@src/types/reducers/init";
 
 export const asyncPending = (state: ReducerInit) => {
   state.loading = true;
