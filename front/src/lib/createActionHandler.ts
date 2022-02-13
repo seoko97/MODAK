@@ -1,7 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-// type ActionCallback<T, Q> = (data?:) => Promise<T>
-
 const createActionByProps = <T, Q>(url: string, callback: (data: T) => Promise<Q>) => {
   return createAsyncThunk(url, async (data: T, { rejectWithValue }) => {
     try {
