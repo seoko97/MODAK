@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
 
-type ICallback = (...arg: any) => void;
+type ICallback<T> = (...arg: T[]) => void;
 
-const useDebounce = (callback: ICallback, limit = 100) => {
+const useDebounce = <T>(callback: ICallback<T>, limit = 100) => {
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
   const onDebounce = useCallback(
