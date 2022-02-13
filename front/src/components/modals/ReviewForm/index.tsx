@@ -33,9 +33,9 @@ const ReviewForm = ({ camp, onClick }: Props) => {
         <Logo />
         <span>캠핑장은 어떠셨나요?</span>
         <RatingButtonWrapper>
-          <Smile onClick={ratingHandler} />
-          <Noraml onClick={ratingHandler} />
-          <Angry onClick={ratingHandler} />
+          <Smile onClick={ratingHandler} active={rating === "또 가고 싶어요"} />
+          <Noraml onClick={ratingHandler} active={rating === "평범합니다"} />
+          <Angry onClick={ratingHandler} active={rating === "최악입니다"} />
         </RatingButtonWrapper>
         <CampsiteName>{camp}</CampsiteName>
         <ReviewContentWrapper>
@@ -76,7 +76,6 @@ const Container = styled.form`
   width: 60vw;
   max-width: 800px;
   height: 80vh;
-  /* max-height: 1000px; */
   padding: 30px;
   z-index: 1002;
   box-sizing: border-box;
@@ -104,7 +103,7 @@ const Container = styled.form`
   }
 `;
 
-const RowIconWrapper = styled.div`
+const RowIconWrapper = styled.div<{ active: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -119,35 +118,46 @@ const RowIconWrapper = styled.div`
       font-size: 14px;
     }
   }
+
+  ${(props) =>
+    props.active &&
+    `
+      color: #038c5a;
+      font-weight: bold;
+      svg {
+        fill: #038c5a;
+      }
+    `}
 `;
 
 interface Rate {
+  active: boolean;
   onClick: (value: string) => void;
 }
-const Smile = ({ onClick }: Rate) => {
+const Smile = ({ active, onClick }: Rate) => {
   const text = "또 가고 싶어요";
   return (
-    <RowIconWrapper onClick={() => onClick(text)}>
+    <RowIconWrapper onClick={() => onClick(text)} active={active}>
       <SmileIcon size={40} />
       <span>{text}</span>
     </RowIconWrapper>
   );
 };
 
-const Noraml = ({ onClick }: Rate) => {
+const Noraml = ({ active, onClick }: Rate) => {
   const text = "평범합니다";
   return (
-    <RowIconWrapper onClick={() => onClick(text)}>
+    <RowIconWrapper onClick={() => onClick(text)} active={active}>
       <NormalIcon size={40} />
       <span>{text}</span>
     </RowIconWrapper>
   );
 };
 
-const Angry = ({ onClick }: Rate) => {
+const Angry = ({ active, onClick }: Rate) => {
   const text = "최악입니다";
   return (
-    <RowIconWrapper onClick={() => onClick(text)}>
+    <RowIconWrapper onClick={() => onClick(text)} active={active}>
       <AngryIcon size={40} />
       <span>{text}</span>
     </RowIconWrapper>
