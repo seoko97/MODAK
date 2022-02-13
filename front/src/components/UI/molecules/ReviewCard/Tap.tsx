@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 interface Props {
   current: string;
@@ -38,7 +38,7 @@ const EachTab = styled.span<{ active: boolean }>`
 
   ${(props) =>
     props.active &&
-    css`
+    `
       color: #038c5a;
       font-weight: bold;
       box-shadow: inset 0px -2px 0px #038c5a;
