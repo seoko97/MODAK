@@ -5,7 +5,7 @@ import ModalLayout from "@src/components/modals/ModalLayout";
 const Container = styled.form`
   display: flex;
   flex-direction: column;
-
+  position: relative;
   width: 500px;
   padding: 50px;
   z-index: 1002;
@@ -132,9 +132,18 @@ const ModifyButton = styled.button`
   border: none;
   color: #fff;
   cursor: pointer;
+  margin: auto;
 `;
 
-const ExitModal = styled.button``;
+const ExitModal = styled.button`
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid #494949;
+`;
 
 interface Props {
   onClick: () => void;
@@ -166,6 +175,7 @@ const UserUpdate = ({ onClick }: Props) => {
   return (
     <ModalLayout onClick={onClick}>
       <Container>
+        <ExitModal onClick={onClick}>x</ExitModal>
         <Header>
           <HeaderTitle>회원정보수정</HeaderTitle>
           <UserExit>탈퇴하기</UserExit>
