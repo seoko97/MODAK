@@ -1,10 +1,5 @@
+import { EditUserData } from "@src/types/apis/user";
 import axios from "axios";
-
-interface EditUserData {
-  nickname: string;
-  profileImg: string;
-  intro: string;
-}
 
 // 로그인 유저 정보
 const getSinginUser = async () => {

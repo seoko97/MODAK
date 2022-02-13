@@ -1,3 +1,9 @@
+import {
+  CampReviewProps,
+  ReviewDTO,
+  UpdateReviewData,
+  UserReviewProps,
+} from "@src/types/apis/review";
 import axios from "axios";
 
 // 메인 리뷰
@@ -9,7 +15,7 @@ const getMainReview = async () => {
 };
 
 // 유저 페이지 리뷰
-const getUserReviews = async (userId: string, lastId: string) => {
+const getUserReviews = async ({ userId, lastId }: UserReviewProps) => {
   const result = await axios.get(`review/user/${userId}?lastId=${lastId}`);
   const { data } = result;
 
@@ -17,7 +23,7 @@ const getUserReviews = async (userId: string, lastId: string) => {
 };
 
 // 이미지 업로드
-const reviewImageUpload = async (body: FormData) => {
+const reviewImageUpload = async (body: FormData[]) => {
   const result = await axios.post("review/images", body);
   const { data } = result;
 
@@ -25,7 +31,7 @@ const reviewImageUpload = async (body: FormData) => {
 };
 
 // 캠핑장 페이지 리뷰
-const getCampReviews = async (campId: string, lastId: string) => {
+const getCampReviews = async ({ campId, lastId }: CampReviewProps) => {
   const result = await axios.get(`review/camp/${campId}?lastId=${lastId}`);
   const { data } = result;
 
@@ -33,7 +39,7 @@ const getCampReviews = async (campId: string, lastId: string) => {
 };
 
 // 리뷰 생성
-const createReivew = async (body: any) => {
+const createReivew = async (body: ReviewDTO) => {
   const result = await axios.post("review", body);
   const { data } = result;
 
@@ -41,7 +47,7 @@ const createReivew = async (body: any) => {
 };
 
 // 리뷰 수정
-const updateReivew = async (id: string, body: any) => {
+const updateReivew = async ({ id, body }: UpdateReviewData) => {
   const result = await axios.put(`review/${id}`, body);
   const { data } = result;
 
