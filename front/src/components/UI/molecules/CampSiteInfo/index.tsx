@@ -6,7 +6,7 @@ import Button from "@atoms/Button";
 import LookIcon from "@icons/LookIcon";
 import CommentIcon from "@src/components/icons/CommentIcon";
 import HeartIcon from "@icons/HeartIcon";
-import useModal from "@src/hooks/useInput";
+import useModal from "@src/hooks/useModal";
 import ReviewForm from "@src/components/modals/ReviewForm";
 
 interface Props {
