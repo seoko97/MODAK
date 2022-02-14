@@ -1,26 +1,88 @@
-import HearctIcon from "@src/components/icons/HeartIcon";
+import HeartIcon from "@src/components/icons/HeartIcon";
 import PencilIcon from "@src/components/icons/PencilIcon";
 import UserUpdate from "@src/components/modals/UserUpdateForm";
-import useModal from "@src/hooks/useInput";
+import useModal from "@src/hooks/useModal";
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import Title from "../../atoms/Title";
+
+export type User = {
+  _id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  nickname: string;
+  profile: string;
+  createAt: string;
+  source: string;
+  reviews?: [] | null;
+  likes: number;
+  special?: boolean;
+  bookmark?: [] | null;
+  intro: string | undefined;
+};
+
+const IconComponent = () => (
+  <IconBox>
+    <Icons>
+      <PencilIcon size={13} /> 10
+    </Icons>
+    <Icons>
+      <HeartIcon size={13} /> 10
+    </Icons>
+  </IconBox>
+);
+
+const MyPageProfile = (): React.ReactElement => {
+  const [user, setUser] = useState<User>({
+    _id: 1,
+    firstName: "이",
+    lastName: "태현",
+    email: "asdasd@gmail.com",
+    nickname: "현",
+    profile:
+      "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+    createAt: "1121-11-11",
+    source: "source",
+    likes: 1,
+    intro:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eveniet magnam dolor quasi laboriosam, qui facere deleniti, assumenda eius, expedita quisquam sit. Vitae veniam corrupti voluptatum laboriosam culpa, accusantium quia!",
+  });
+  const [isOpen, onOpen, onClose] = useModal();
+  const { nickname, profile, intro } = user;
+
+  const updateUser = (userInfo: User) => {
+    setUser({
+      ...user,
+      ...userInfo,
+    });
+  };
+
+  return (
+    <Profile>
+      <ProfileImage>
+        <Img src={profile} />
+      </ProfileImage>
+      <ProfileInfo>
+        <UserName>
+          <Title size={14}>{nickname}</Title>
+          <EditProfile onClick={onOpen}>
+            <PencilIcon size={13} />
+          </EditProfile>
+          {isOpen && <UserUpdate onClick={onClose} user={user} updateUser={updateUser} />}
+        </UserName>
+        <p>{intro}</p>
+        <IconComponent />
+      </ProfileInfo>
+    </Profile>
+  );
+};
 
 // --- 프로필 컨테이너 ---
 const Profile = styled.figure`
   display: flex;
   gap: 30px;
-  padding: 30px;
   position: relative;
-  & ::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 10px;
-    bottom: 0px;
-    background-color: #dedede;
-  }
   margin-bottom: 10px;
 `;
 
@@ -76,9 +138,6 @@ const Icons = styled.div`
   cursor: pointer;
   :hover {
     font-weight: bold;
-    & svg {
-      fill: red;
-    }
   }
 `;
 
@@ -87,71 +146,5 @@ const EditProfile = styled.button`
   border: none;
   background-color: transparent;
 `;
-
-export type User = {
-  _id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  nickname: string;
-  profile: string;
-  createAt: string;
-  source: string;
-  reviews?: [] | null;
-  likes: number;
-  special?: boolean;
-  bookmark?: [] | null;
-  introduce: string | undefined;
-};
-
-const MyPageProfile = (): React.ReactElement => {
-  const [user, setUser] = useState<User>({
-    _id: 1,
-    firstName: "이",
-    lastName: "태현",
-    email: "asdasd@gmail.com",
-    nickname: "현",
-    profile:
-      "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-    createAt: "1121-11-11",
-    source: "source",
-    likes: 1,
-    introduce:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eveniet magnam dolor quasi laboriosam, qui facere deleniti, assumenda eius, expedita quisquam sit. Vitae veniam corrupti voluptatum laboriosam culpa, accusantium quia!",
-  });
-  const [isOpen, onOpen, onClose] = useModal();
-  const { nickname, profile, introduce } = user;
-
-  const updateUser = (userInfo: User) => {
-    setUser({
-      ...user,
-      ...userInfo,
-    });
-  };
-
-  return (
-    <Profile>
-      <ProfileImage>
-        <Img src={profile} />
-      </ProfileImage>
-      <ProfileInfo>
-        <UserName>
-          <Title size={14}>{nickname}</Title>
-          <EditProfile onClick={onOpen}>
-            <PencilIcon size={13} />
-          </EditProfile>
-          {isOpen && <UserUpdate onClick={onClose} user={user} updateUser={updateUser} />}
-        </UserName>
-        <p>{introduce}</p>
-        <IconBox>
-          <Icons>
-            <PencilIcon size={13} /> 10
-            <HearctIcon size={13} /> 10
-          </Icons>
-        </IconBox>
-      </ProfileInfo>
-    </Profile>
-  );
-};
 
 export default MyPageProfile;

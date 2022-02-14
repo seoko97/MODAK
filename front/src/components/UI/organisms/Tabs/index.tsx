@@ -10,6 +10,11 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 40px;
+  margin-top: 40px;
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    flex-direction: column;
+    gap: 6px;
+  }
 `;
 
 const EachTab = styled.span<{ active: boolean }>`
@@ -22,7 +27,7 @@ const EachTab = styled.span<{ active: boolean }>`
     css`
       color: #038c5a;
       font-weight: bold;
-      box-shadow: inset 0px -2.5px 0px #038c5a;
+      box-shadow: inset 0px -2px 0px #038c5a;
     `}
   ${(props) =>
     !props.active &&
