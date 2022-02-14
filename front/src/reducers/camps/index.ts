@@ -2,24 +2,35 @@ import { createSlice } from "@reduxjs/toolkit";
 import { asyncFulfilled, asyncPending, asyncRejected, reducerUtils } from "@src/lib/reducerUtils";
 import { ICampsState } from "@src/types/reducers/camp";
 import { IErrPayload } from "@src/types/reducers/init";
-import { getCamps, getMainCamps, getUserCamps } from "./action";
+import { getCamps, getCampsByKeyword, getMainCamps, getUserCamps } from "./action";
 
 export const initialState: ICampsState = {
   mainCamps: [],
+  searchCamps: [],
   getCamps: reducerUtils.init(),
   getMainCamps: reducerUtils.init(),
   getUserCamps: reducerUtils.init(),
+  search: reducerUtils.init(),
 };
 
 const camps = createSlice({
   name: "camps",
   initialState,
-  reducers: {},
+  reducers: {
+    search(state) {
+      asyncPending(state.search);
+    },
+    clearSearchCamps(state) {
+      state.searchCamps = [];
+      state.search.done = false;
+      state.search.loading = false;
+    },
+  },
 
   extraReducers: (builder) =>
     builder
       // 캠핑장 정보 불러오기
-      .addCase(getCamps.pending, (state, action) => {
+      .addCase(getCamps.pending, (state, acton) => {
         asyncPending(state.getCamps);
         state.mainCamps = [];
       })
@@ -31,7 +42,7 @@ const camps = createSlice({
         asyncRejected(state.getCamps, action.payload as IErrPayload);
       })
 
-      // 북마크
+      // 메인 페이지 캠핑장 정보
       .addCase(getMainCamps.pending, (state, action) => {
         asyncPending(state.getMainCamps);
         state.mainCamps = [];
@@ -44,7 +55,7 @@ const camps = createSlice({
         asyncRejected(state.getMainCamps, action.payload as IErrPayload);
       })
 
-      // 북마크 취소
+      // 유저 페이지 캠핑장 정보
       .addCase(getUserCamps.pending, (state, action) => {
         asyncPending(state.getUserCamps);
         state.mainCamps = [];
@@ -55,7 +66,21 @@ const camps = createSlice({
       })
       .addCase(getUserCamps.rejected, (state, action) => {
         asyncRejected(state.getUserCamps, action.payload as IErrPayload);
+      })
+
+      // 캠핑장 검색 정보
+      .addCase(getCampsByKeyword.pending, (state, action) => {
+        asyncPending(state.search);
+        state.searchCamps = [];
+      })
+      .addCase(getCampsByKeyword.fulfilled, (state, action) => {
+        asyncFulfilled(state.search);
+        state.searchCamps = action.payload.camps;
+      })
+      .addCase(getCampsByKeyword.rejected, (state, action) => {
+        asyncRejected(state.search, action.payload as IErrPayload);
       }),
 });
 
+export const { search, clearSearchCamps } = camps.actions;
 export default camps.reducer;

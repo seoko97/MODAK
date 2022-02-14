@@ -3,6 +3,7 @@ import { AnyAction, combineReducers } from "@reduxjs/toolkit";
 
 import { IUserState } from "@src/types/reducers/user";
 import { IReviewsState, IReviewState } from "@src/types/reducers/review";
+import { ICampsState, ICampState } from "@src/types/reducers/camp";
 
 import user from "./user";
 import review from "./review";
@@ -14,9 +15,11 @@ export interface IRootState {
   user: IUserState;
   review: IReviewState;
   reviews: IReviewsState;
+  camp: ICampState;
+  camps: ICampsState;
 }
 
-const rootReducer = (state: any, action: AnyAction) => {
+const rootReducer = (state: any, action: AnyAction): IRootState => {
   switch (action.type) {
     case HYDRATE: {
       return action.payload;
