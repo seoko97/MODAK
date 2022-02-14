@@ -1,41 +1,10 @@
-import { createSlice, PayloadAction, SerializedError } from "@reduxjs/toolkit";
-import {
-  asyncFulfilled,
-  asyncPending,
-  asyncRejected,
-  IErrPayload,
-  ReducerInit,
-  reducerUtils,
-} from "@lib/reducerUtils";
+import { createSlice } from "@reduxjs/toolkit";
+import { asyncFulfilled, asyncPending, asyncRejected, reducerUtils } from "@lib/reducerUtils";
+import { IUserState } from "@src/types/reducers/user";
+import { IErrPayload } from "@src/types/reducers/init";
 
 import { editUserInfo, getSigninUser, getUserInfo, signout } from "./action";
 
-export interface IUser {
-  intro: string;
-  _id: string;
-  email: string;
-  nickname: string;
-  profileImg: string;
-  source: string;
-  totalLike: number;
-  reviewCount: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface IUserState {
-  me: IUser | null;
-  userInfo: IUser | null;
-  signin: ReducerInit;
-  signout: ReducerInit;
-  getUserInfo: ReducerInit;
-  editUserInfo: ReducerInit;
-}
-
-// 상위 레벨의 데이터를 고민
-// 다른 사람의 페이지를 들어가면
-// userInfo post정보를 같이 입력
-// slice를 만들때 다른 유저 페이지를 접속했을 때
 export const initialState: IUserState = {
   me: null, // 로그인 유저 정보
   userInfo: null, // 유저 페이지 유저 정보,
@@ -88,12 +57,12 @@ const user = createSlice({
       })
       .addCase(editUserInfo.rejected, (state, action) => {
         asyncRejected(state.editUserInfo, action.payload as IErrPayload);
-        state.userInfo = null;
       })
 
       // 유저 페이지 정보
-      .addCase(getUserInfo.pending, (state, action) => {
+      .addCase(getUserInfo.pending, (state) => {
         asyncPending(state.getUserInfo);
+        state.userInfo = null;
       })
       .addCase(getUserInfo.fulfilled, (state, action) => {
         asyncFulfilled(state.getUserInfo);
@@ -104,20 +73,5 @@ const user = createSlice({
         state.userInfo = null;
       }),
 });
-
-// type ExtraSuccessAction<T> = PayloadAction<
-//   T,
-//   string,
-//   {
-//     arg: string;
-//     requestId: string;
-//     requestStatus: "fulfilled";
-//   },
-//   never
-// >;
-
-// const a = (state: WritableDraft<IUserState>, action: ExtraSuccessAction<IUserState>) => {
-//   action.payload.me = null;
-// };
 
 export default user.reducer;
