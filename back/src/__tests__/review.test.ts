@@ -17,6 +17,9 @@ const token =
 // 올바르지 않은 token
 const wrongtoken = "wrongtoken";
 
+let testId = "";
+const doublequote = '"';
+
 describe("review test", () => {
   beforeAll(async () => {
     await mongoose.connect(configs.DB_URL).then(() => console.log("데이터베이스 연결 성공"));
@@ -100,7 +103,9 @@ describe("review test", () => {
         photos: [],
         author: user,
       });
+    testId = res.text.split(doublequote)[93];
 
+    console.log(res.text);
     expect(res.text).toContain("전라남도 담양군 금성면 비내동길 148");
     expect(res.statusCode).toEqual(200);
   });
@@ -134,21 +139,36 @@ describe("review test", () => {
     console.log(
       `8. 리뷰 수정 테스트
   i.  데이터가 수정되었는지 확인합니다.
-  ii. Response의 statusCode가 200인지 확인합니다.`,
+  ii. Response의 statusCode가 200인지 확인합니다.
+  iii.수정하는 리뷰의 ObjectId는 ${testId}입니다.`,
     );
-
     const res = await request(app)
-      .put("/api/review/620a00b837b18e561e673fb7")
+      .put("/api/review/" + testId)
       .set("authorization", token)
       .send({
         content: "test - updated",
         location: campsite,
         rating: "별로에요",
         photos: [],
-        id: "620a00b837b18e561e673fb7",
+        id: testId,
       });
-
+    console.log(res.text);
     expect(res.text).toContain("별로에요");
+    expect(res.statusCode).toEqual(200);
+  });
+
+  test("/api/review/", async () => {
+    console.log(
+      `9. 리뷰 삭제 테스트
+  i.  데이터가 삭제되었는지 확인합니다.
+  ii. Response의 statusCode가 200인지 확인합니다.
+  iii.삭제하는 리뷰의 ObjectId는 ${testId}입니다.`,
+    );
+    const res = await request(app)
+      .delete("/api/review/" + testId)
+      .set("authorization", token)
+      .send();
+
     expect(res.statusCode).toEqual(200);
   });
 });
