@@ -18,7 +18,7 @@ router.patch(
   campsiteController.bookmark,
 );
 router.patch(
-  "/:id/unBookmark",
+  "/:id/unbookmark",
   ExpriedJwtAuthGuard,
   RefreshJwtAuthGuard,
   campsiteController.unBookmark,

@@ -17,6 +17,7 @@ export interface IUserDocument extends IUserDTO, Document {
   refreshToken: string | null;
   totalLike: number;
   reviewCount: number;
+  intro: string;
 
   comparePassword(aPassword: string): Promise<boolean>;
   verifyRefresh(): boolean;

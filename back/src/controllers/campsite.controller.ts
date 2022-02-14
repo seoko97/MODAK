@@ -18,9 +18,13 @@ export class CampsiteController {
     res.json({ status: true, camps });
   };
 
-  getCamps: RequestHandler = async (req, res) => {
+  getCamps: RequestHandler = async (req, res, next) => {
     const { sorted, lastId, ...data } = req.query;
     const query = campsQuery(data) as IKeyValueString;
+
+    if (lastId && !checkValid(lastId as string))
+      return next({ message: "유효하지 않은 정보입니다." });
+
     const target = {} as IKeyValueString;
     sorted && (target[`${sorted}`] = -1);
 

@@ -22,6 +22,6 @@ router.get(
   asyncHandler(authController.kakaoOAuthCallback),
 );
 
-router.get("/signout", ExpriedJwtAuthGuard, RefreshJwtAuthGuard, authController.signout);
+router.post("/signout", ExpriedJwtAuthGuard, RefreshJwtAuthGuard, authController.signout);
 
 export default router;

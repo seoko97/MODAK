@@ -36,6 +36,10 @@ export const UserSchema = new Schema<IUserDocument, IUserModel>(
       type: Number,
       default: 0,
     },
+    intro: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,
