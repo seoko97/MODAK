@@ -1,11 +1,11 @@
 import React, { memo } from "react";
-import Link from "next/link";
+import Link from "@atoms/Link";
 import SubTitle from "@atoms/SubTitle";
 import Avatar from "@atoms/Avatar";
 import Title from "@atoms/Title";
 import HearctIcon from "@icons/HeartIcon";
 import PencilIcon from "@icons/PencilIcon";
-import SmileIcon from "@icons/SmileIcon";
+import Rating from "./Rating";
 
 import {
   StyledContainer,
@@ -17,7 +17,7 @@ import {
   StyledReviewIconBox,
   StyledProfileIconBox,
   IconWrapper,
-  RowIconWrapper,
+  LinkInner,
 } from "./style";
 
 interface Author {
@@ -33,28 +33,20 @@ interface Props {
   photos?: string[];
   author: Author;
   createAt: string;
+  rating: string; // "평가 아이콘 관련"
 }
 
-const Smile = () => {
-  return (
-    <RowIconWrapper>
-      <SmileIcon size={40} />
-      <span>또 가고 싶어요</span>
-    </RowIconWrapper>
-  );
-};
-
-const ReviewCard = ({ _id, content, photos, author, createAt }: Props) => {
+const ReviewCard = ({ _id, content, photos, author, createAt, rating }: Props) => {
   const { nickname, profile, likes, posts } = author;
   return (
     <StyledContainer>
       <StyledProfileContainer>
         <StyledProfile>
-          <Link href="#">
-            <>
+          <Link href="/user/1">
+            <LinkInner>
               <Avatar size={70} url={profile} alt="유저프로필" />
               <Title size={14}>{nickname}</Title>
-            </>
+            </LinkInner>
           </Link>
           <StyledProfileIconBox>
             <IconWrapper>
@@ -67,7 +59,7 @@ const ReviewCard = ({ _id, content, photos, author, createAt }: Props) => {
             </StyledReviewIconBox>
           </StyledProfileIconBox>
         </StyledProfile>
-        <Smile />
+        <Rating rating={rating} />
       </StyledProfileContainer>
       <StyledReviewCard>
         <SubTitle>{createAt}</SubTitle>
@@ -79,7 +71,6 @@ const ReviewCard = ({ _id, content, photos, author, createAt }: Props) => {
         </StyledReviewPhotos>
 
         <StyledReviewEvaluateBox>
-          {/* <Smile /> */}
           <span>신고하기</span>
         </StyledReviewEvaluateBox>
       </StyledReviewCard>

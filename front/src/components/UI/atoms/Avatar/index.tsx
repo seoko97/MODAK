@@ -12,7 +12,7 @@ const StyledAvatar = styled(Image)<Pick<Props, "size">>`
   background: #ccc;
   border-radius: 50%;
   object-fit: cover;
-  transition: all 0.125s ease-in-out;
+  transition: transform 0.125s ease-in-out;
   cursor: pointer;
 
   :hover {
