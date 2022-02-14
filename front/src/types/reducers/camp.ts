@@ -33,7 +33,9 @@ export interface ICampState {
 
 export interface ICampsState {
   mainCamps: ICamp[];
+  searchCamps: Pick<ICamp, "_id" | "name" | "lineIntro">[];
   getCamps: ReducerInit;
   getMainCamps: ReducerInit;
   getUserCamps: ReducerInit;
+  search: ReducerInit;
 }
