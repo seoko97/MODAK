@@ -15,10 +15,6 @@ try {
   fs.mkdirSync("uploads");
 }
 
-interface MulterRequest extends Request {
-  files: any;
-}
-
 export class ReviewController {
   constructor(
     private readonly reviewService: ReviewService,
@@ -32,15 +28,15 @@ export class ReviewController {
     res.json({ status: true, reviews });
   };
 
-  getReviews: RequestHandler = async (req, res, next) => {
+  getCampReviews: RequestHandler = async (req, res, next) => {
     const { location } = req.params;
     const { lastId } = req.query;
 
-    const query = { location } as IKeyValueString;
-    lastId && (query._id = { $gt: lastId });
-
     if (!checkValid(location) || (lastId && !checkValid(lastId as string)))
       return next({ message: "유효하지 않은 정보입니다." });
+
+    const query = { location } as IKeyValueString;
+    lastId && (query._id = { $gt: lastId });
 
     const reviews = await this.reviewService.getReviewsByQuery(query, { count: -1, _id: -1 }, 10);
 
@@ -49,12 +45,12 @@ export class ReviewController {
 
   getUserReviews: RequestHandler = async (req, res, next) => {
     const { lastId } = req.query;
-    const { _id } = req.user as ITokenUser;
-
-    if (lastId && !checkValid(lastId as string))
+    const { id } = req.params;
+    const validateUser = await this.userService.getById(id);
+    if (!validateUser || !checkValid(id) || (lastId && !checkValid(lastId as string)))
       return next({ message: "유효하지 않은 정보입니다." });
 
-    const query = { author: _id } as IKeyValueString;
+    const query = { author: id } as IKeyValueString;
     lastId && (query._id = { $gt: lastId });
 
     const reviews = await this.reviewService.getReviewsByUserId(query);
