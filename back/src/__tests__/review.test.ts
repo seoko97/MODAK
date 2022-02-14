@@ -3,28 +3,24 @@ import { configs } from "@utils/constants";
 import mongoose from "mongoose";
 import request from "supertest";
 
+// 올바른 Campsite ObjectId
+const campsite = "62062139f6007b0f615edb09";
+// 올바르지 않은 Campsite ObjectId
+const wrongcampsite = "07b0f615e62062139f60db09";
+// 올바른 User ObjectId
+const user = "6205bad7f13438a35b7804ff";
+// 올바르지 않은 Campsite ObjectId
+const wronguser = "620538a35bbad7f1347804ff";
+// 올바른 token
+const token =
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjA3NDcwOGQ5MWMwY2RhNzFmN2I0NjkiLCJpYXQiOjE2NDQ2NDQxMDQsImV4cCI6MTY0NTg1MzcwNH0.KFDmXW1ximfFWefaG0X9oxG14_T1COLGpA_q9o_-Kn4";
+// 올바르지 않은 token
+const wrongtoken = "wrongtoken";
+
 describe("review test", () => {
   beforeAll(async () => {
     await mongoose.connect(configs.DB_URL).then(() => console.log("데이터베이스 연결 성공"));
   });
-
-  // afterAll(async () => {
-  //   await ReviewModel.findOneAndDelete({});
-  // });
-
-  // 올바른 Campsite ObjectId
-  const campsite = "62062139f6007b0f615edb09";
-  // 올바르지 않은 Campsite ObjectId
-  const wrongcampsite = "07b0f615e62062139f60db09";
-  // 올바른 User ObjectId
-  const user = "6205bad7f13438a35b7804ff";
-  // 올바르지 않은 Campsite ObjectId
-  const wronguser = "620538a35bbad7f1347804ff";
-  // 올바른 token
-  const token =
-    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjA3NDcwOGQ5MWMwY2RhNzFmN2I0NjkiLCJpYXQiOjE2NDQ2NDQxMDQsImV4cCI6MTY0NTg1MzcwNH0.KFDmXW1ximfFWefaG0X9oxG14_T1COLGpA_q9o_-Kn4";
-  // 올바르지 않은 token
-  const wrongtoken = "wrongtoken";
 
   test("/api/review/main", async () => {
     console.log("1. 리뷰 메인페이지를 확인하는 테스트입니다.");
@@ -132,5 +128,27 @@ describe("review test", () => {
       "Review validation failed: rating: `괜찮아요` is not a valid enum value for path `rating`",
     );
     expect(res.statusCode).toEqual(401);
+  });
+
+  test("/api/review/", async () => {
+    console.log(
+      `8. 리뷰 수정 테스트
+  i.  데이터가 수정되었는지 확인합니다.
+  ii. Response의 statusCode가 200인지 확인합니다.`,
+    );
+
+    const res = await request(app)
+      .put("/api/review/620a00b837b18e561e673fb7")
+      .set("authorization", token)
+      .send({
+        content: "test - updated",
+        location: campsite,
+        rating: "별로에요",
+        photos: [],
+        id: "620a00b837b18e561e673fb7",
+      });
+
+    expect(res.text).toContain("별로에요");
+    expect(res.statusCode).toEqual(200);
   });
 });
