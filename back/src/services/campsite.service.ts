@@ -57,6 +57,10 @@ export class CampsiteService {
       { new: true },
     );
   }
+
+  async getById(id: string, obj = {}): Promise<ICampsiteDTO | null> {
+    return this.campsiteModel.findById(id, obj);
+  }
 }
 
 export const campsiteService = new CampsiteService(CampsiteModel, UserModel);

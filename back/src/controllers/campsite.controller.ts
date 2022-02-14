@@ -9,13 +9,13 @@ export class CampsiteController {
   constructor(private readonly campsiteService: CampsiteService) {}
 
   getMainCamps: RequestHandler = async (_, res) => {
-    const reviews = await this.campsiteService.getCampsByQuery(
+    const camps = await this.campsiteService.getCampsByQuery(
       {},
       { totalBookmark: -1, views: -1 },
       10,
     );
 
-    res.json({ status: true, reviews });
+    res.json({ status: true, camps });
   };
 
   getCamps: RequestHandler = async (req, res, next) => {

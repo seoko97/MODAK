@@ -3,20 +3,20 @@ import { configs } from "@utils/constants";
 import mongoose from "mongoose";
 import request from "supertest";
 
+// 올바른 User ObjectId
+const user = "6207a790b16f869aa2216b22";
+// 올바르지 않은 Campsite ObjectId
+const wronguser = "22166207a790b16f869aab22";
+// 올바른 token
+const token =
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjA3NDcwOGQ5MWMwY2RhNzFmN2I0NjkiLCJpYXQiOjE2NDQ2NDQxMDQsImV4cCI6MTY0NTg1MzcwNH0.KFDmXW1ximfFWefaG0X9oxG14_T1COLGpA_q9o_-Kn4";
+// 올바르지 않은 token
+const wrongtoken = "wrongtoken";
+
 describe("user test", () => {
   beforeAll(async () => {
     await mongoose.connect(configs.DB_URL).then(() => console.log("데이터베이스 연결 성공"));
   });
-
-  // 올바른 User ObjectId
-  const user = "6207a790b16f869aa2216b22";
-  // 올바르지 않은 Campsite ObjectId
-  const wronguser = "22166207a790b16f869aab22";
-  // 올바른 token
-  const token =
-    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjA3NDcwOGQ5MWMwY2RhNzFmN2I0NjkiLCJpYXQiOjE2NDQ2NDQxMDQsImV4cCI6MTY0NTg1MzcwNH0.KFDmXW1ximfFWefaG0X9oxG14_T1COLGpA_q9o_-Kn4";
-  // 올바르지 않은 token
-  const wrongtoken = "wrongtoken";
 
   // 로그인 한 유저가 userpage에 접근
   test("/api/user Success", async () => {
