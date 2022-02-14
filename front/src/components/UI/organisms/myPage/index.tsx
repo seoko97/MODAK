@@ -1,12 +1,12 @@
 import styled, { css } from "styled-components";
 import Link from "next/link";
-import React, { memo, Props, ReactComponentElement, ReactElement, useState } from "react";
+import React, { memo, ReactElement, useState } from "react";
 import SubTitle from "@atoms/SubTitle";
+import HeartIcon from "@src/components/icons/HeartIcon";
+import PencilIcon from "@src/components/icons/PencilIcon";
 import MyPageProfile from "../../molecules/MypageProfile";
 import Title from "../../atoms/Title";
-import HearctIcon from "@src/components/icons/HeartIcon";
-import PencilIcon from "@src/components/icons/PencilIcon";
-import Tab from "./Tab";
+import Tabs from "../Tabs";
 
 // --- 공통 ---
 
@@ -61,38 +61,6 @@ const PhotoBox = styled.div`
 // --- 전체 컨테이너 ---
 const Main = styled.div`
   padding: 20px;
-`;
-
-// --- 탭 메뉴 컨테이너 ---
-const Container = styled.article``;
-
-// --- 카테고리 ---
-const Tabs = styled.ul`
-  display: flex;
-  justify-content: center;
-  position: relative;
-  margin-bottom: 40px;
-  & ::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 1px;
-    bottom: -20px;
-    background-color: #00010d;
-  }
-`;
-const Category = styled.li`
-  text-align: center;
-  width: 100px;
-  cursor: pointer;
-  transition: color 0.1s;
-  :hover:not(.active) {
-    color: orange;
-  }
-  &.active {
-    color: green;
-  }
 `;
 
 // --- 내 리뷰 ---
@@ -185,10 +153,10 @@ const MyPage = () => {
       <CampInfo>
         <SubTitle size={14}>{createAt}</SubTitle>
         <CampLink href="#">
-          <>@장호비치캠핑장</>
+          <a>@장호비치캠핑장</a>
         </CampLink>
         <Icons>
-          <HearctIcon size={12}></HearctIcon>14
+          <HeartIcon size={12}></HeartIcon>14
         </Icons>
       </CampInfo>
       <ReviewPost>
@@ -220,32 +188,31 @@ const MyPage = () => {
       <SubTitle>2022-01-28</SubTitle>
       <CampInfo>
         <CampLink href="#">
-          <>@캠핑장 이름/ 주소</>
+          <a>@캠핑장 이름/ 주소</a>
         </CampLink>
-        <IconBox>
-          <Icons>
-            <PencilIcon size={13} /> 10
-            <HearctIcon size={13} /> 10
-          </Icons>
-        </IconBox>
+        <IconComponent />
       </CampInfo>
     </VisitedCamp>
+  );
+
+  const IconComponent = () => (
+    <IconBox>
+      <Icons>
+        <PencilIcon size={13} /> 19
+        <HeartIcon size={13} /> 10
+      </Icons>
+    </IconBox>
   );
 
   const WishComponent = () => (
     <WishCamp>
       <CampInfo>
         <CampLink href="#">
-          <>
+          <a>
             <p>@캠핑장 이름/ 주소</p>
-          </>
+          </a>
         </CampLink>
-        <IconBox>
-          <Icons>
-            <PencilIcon size={13} /> 10
-            <HearctIcon size={13} /> 10
-          </Icons>
-        </IconBox>
+        <IconComponent />
       </CampInfo>
       <Tags>#가족캠핑 #글램핑</Tags>
       <OtherReview>
@@ -275,22 +242,9 @@ const MyPage = () => {
 
   return (
     <Main>
-      <MyPageProfile></MyPageProfile>
-      <Container>
-        <Tabs>
-          <Tab current={tab} onClick={handleClick}></Tab>
-          {/* <Category className="active">
-            <Title size={14}>내 리뷰</Title>
-          </Category>
-          <Category>
-            <Title size={14}>나의 캠핑 기록</Title>
-          </Category>
-          <Category>
-            <Title size={14}>찜한 캠핑장</Title>
-          </Category> */}
-        </Tabs>
-        {tabList[tab]}
-      </Container>
+      <MyPageProfile />
+      <Tabs current={tab} onClick={handleClick}></Tabs>
+      {tabList[tab]}
     </Main>
   );
 };

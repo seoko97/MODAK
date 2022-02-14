@@ -1,6 +1,6 @@
-import React from "react";
+import React, { memo } from "react";
 import styled, { css } from "styled-components";
-import { TabList } from ".";
+import { TabList } from "../MyPage";
 
 interface Props {
   current: keyof TabList;
@@ -8,23 +8,21 @@ interface Props {
 }
 const Container = styled.div`
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 10px;
-  margin: 10px 0;
+  justify-content: center;
+  margin-bottom: 40px;
 `;
 
 const EachTab = styled.span<{ active: boolean }>`
-  font-size: 14px;
+  font-size: 18px;
   color: #757575;
   cursor: pointer;
-
+  margin: auto;
   ${(props) =>
     props.active &&
     css`
       color: #038c5a;
       font-weight: bold;
-      box-shadow: inset 0px -2px 0px #038c5a;
+      box-shadow: inset 0px -2.5px 0px #038c5a;
     `}
   ${(props) =>
     !props.active &&
@@ -38,7 +36,7 @@ const EachTab = styled.span<{ active: boolean }>`
 
 const tabs: (keyof TabList)[] = ["내 리뷰", "나의 캠핑 기록", "찜한 캠핑장"];
 
-const Tap = ({ current, onClick }: Props) => {
+const Taps = ({ current, onClick }: Props) => {
   return (
     <Container>
       {tabs.map((tab, idx) => {
@@ -52,4 +50,4 @@ const Tap = ({ current, onClick }: Props) => {
   );
 };
 
-export default Tap;
+export default Taps;
