@@ -31,8 +31,8 @@ export class ReviewController {
   getCampReviews: RequestHandler = async (req, res, next) => {
     const { location } = req.params;
     const { lastId } = req.query;
-
-    if (!checkValid(location) || (lastId && !checkValid(lastId as string)))
+    const findCamp = await this.campsiteService.getById(location);
+    if (!findCamp || !checkValid(location) || (lastId && !checkValid(lastId as string)))
       return next({ message: "유효하지 않은 정보입니다." });
 
     const query = { location } as IKeyValueString;
@@ -46,8 +46,8 @@ export class ReviewController {
   getUserReviews: RequestHandler = async (req, res, next) => {
     const { lastId } = req.query;
     const { id } = req.params;
-    const validateUser = await this.userService.getById(id);
-    if (!validateUser || !checkValid(id) || (lastId && !checkValid(lastId as string)))
+    const findUser = await this.userService.getById(id);
+    if (!findUser || !checkValid(id) || (lastId && !checkValid(lastId as string)))
       return next({ message: "유효하지 않은 정보입니다." });
 
     const query = { author: id } as IKeyValueString;
