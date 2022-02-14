@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import styled, { css } from "styled-components";
-import { TabList } from "../MyPage";
+import { TabList } from "../myPage";
 
 interface Props {
   current: keyof TabList;
