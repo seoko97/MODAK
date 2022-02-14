@@ -1,53 +1,60 @@
 import React, { useRef, useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import ModalLayout from "@src/components/modals/ModalLayout";
+import { User } from "@src/components/UI/molecules/MypageProfile";
 
 interface Props {
   onClick: () => void;
+  user: User;
+  updateUser: (user: User) => void;
 }
 
-const UserUpdate = ({ onClick }: Props) => {
-  const [user, setUser] = useState({
-    id: 1,
-    nickname: "김불멍",
-    description: "소개글입니다. 임의의 소개글입니다. 임의의 소개글입니다.",
-    profile:
-      "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-  });
-
-  const { nickname, description, profile } = user;
+const UserUpdate = ({ onClick, user, updateUser }: Props) => {
+  const { nickname, introduce, profile } = user;
   const imageRef = React.useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
-  const descriptionRef = useRef<HTMLInputElement>(null);
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.currentTarget === null) {
-      return;
-    }
-    e.preventDefault();
-    setUser({
-      ...user,
-      [e.currentTarget.name]: e.currentTarget.value,
-    });
-  };
+  const introduceRef = useRef<HTMLTextAreaElement>(null);
 
   const onChangeClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     imageRef.current?.click();
   };
 
+  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (e.currentTarget === null) {
+      return;
+    }
+    const updated: User = { ...user, [e.currentTarget.name]: e.currentTarget.value };
+    updateUser(updated);
+  };
+
   // ! 이미지 url을 받아와서 바꿔야함.
   const onChangeImage = async () => {
-    setUser({
+    updateUser({
       ...user,
       profile:
         "https://images.unsplash.com/photo-1579783483458-83d02161294e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1397&q=80",
     });
   };
 
+  const deleteImage = () => {
+    updateUser({
+      ...user,
+      profile: "",
+    });
+  };
+
+  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const _nickname = e.target.nickname.value;
+    const _introduce = e.target.introduce.value;
+    const updated = { ...user, nickname: _nickname, introduce: _introduce };
+    updateUser(updated);
+  };
+
   return (
     <ModalLayout onClick={onClick}>
-      <Container>
+      <Container onSubmit={handleSubmit}>
         <ExitModal onClick={onClick}>x</ExitModal>
         <Header>
           <HeaderTitle>회원정보수정</HeaderTitle>
@@ -64,34 +71,34 @@ const UserUpdate = ({ onClick }: Props) => {
               onChange={onChangeImage}
             />
             <ImageContainer onClick={onChangeClick}>
-              <ProfileImage src={profile} alt="a"></ProfileImage>
+              <ProfileImage src={profile} alt="profile__image"></ProfileImage>
             </ImageContainer>
-            <DeleteImage>삭제</DeleteImage>
+            <DeleteImage onClick={deleteImage}>삭제</DeleteImage>
           </EditImage>
         </EditContainer>
         <EditContainer>
           <EditTitle>닉네임</EditTitle>
-          <InputBox>
-            <Input
-              type="text"
-              name="nickname"
-              ref={nameRef}
-              value={nickname}
-              onChange={onChange}
-            ></Input>
-          </InputBox>
+          <InputName
+            type="text"
+            name="nickname"
+            ref={nameRef}
+            value={nickname}
+            onChange={onChange}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+              }
+            }}
+          ></InputName>
         </EditContainer>
         <EditContainer>
           <EditTitle>소개</EditTitle>
-          <InputBox>
-            <Input
-              type="text"
-              name="description"
-              ref={descriptionRef}
-              value={description}
-              onChange={onChange}
-            ></Input>
-          </InputBox>
+          <InputText
+            name="introduce"
+            ref={introduceRef}
+            value={introduce}
+            onChange={onChange}
+          ></InputText>
         </EditContainer>
         <EditContainer>
           <ModifyButton>회원 정보 수정</ModifyButton>
@@ -145,7 +152,6 @@ const EditContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
   justify-content: flex-start;
   margin: 12px auto;
   @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
@@ -161,8 +167,7 @@ const EditTitle = styled.div`
   }
 `;
 
-const InputBox = styled.div``;
-const Input = styled.input`
+const Input = css`
   :focus {
     outline: none;
     box-shadow: 0 0 0 2px #f2b705;
@@ -175,6 +180,15 @@ const Input = styled.input`
   height: 36px;
   color: #1b1b1b;
   width: 200px;
+`;
+
+const InputName = styled.input`
+  ${Input};
+`;
+
+const InputText = styled.textarea`
+  ${Input};
+  height: 54px;
 `;
 
 const EditImage = styled.div`
@@ -197,14 +211,6 @@ const ImageContainer = styled.div`
 
 const ImageInput = styled.input`
   display: none;
-`;
-
-const ChangeImage = styled.button`
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  background-color: #d8d8d8;
-  border: 1px solid #d8d8d8;
 `;
 
 const ProfileImage = styled.img`
