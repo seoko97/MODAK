@@ -1,7 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { SetStateAction, useRef, Dispatch } from "react";
 import styled, { css } from "styled-components";
 import ModalLayout from "@src/components/modals/ModalLayout";
 import { User } from "@src/components/UI/molecules/MypageProfile";
+import TrashCanIcon from "@src/components/icons/TrashCanIcon";
+import ExitIcon from "@src/components/icons/ExitIcon";
 
 interface Props {
   onClick: () => void;
@@ -10,10 +12,10 @@ interface Props {
 }
 
 const UserUpdate = ({ onClick, user, updateUser }: Props) => {
-  const { nickname, introduce, profile } = user;
-  const imageRef = React.useRef<HTMLInputElement>(null);
-  const nameRef = useRef<HTMLInputElement>(null);
-  const introduceRef = useRef<HTMLTextAreaElement>(null);
+  const { nickname, intro, profile } = user;
+  const imageRef = React.useRef<HTMLInputElement | null>(null);
+  const nameRef = useRef<HTMLInputElement | null>(null);
+  const introRef = useRef<HTMLTextAreaElement | null>(null);
 
   const onChangeClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -37,7 +39,8 @@ const UserUpdate = ({ onClick, user, updateUser }: Props) => {
     });
   };
 
-  const deleteImage = () => {
+  const deleteImage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     updateUser({
       ...user,
       profile: "",
@@ -46,19 +49,29 @@ const UserUpdate = ({ onClick, user, updateUser }: Props) => {
 
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const _nickname = e.target.nickname.value;
-    const _introduce = e.target.introduce.value;
-    const updated = { ...user, nickname: _nickname, introduce: _introduce };
+    const _nickname = e.target.nickname.value.trim();
+    if (_nickname === "") {
+      alert("닉네임은 한 글자 이상 입력해주세요.");
+      return;
+    }
+    const _intro = e.target.intro.value;
+    const updated = { ...user, nickname: _nickname, introduce: _intro };
     updateUser(updated);
+    onClick();
+  };
+
+  const exitUser = () => {
+    confirm("탈퇴하시겠어요?");
   };
 
   return (
     <ModalLayout onClick={onClick}>
       <Container onSubmit={handleSubmit}>
-        <ExitModal onClick={onClick}>x</ExitModal>
+        <ExitModal onClick={onClick}>
+          <ExitIcon />
+        </ExitModal>
         <Header>
           <HeaderTitle>회원정보수정</HeaderTitle>
-          <UserExit>탈퇴하기</UserExit>
         </Header>
         <EditContainer>
           <EditTitle>프로필 이미지</EditTitle>
@@ -73,7 +86,9 @@ const UserUpdate = ({ onClick, user, updateUser }: Props) => {
             <ImageContainer onClick={onChangeClick}>
               <ProfileImage src={profile} alt="profile__image"></ProfileImage>
             </ImageContainer>
-            <DeleteImage onClick={deleteImage}>삭제</DeleteImage>
+            <DeleteImage onClick={deleteImage}>
+              <TrashCanIcon />
+            </DeleteImage>
           </EditImage>
         </EditContainer>
         <EditContainer>
@@ -89,20 +104,16 @@ const UserUpdate = ({ onClick, user, updateUser }: Props) => {
                 e.preventDefault();
               }
             }}
-          ></InputName>
+          />
         </EditContainer>
         <EditContainer>
           <EditTitle>소개</EditTitle>
-          <InputText
-            name="introduce"
-            ref={introduceRef}
-            value={introduce}
-            onChange={onChange}
-          ></InputText>
+          <InputText name="intro" ref={introRef} value={intro} onChange={onChange}></InputText>
         </EditContainer>
         <EditContainer>
           <ModifyButton>회원 정보 수정</ModifyButton>
         </EditContainer>
+        <UserExit onClick={exitUser}>탈퇴하기</UserExit>
       </Container>
     </ModalLayout>
   );
@@ -146,6 +157,10 @@ const UserExit = styled.button`
   border: none;
   background-color: transparent;
   text-decoration: underline;
+  cursor: pointer;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
 `;
 
 const EditContainer = styled.div`
@@ -180,8 +195,8 @@ const Input = css`
   height: 36px;
   color: #1b1b1b;
   width: 200px;
+  position: relative;
 `;
-
 const InputName = styled.input`
   ${Input};
 `;
@@ -220,15 +235,20 @@ const ProfileImage = styled.img`
 
 const DeleteImage = styled.button`
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 6px;
+  top: 6px;
   background-color: #038c5a;
   cursor: pointer;
-  width: 40px;
-  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
   border: none;
   border-radius: 2px;
-  color: #fff;
+  & svg {
+    fill: #f3f3f3;
+  }
   :hover {
     background-color: #025939;
   }
@@ -251,9 +271,11 @@ const ExitModal = styled.button`
   top: 12px;
   right: 12px;
   background-color: transparent;
-  border-radius: 50%;
   cursor: pointer;
-  border: 1px solid #494949;
+  border: none;
+  width: 18px;
+  height: 18px;
+  padding: 0;
 `;
 
 export default UserUpdate;
