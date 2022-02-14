@@ -28,31 +28,37 @@ describe("review test", () => {
   const wrongtoken = "wrongtoken";
 
   //모든 캠핑장의 정보를 받아오는지 확인
-  test("Success /api/review/main", async () => {
-    console.log("리뷰 메인페이지를 확인하는 테스트입니다.");
+  test("/api/review/main", async () => {
+    console.log("1. 리뷰 메인페이지를 확인하는 테스트입니다.");
     const res = await request(app).get("/api/review/main").send();
     expect(res.statusCode).toEqual(200);
   });
 
   //특정 사용자가 작성한 리뷰들을 받아오는지 확인
   test("/api/review/user/:id", async () => {
-    console.log("특정 사용자가 작성한 리뷰들을 받아오는지 확인하는 테스트입니다.");
+    console.log(`2. 특정 사용자가 작성한 리뷰들을 받아오는 테스트
+  i.  Response에 "reviews"가 포함되어있는지 확인합니다.
+  ii. Response의 statusCode가 200인지 확인합니다.`);
     const res = await request(app)
       .get("/api/review/user/" + user)
       .send();
 
-    console.log(res.text);
+    expect(res.text).toContain("reviews");
     expect(res.statusCode).toEqual(200);
   });
 
   //특정 사용자가 작성한 리뷰들을 받아오는지 확인
   test("/api/review/user/:id", async () => {
-    console.log("특정 사용자가 작성한 리뷰들을 받아오는지 확인하는 테스트입니다.");
+    console.log(
+      `3. 존재하지 않는 사용자가 작성한 리뷰들을 받아오는 테스트
+  i.  Response에 "유효하지 않은 정보입니다."가 포함되어있는지 확인합니다.
+  ii. Response의 statusCode가 401인지 확인합니다.`,
+    );
     const res = await request(app)
       .get("/api/review/user/" + wronguser)
       .send();
 
-    console.log(res.text);
-    expect(res.statusCode).toEqual(200);
+    expect(res.text).toContain("유효하지 않은 정보입니다.");
+    expect(res.statusCode).toEqual(401);
   });
 });
