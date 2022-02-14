@@ -4,8 +4,12 @@ import StyledCheckbox from "./CheckButton";
 
 const FilterCategory = ({ category }) => {
   const [checkedOptions, setCheckedOptions] = useState([]);
+  const [filterNameActive, setFilterNameActive] = useState(false);
 
-  // TODO: 카테고리별로 잘 담기고 빠지긴 하는데 카테고리별 리스트를 어떻게 한번에 보내줄지 확인
+  const toggleHandler = (e) => {
+    setFilterNameActive(!filterNameActive);
+  };
+
   const checkedOptionsHandler = (value, isChecked) => {
     if (isChecked) {
       setCheckedOptions([...checkedOptions, value]);
@@ -19,7 +23,11 @@ const FilterCategory = ({ category }) => {
 
   return (
     <StyledFilterList>
-      <FilterName id="mobile-toggle" onClick={toggleHandler}>
+      <FilterName
+        id="mobile-toggle"
+        className={filterNameActive ? "active" : ""}
+        onClick={toggleHandler}
+      >
         {category.name}
         <div id="burger">
           <div id="line1"></div>
@@ -114,7 +122,3 @@ const FilterName = styled.div`
     }
   }
 `;
-
-const toggleHandler = (e) => {
-  e.target.classList.toggle("active");
-};

@@ -90,31 +90,6 @@ CampSiteListBox.defaultProps = {
 
 export default CampSiteListBox;
 
-// 카드 리스트형 디자인
-// const CardWrapper = styled.div`
-//   display: flex;
-//   width: 90%;
-//   height: 250px;
-//   margin: 30px auto 0;
-//   border-radius: 15px;
-//   box-shadow: 3px 4px 5px rgba(0, 0, 0, 0.1);
-//   overflow: hidden;
-
-//   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-//   transition: 0.3s transform;
-
-//   &:hover {
-//     transform: scale(1.005);
-//     cursor: pointer;
-//   }
-
-//   @media screen and (max-width: ${({ theme }) => theme.BP.MOBILE}) {
-//     width: 396px;
-//     height: 150px;
-//   }
-// `;
-
-// 리스트 디자인
 const CardWrapper = styled.div`
   display: flex;
   width: 90%;
@@ -123,18 +98,19 @@ const CardWrapper = styled.div`
   padding-bottom: 30px;
   border-bottom: 1px dotted #c0c0c0;
   overflow: hidden;
-
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   transition: 0.3s transform;
+  font-size: 20px;
 
   &:hover {
     transform: scale(1.005);
     cursor: pointer;
   }
 
-  @media screen and (max-width: ${({ theme }) => theme.BP.MOBILE}) {
-    width: 396px;
+  @media screen and (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    width: 90%;
     height: 150px;
+    font-size: 1rem;
   }
 `;
 
@@ -147,7 +123,7 @@ const ImgWrapper = styled.div`
     object-fit: cover;
   }
 
-  @media screen and (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+  @media screen and (max-width: ${({ theme }) => theme.BP.TABLET}) {
     min-width: 150px;
   }
 `;
@@ -157,32 +133,23 @@ const CampSiteInfo = styled.div`
   height: 100%;
   position: relative;
   padding: 1em 1.5em;
+  font-size: 0.8em;
 `;
 
 const CardInfoHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* border-bottom: 1px dotted #c0c0c0; */
-  /* background-color: blue; */
   margin-bottom: 10px;
 
   & > h3 {
-    font-size: 20px;
     font-weight: 700;
-
-    @media screen and (max-width: ${({ theme }) => theme.BP.MOBILE}) {
-      font-size: 14px;
-      align-items: flex-end;
-    }
   }
 `;
 
 const InfoTable = styled.table`
   border-collapse: separate;
   border-spacing: 0 5px;
-  /* width: 100%; */
-  /* background-color: yellow; */
 
   & th {
     text-align: left;
@@ -192,16 +159,11 @@ const InfoTable = styled.table`
   & td {
     padding-left: 5px;
   }
-
-  @media screen and (max-width: ${({ theme }) => theme.BP.MOBILE}) {
-    font-size: 12px;
-  }
 `;
 
 const TagsContainer = styled.ul`
   display: flex;
   flex-wrap: wrap;
-  font-size: 14px;
 
   & > li {
     margin-right: 15px;
@@ -210,9 +172,6 @@ const TagsContainer = styled.ul`
       content: "#";
     }
   }
-  @media screen and (max-width: ${({ theme }) => theme.BP.MOBILE}) {
-    font-size: 12px;
-  }
 `;
 
 const CountsWrapper = styled.div`
@@ -220,21 +179,17 @@ const CountsWrapper = styled.div`
 `;
 
 const CountContainer = styled.div`
-  font-size: 11px;
   display: flex;
-  align-items: center;
 
-  & svg {
+  svg {
     margin-right: 2px;
     margin-left: 10px;
   }
-  @media screen and (max-width: ${({ theme }) => theme.BP.MOBILE}) {
-    font-size: 9px;
-    align-items: flex-start;
-
-    & svg {
-      width: 12px;
-      height: 12px;
+  @media screen and (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    svg {
+      margin-top: 2px;
+      width: 15px;
+      height: 15px;
     }
   }
 `;
