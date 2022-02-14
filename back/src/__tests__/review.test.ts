@@ -159,7 +159,20 @@ describe("review test", () => {
 
   test("/api/review/", async () => {
     console.log(
-      `9. 리뷰 삭제 테스트
+      `9. 타인 리뷰 삭제 테스트
+  i.  사용자 검증 과정에서 걸러지는지 확인합니다.`,
+    );
+    const res = await request(app)
+      .delete("/api/review/" + testId)
+      .set("authorization", wrongtoken)
+      .send();
+
+    expect(res.statusCode).toEqual(401);
+  });
+
+  test("/api/review/", async () => {
+    console.log(
+      `10. 리뷰 삭제 테스트
   i.  데이터가 삭제되었는지 확인합니다.
   ii. Response의 statusCode가 200인지 확인합니다.
   iii.삭제하는 리뷰의 ObjectId는 ${testId}입니다.`,

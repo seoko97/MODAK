@@ -1,9 +1,5 @@
 import { RequestHandler } from "express";
-
 import { UserService, userService } from "@services/user.service";
-
-import { reviewService } from "@src/services/review.service";
-
 import { ITokenUser } from "@src/types/User";
 import { checkValid } from "@src/utils/checkIdValid";
 
