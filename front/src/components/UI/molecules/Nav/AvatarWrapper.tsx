@@ -1,51 +1,81 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import NavItem from "./NavItem";
+import { useAppSelector } from "@src/store/configureStore";
+import useModal from "@src/hooks/useModal";
+import { useRouter } from "next/router";
 import Avatar from "../../atoms/Avatar";
+import Button from "../../atoms/Button";
+import Link from "../../atoms/Link";
 
-const StyledAvatar = styled.div<{ open: boolean }>`
+const StyledAvatar = styled.div<{ isOpen: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  /* 로그인 된 상태일 때 */
   position: relative;
+`;
 
-  div:last-of-type {
-    display: ${({ open }) => (open ? "block" : "none")};
-    width: 120px;
-    top: 35px;
-    position: absolute;
-    text-align: center;
-    padding: 5px;
-    box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
-    box-sizing: border-box;
-    border-radius: 4px;
-    transition: all 0.3s;
-    opacity: ${({ open }) => (open ? "1" : "0")};
+const Inner = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const MenuBox = styled.ul<{ isOpen: boolean }>`
+  display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
+  padding: 10px;
+  position: absolute;
+  width: 200px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  top: 35px;
+  right: 0;
+  color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
+  background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.PRIMARY_COLOR};
+  box-shadow: 0 3px 6px 0 hsla(0, 0%, 0%, 0.2);
+  border-radius: 5px;
+`;
+
+const MenuItem = styled.li`
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  &:not(:last-of-type) {
+    margin-bottom: 5px;
   }
-
-  li {
-    cursor: pointer;
+  & button {
+    padding: 0;
   }
 `;
 
 const AvatarWrapper = () => {
-  const [open, setOpen] = useState<boolean>(false);
-  return (
-    <StyledAvatar open={open}>
-      <div
-        onClick={() => {
-          setOpen(!open);
-        }}
-      >
-        <Avatar url="/post.jpg" alt="사진" />
-      </div>
+  const { me } = useAppSelector((state) => state.user);
+  const [isOpen, onOpen, onClose] = useModal();
+  const router = useRouter();
 
-      <div>
-        <NavItem text="마이페이지" href="/user/:id" />
-        <NavItem text="로그아웃" href="/" />
-      </div>
+  useEffect(() => {
+    onClose();
+  }, [router.asPath]);
+
+  return (
+    <StyledAvatar isOpen={isOpen}>
+      <Inner onClick={onOpen}>
+        <Avatar url={me?.profileImg as string} alt="사진" />
+      </Inner>
+      <MenuBox isOpen={isOpen}>
+        <MenuItem>
+          <span>{me?.nickname} 님</span>
+        </MenuItem>
+        <MenuItem>
+          <Link href={`/user/${me?._id}`}>마이페이지</Link>
+        </MenuItem>
+        <MenuItem>
+          <Button name="로그아웃" />
+        </MenuItem>
+      </MenuBox>
     </StyledAvatar>
   );
 };

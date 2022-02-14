@@ -63,4 +63,19 @@ const unBookmarkCamp = async (campId: string) => {
   return data;
 };
 
-export default { bookmarkCamp, getCamp, getCamps, getMainCamps, unBookmarkCamp, getUserCamps };
+const search = async (value: string) => {
+  const result = await axios.get(`camp/search/${value}`);
+  const { data } = result;
+
+  return data;
+};
+
+export default {
+  bookmarkCamp,
+  getCamp,
+  getCamps,
+  getMainCamps,
+  unBookmarkCamp,
+  getUserCamps,
+  search,
+};

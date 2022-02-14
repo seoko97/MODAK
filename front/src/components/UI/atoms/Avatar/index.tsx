@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import Image from "next/image";
 
 interface Props {
   url: string;
@@ -8,7 +7,7 @@ interface Props {
   alt: string;
 }
 
-const StyledAvatar = styled(Image)<Pick<Props, "size">>`
+const StyledAvatar = styled.img<Pick<Props, "size">>`
   background: #ccc;
   border-radius: 50%;
   object-fit: cover;
@@ -25,6 +24,7 @@ const Avatar: FC<Props> = ({ size, url, alt }) => (
 );
 
 Avatar.defaultProps = {
+  url: "/post.jpg",
   size: 30,
 };
 

@@ -4,7 +4,6 @@ import styled from "styled-components";
 import ModalPortal from "../ModalPortal";
 
 interface Props {
-  children: React.ReactChild;
   onClick: () => void;
 }
 
@@ -17,7 +16,7 @@ const Overlay = styled.div`
   justify-content: center;
   align-items: center;
   top: 0;
-  z-index: 1001;
+  z-index: 100;
 `;
 
 const Container = styled.div`

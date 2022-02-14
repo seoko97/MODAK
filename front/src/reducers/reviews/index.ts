@@ -62,7 +62,7 @@ const reviews = createSlice({
       })
       .addCase(getMainReviews.fulfilled, (state, action) => {
         asyncFulfilled(state.getMainReviews);
-        state.mainReviews = action.payload.reviews;
+        state.mainReviews.push(...action.payload.reviews);
       })
       .addCase(getMainReviews.rejected, (state, action) => {
         asyncRejected(state.getMainReviews, action.payload as IErrPayload);
@@ -75,7 +75,7 @@ const reviews = createSlice({
       })
       .addCase(getUserReviews.fulfilled, (state, action) => {
         asyncFulfilled(state.getUserReviews);
-        state.mainReviews = action.payload.reviews;
+        state.mainReviews.push(...action.payload.reviews);
       })
       .addCase(getUserReviews.rejected, (state, action) => {
         asyncRejected(state.getUserReviews, action.payload as IErrPayload);
@@ -88,7 +88,7 @@ const reviews = createSlice({
       })
       .addCase(getCampReviews.fulfilled, (state, action) => {
         asyncFulfilled(state.getCampReviews);
-        state.mainReviews = action.payload.reviews;
+        state.mainReviews.push(...action.payload.reviews);
       })
       .addCase(getCampReviews.rejected, (state, action) => {
         asyncRejected(state.getCampReviews, action.payload as IErrPayload);

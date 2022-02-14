@@ -6,7 +6,7 @@ const useThrottle = <T>(callback: ICallback<T>, limit = 100) => {
   const [waiting, setWaiting] = useState<boolean>(false);
 
   const onThrottle = useCallback(
-    (...data) => {
+    async (...data) => {
       if (!waiting) {
         callback(...data);
         setWaiting(true);
