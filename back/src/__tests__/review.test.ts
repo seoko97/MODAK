@@ -46,14 +46,14 @@ describe("review test", () => {
   test("/api/review/user/:id", async () => {
     console.log(
       `3. 존재하지 않는 사용자가 작성한 리뷰들을 받아오는 테스트
-  i.  Response에 "유효하지 않은 정보입니다."가 포함되어있는지 확인합니다.
+  i.  Response에 "존재하지 않는 사용자입니다."가 포함되어있는지 확인합니다.
   ii. Response의 statusCode가 401인지 확인합니다.`,
     );
     const res = await request(app)
       .get("/api/review/user/" + wronguser)
       .send();
 
-    expect(res.text).toContain("유효하지 않은 정보입니다.");
+    expect(res.text).toContain("존재하지 않는 사용자입니다.");
     expect(res.statusCode).toEqual(401);
   });
 
@@ -74,14 +74,14 @@ describe("review test", () => {
   test("/api/review/camp/:id", async () => {
     console.log(
       `5. 존재하지 않는 캠핑장에 작성된 리뷰들을 받아오는 테스트
-  i.  Response에 "유효하지 않은 정보입니다."가 포함되어있는지 확인합니다.
+  i.  Response에 "존재하지 않는 캠핑장입니다."가 포함되어있는지 확인합니다.
   ii. Response의 statusCode가 401인지 확인합니다.`,
     );
     const res = await request(app)
       .get("/api/review/camp/" + wrongcampsite)
       .send();
 
-    expect(res.text).toContain("유효하지 않은 정보입니다.");
+    expect(res.text).toContain("존재하지 않는 캠핑장입니다.");
     expect(res.statusCode).toEqual(401);
   });
 
