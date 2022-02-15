@@ -39,6 +39,10 @@ const SelectBoxWrapper = styled.div`
     position: absolute;
     right: 10px;
   }
+
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    width: 120px;
+  }
 `;
 
 const DropDownSelect = styled.select`

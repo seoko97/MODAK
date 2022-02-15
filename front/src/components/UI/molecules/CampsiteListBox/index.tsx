@@ -51,10 +51,6 @@ const CampSiteListBox = ({
           <InfoTable>
             <tbody>
               <tr>
-                <th>캠핑 타입</th>
-                <td>{category}</td>
-              </tr>
-              <tr>
                 <th>주소</th>
                 <td>{tel}</td>
               </tr>
@@ -92,12 +88,9 @@ export default CampSiteListBox;
 
 const CardWrapper = styled.div`
   display: flex;
-  width: 90%;
-  height: 250px;
   margin: 30px auto 0;
   padding-bottom: 30px;
   border-bottom: 1px dotted #c0c0c0;
-  overflow: hidden;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   transition: 0.3s transform;
   font-size: 20px;
@@ -108,23 +101,39 @@ const CardWrapper = styled.div`
   }
 
   @media screen and (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    width: 90%;
-    height: 150px;
+    flex-direction: column;
+    height: auto;
+    font-size: 1.5rem;
+  }
+  @media screen and (max-width: ${({ theme }) => theme.BP.MOBILE}) {
     font-size: 1rem;
   }
 `;
 
 const ImgWrapper = styled.div`
-  min-width: 250px;
+  width: 40%;
+  margin-right: 1em;
+  position: relative;
+
+  &:before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+  }
 
   & > img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
   @media screen and (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    min-width: 150px;
+    width: auto;
+    height: auto;
+    margin-right: 0;
   }
 `;
 
@@ -132,7 +141,7 @@ const CampSiteInfo = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  padding: 1em 1.5em;
+  padding: 1em 0;
   font-size: 0.8em;
 `;
 
@@ -142,7 +151,8 @@ const CardInfoHeader = styled.div`
   align-items: center;
   margin-bottom: 10px;
 
-  & > h3 {
+  h3 {
+    font-size: 1.2em;
     font-weight: 700;
   }
 `;
@@ -153,7 +163,7 @@ const InfoTable = styled.table`
 
   & th {
     text-align: left;
-    width: 50%;
+    width: 30%;
   }
 
   & td {

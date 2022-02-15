@@ -87,6 +87,9 @@ const StyledFilterList = styled.div`
 `;
 
 const FilterName = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   min-width: 100px;
   font-size: 20px;
 
@@ -95,9 +98,7 @@ const FilterName = styled.div`
   }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+    font-size: 15px;
 
     #burger {
       display: flex;
