@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import Link from "next/link";
 import React, { memo, ReactElement, useState } from "react";
-import SubTitle from "@atoms/SubTitle";
+import SubTitle from "@src/components/UI/atoms/SubTitle";
 import HeartIcon from "@src/components/icons/HeartIcon";
 import PencilIcon from "@src/components/icons/PencilIcon";
-import MyPageProfile from "../../molecules/MypageProfile";
-import Title from "../../atoms/Title";
-import Tabs from "../Tabs";
+import MyPageProfile from "@src/components/UI/molecules/MypageProfile";
+import Title from "@src/components/UI/atoms/Title";
+import Tabs from "@src/components/UI/organisms/Tabs";
 
 export type TabList = {
   "내 리뷰": ReactElement;
@@ -94,8 +94,8 @@ const MyPage = () => {
         인스타그램 : https://www.instagram.com/88_leeq
       </ReviewPost>
       <PhotoBox>
-        {photos.map((photo) => (
-          <img key={1} src={photo} alt="reviewPhoto" />
+        {photos.map((photo, idx) => (
+          <img key={idx} src={photo} alt="reviewPhoto" />
         ))}
       </PhotoBox>
     </Review>

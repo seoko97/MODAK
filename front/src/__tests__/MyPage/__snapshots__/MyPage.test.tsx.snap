@@ -1,0 +1,193 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`마이페이지 테스트 렌더 확인 1`] = `
+<div
+  className="sc-hiCibw jCSzyP"
+>
+  <figure
+    className="sc-hGPBjI kQunSb"
+  >
+    <div
+      className="sc-dlVxhl cppKdq"
+    >
+      <img
+        className="sc-kfPuZi hiqZvz"
+        src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+      />
+    </div>
+    <figcaption
+      className="sc-fKVqWL eSWZZJ"
+    >
+      <div
+        className="sc-bBHxTw bNEYYp"
+      >
+        <h2
+          className="sc-dJjYzT jVyhIY"
+          size={14}
+        >
+          현
+        </h2>
+        <button
+          className="sc-llYSUQ ixogRH"
+          onClick={[Function]}
+        >
+          <svg
+            className="sc-dkPtRN jediSo"
+            height={13}
+            viewBox="0 0 24 24"
+            width={13}
+          >
+            <path
+              d="M14.078 7.061l2.861 2.862-10.799 10.798-3.584.723.724-3.585 10.798-10.798zm0-2.829l-12.64 12.64-1.438 7.128 7.127-1.438 12.642-12.64-5.691-5.69zm7.105 4.277l2.817-2.82-5.691-5.689-2.816 2.817 5.69 5.692z"
+            />
+          </svg>
+        </button>
+      </div>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eveniet magnam dolor quasi laboriosam, qui facere deleniti, assumenda eius, expedita quisquam sit. Vitae veniam corrupti voluptatum laboriosam culpa, accusantium quia!
+      </p>
+      <div
+        className="sc-iwjdpV hvqBzd"
+      >
+        <div
+          className="sc-cxpSdN kimslQ"
+        >
+          <svg
+            className="sc-dkPtRN jediSo"
+            height={13}
+            viewBox="0 0 24 24"
+            width={13}
+          >
+            <path
+              d="M14.078 7.061l2.861 2.862-10.799 10.798-3.584.723.724-3.585 10.798-10.798zm0-2.829l-12.64 12.64-1.438 7.128 7.127-1.438 12.642-12.64-5.691-5.69zm7.105 4.277l2.817-2.82-5.691-5.689-2.816 2.817 5.69 5.692z"
+            />
+          </svg>
+           10
+        </div>
+        <div
+          className="sc-cxpSdN kimslQ"
+        >
+          <svg
+            className="sc-gsDKAQ dgFSI"
+            height={13}
+            viewBox="0 0 24 24"
+            width={13}
+          >
+            <path
+              d="M6.28 3c3.236.001 4.973 3.491 5.72 5.031.75-1.547 2.469-5.021 5.726-5.021 2.058 0 4.274 1.309 4.274 4.182 0 3.442-4.744 7.851-10 13-5.258-5.151-10-9.559-10-13 0-2.676 1.965-4.193 4.28-4.192zm.001-2c-3.183 0-6.281 2.187-6.281 6.192 0 4.661 5.57 9.427 12 15.808 6.43-6.381 12-11.147 12-15.808 0-4.011-3.097-6.182-6.274-6.182-2.204 0-4.446 1.042-5.726 3.238-1.285-2.206-3.522-3.248-5.719-3.248z"
+            />
+          </svg>
+           10
+        </div>
+      </div>
+    </figcaption>
+  </figure>
+  <div
+    className="sc-iJKOTD kJzskW"
+    role="tablist"
+  >
+    <span
+      className="sc-giYglK khYqMr"
+      onClick={[Function]}
+      role="tab"
+    >
+      내 리뷰
+    </span>
+    <span
+      className="sc-giYglK bFydIH"
+      onClick={[Function]}
+      role="tab"
+    >
+      나의 캠핑 기록
+    </span>
+    <span
+      className="sc-giYglK bFydIH"
+      onClick={[Function]}
+      role="tab"
+    >
+      찜한 캠핑장
+    </span>
+  </div>
+  <section
+    className="sc-gWXbKe kiesWM"
+  >
+    <div
+      className="sc-kLwhqv dfBskY"
+    >
+      <h2
+        className="sc-bdvvtL cImVWW"
+        size={14}
+      >
+        2022-01-28
+      </h2>
+      <a
+        href="/#"
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+      >
+        @장호비치캠핑장
+      </a>
+      <div
+        className="sc-ezbkAF dfjDAi"
+      >
+        <div
+          className="sc-bYoBSM hJGekO"
+        >
+          <svg
+            className="sc-gsDKAQ dgFSI"
+            height={13}
+            viewBox="0 0 24 24"
+            width={13}
+          >
+            <path
+              d="M6.28 3c3.236.001 4.973 3.491 5.72 5.031.75-1.547 2.469-5.021 5.726-5.021 2.058 0 4.274 1.309 4.274 4.182 0 3.442-4.744 7.851-10 13-5.258-5.151-10-9.559-10-13 0-2.676 1.965-4.193 4.28-4.192zm.001-2c-3.183 0-6.281 2.187-6.281 6.192 0 4.661 5.57 9.427 12 15.808 6.43-6.381 12-11.147 12-15.808 0-4.011-3.097-6.182-6.274-6.182-2.204 0-4.446 1.042-5.726 3.238-1.285-2.206-3.522-3.248-5.719-3.248z"
+            />
+          </svg>
+           10
+        </div>
+      </div>
+    </div>
+    <div
+      className="sc-cCcXHH jRHfmS"
+    >
+      안녕하세요! 저번 주말 선재도의 트리 캠핑장에 다녀왔습니다.
+      <br />
+      여기는 경기도 지역 오션뷰 캠핑장으로 정말 유명한 곳인데요.
+      <br />
+      홈페이지에서 예약할 때 정보가 별로 없다보니 어떤자리를 예약하는게 좋을지 분간이 잘 안되서 영상을 직접 찍게 되었습니다.
+      <br />
+      <br />
+      이 곳은 정말 숲 속에 있는 분위기에 바다까지 볼 수 있어서 낭만적인 분위기를 연출할 수 있는 곳입니다.
+      <br />
+      또한 겨울에 와서 그런지 벌레도 전혀 없고 한적해서 정말 좋았어요.
+      <br />
+      시도 때도 없이 날아다니는 비행기 소리가 조금 거슬리긴 하지만..
+      <br />
+      인천지역 트리 캠핑장 추천합니다!
+      <br />
+      <br />
+      =======================================================================================================
+      <br />
+      E=MAIL : 88leeq@naver.com
+      <br />
+      인스타그램 : https://www.instagram.com/88_leeq
+    </div>
+    <div
+      className="sc-jJoQJp llNRkl"
+    >
+      <img
+        alt="reviewPhoto"
+        src="https://images.unsplash.com/photo-1594495894542-a46cc73e081a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
+      />
+      <img
+        alt="reviewPhoto"
+        src="https://images.unsplash.com/photo-1563299796-17596ed6b017?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+      />
+      <img
+        alt="reviewPhoto"
+        src="https://images.unsplash.com/photo-1475483768296-6163e08872a1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+      />
+    </div>
+  </section>
+</div>
+`;
