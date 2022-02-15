@@ -6,7 +6,7 @@ type ReturnTypes = [string, CallbackFC, Dispatch<SetStateAction<string>>];
 const useInput = (initialValue = ""): ReturnTypes => {
   const [value, setter] = useState<string>(initialValue);
   const handler = useCallback((e) => {
-    setter(e.terget.value);
+    setter(e.target.value);
   }, []);
   return [value, handler, setter];
 };

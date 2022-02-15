@@ -5,11 +5,10 @@ const GlobalStyle = createGlobalStyle`
     ${reset}
 
       body {
-        overflow-y: overlay;
+        overflow-y: auto;
         margin: 0;
         font-size: 14px;
         line-height: 1.5715;
-        user-select: none;
       }
 
       body,
@@ -34,6 +33,7 @@ const GlobalStyle = createGlobalStyle`
       }
       & * {
         font-family: "Quicksand", "Noto Sans KR", sans-serif !important;
+        box-sizing: border-box;
       }
 `;
 
