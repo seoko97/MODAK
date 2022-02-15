@@ -1,9 +1,9 @@
+import React, { useState } from "react";
+import styled, { css } from "styled-components";
 import HearctIcon from "@src/components/icons/HeartIcon";
 import PencilIcon from "@src/components/icons/PencilIcon";
 import UserUpdate from "@src/components/modals/UserUpdateForm";
 import useModal from "@src/hooks/useInput";
-import React, { useState } from "react";
-import styled, { css } from "styled-components";
 import Title from "../../atoms/Title";
 
 // --- 프로필 컨테이너 ---
