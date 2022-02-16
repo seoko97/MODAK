@@ -7,7 +7,7 @@ export interface UserReviewProps {
 
 export interface CampReviewProps {
   campId: string;
-  lastId: string;
+  lastId?: string;
 }
 
 export type ReviewDTO = Pick<IReview, "content" | "location" | "rating" | "photos">;

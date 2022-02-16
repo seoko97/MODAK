@@ -32,7 +32,8 @@ const reviewImageUpload = async (body: FormData[]) => {
 
 // 캠핑장 페이지 리뷰
 const getCampReviews = async ({ campId, lastId }: CampReviewProps) => {
-  const result = await axios.get(`review/camp/${campId}?lastId=${lastId}`);
+  const query = lastId ? `?lastId=${lastId}` : "";
+  const result = await axios.get(`review/camp/${campId}${query}`);
   const { data } = result;
 
   return data;
@@ -64,7 +65,7 @@ const deleteReivew = async (id: string) => {
 
 // 좋아요
 const likeReview = async (id: string) => {
-  const result = await axios.put(`review/${id}/like`);
+  const result = await axios.patch(`review/${id}/like`);
   const { data } = result;
 
   return data;
@@ -72,7 +73,7 @@ const likeReview = async (id: string) => {
 
 // 좋아요 취소
 const unLikeReview = async (id: string) => {
-  const result = await axios.put(`review/${id}/unlike`);
+  const result = await axios.patch(`review/${id}/unlike`);
   const { data } = result;
 
   return data;
