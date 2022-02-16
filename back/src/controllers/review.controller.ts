@@ -36,7 +36,7 @@ export class ReviewController {
       return next({ message: "유효하지 않은 정보입니다." });
 
     const query = { location } as IKeyValueString;
-    lastId && (query._id = { $gt: lastId });
+    lastId && (query._id = { $lt: lastId });
 
     const reviews = await this.reviewService.getReviewsByQuery(query, { count: -1, _id: -1 }, 10);
 
@@ -47,7 +47,7 @@ export class ReviewController {
     const { lastId } = req.query;
     const { id } = req.params;
 
-    if (checkValid(id) || (lastId && !checkValid(lastId as string)))
+    if (!checkValid(id) || (lastId && !checkValid(lastId as string)))
       return next({ message: "유효하지 않은 정보입니다." });
 
     const query = { author: id } as IKeyValueString;
@@ -71,8 +71,12 @@ export class ReviewController {
       photos,
       author: _id,
     });
+
     await this.userService.updateByQuery({ _id }, { $inc: { reviewCount: 1 } });
-    await this.campsiteService.update(campId, { $inc: { totalReview: 1 } });
+    await this.campsiteService.update(campId, {
+      $push: { photo: { $each: photos } },
+      $inc: { totalReview: 1 },
+    });
 
     res.send({ status: true, review });
   };

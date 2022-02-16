@@ -23,6 +23,14 @@ export class CampsiteService {
       .limit(limit);
   }
 
+  async getCampsByKeyword(word: string) {
+    const camps = await this.campsiteModel
+      .find({ name: { $regex: word } }, { _id: 1, name: 1, lineIntro: 1 })
+      .limit(5);
+
+    return camps;
+  }
+
   async create(data: ICampsiteDTO) {
     return await this.campsiteModel.findOrCreate(data);
   }

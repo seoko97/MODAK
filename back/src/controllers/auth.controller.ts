@@ -5,7 +5,7 @@ import { userService, UserService } from "@services/user.service";
 import { ITokenUser } from "~types/User";
 
 const EXPIRED = {
-  access: 1000 * 60 * 20,
+  access: 1000 * 60 * 60,
   refresh: 1000 * 60 * 60 * 24 * 14,
 };
 
