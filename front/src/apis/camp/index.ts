@@ -10,8 +10,9 @@ export const getCampQuery = (data: KeyValueStr) => {
 
   const arr = list.map((el) => {
     const e = data[el];
-    if (typeof e === "string" || e instanceof String) return `${el}=${e}`;
-    const a = (data[el] as string[]).map((k) => `${el}=${k}`);
+    if (el === "lastId") return `${el}=${e}`;
+    if (typeof e === "string" || e instanceof String) return `${el}=${encodeURI(e as string)}`;
+    const a = (data[el] as string[]).map((k) => `${el}=${encodeURI(k)}`);
     return a.join("&");
   });
   return arr.join("&");
@@ -19,7 +20,7 @@ export const getCampQuery = (data: KeyValueStr) => {
 
 // 캠핑장 목록
 const getCamps = async ({ ...query }: CampQueryData) => {
-  const queryStr = getCampQuery(query as KeyValueStr);
+  const queryStr = getCampQuery(query as KeyValueStr).trim();
   const result = await axios.get(`camp?${queryStr}`);
   const { data } = result;
 
