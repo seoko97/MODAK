@@ -6,7 +6,7 @@ interface Props {
   onClick: (tab: string) => void;
 }
 
-const tabs = ["전체", "또 가고 싶어요", "평범해요", "최악입니다"];
+const tabs = ["전체", "또 가고 싶어요", "평범해요", "별로에요"];
 
 const Tap = ({ current, onClick }: Props) => {
   return (

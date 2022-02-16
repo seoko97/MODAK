@@ -10,11 +10,11 @@ interface Props {
 
 const Rating = ({ rating }: Props) => {
   switch (rating) {
-    case "best":
+    case "또 가고 싶어요":
       return <Smile />;
-    case "normal":
+    case "평범해요":
       return <Noraml />;
-    case "angry":
+    case "별로에요":
       return <Angry />;
     default:
       return <Noraml />;
@@ -45,7 +45,7 @@ const Angry = () => {
   return (
     <RowIconWrapper>
       <AngryIcon size={40} />
-      <span>최악입니다</span>
+      <span>별로에요</span>
     </RowIconWrapper>
   );
 };
