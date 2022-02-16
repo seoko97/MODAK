@@ -10,6 +10,7 @@ import {
   wronguser,
   token,
   wrongtoken,
+  tokenB,
 } from "./test.config";
 
 let testReviewObjectId = "";
@@ -116,6 +117,28 @@ describe("리뷰 PUT 테스트", () => {
 
     expect(res.statusCode).toEqual(401);
     expect(res.text).toContain("로그인이 필요합니다.");
+  });
+});
+
+describe("리뷰 PATCH 테스트", () => {
+  test("1. 리뷰 좋아요 테스트", async () => {
+    const res = await request(app)
+      .patch("/api/review/" + testReviewObjectId + "/like")
+      .set("authorization", tokenB)
+      .send();
+
+    console.log(res.text);
+    expect(res.statusCode).toEqual(200);
+  });
+
+  test("2. 리뷰 좋아요 취소 테스트", async () => {
+    const res = await request(app)
+      .patch("/api/review/" + testReviewObjectId + "/unlike")
+      .set("authorization", tokenB)
+      .send();
+
+    console.log(res.text);
+    expect(res.statusCode).toEqual(200);
   });
 });
 
