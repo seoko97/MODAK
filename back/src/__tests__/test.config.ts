@@ -9,7 +9,7 @@ const token =
 const tokenB =
   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjA3YTc5MGIxNmY4NjlhYTIyMTZiMjIiLCJpYXQiOjE2NDQ4MDExNjYsImV4cCI6MTY0NjAxMDc2Nn0.Mu1y5PdzdNjVVsTtdkCbVrgro31CPUdnuHlqbNkPjEE";
 const wrongtoken = "";
-const keyword = "당진";
+const keyword = encodeURI("당진");
 /*
  *   campsite: 올바른 Campsite ObjectId
  *   wrongcampsite: 올바르지 않은 Campsite ObjectId

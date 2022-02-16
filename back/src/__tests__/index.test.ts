@@ -5,7 +5,7 @@ import { configs } from "@utils/constants";
 
 describe("GET /", () => {
   beforeAll(async () => {
-    await mongoose.connect(configs.DB_URL).then(() => console.log("데이터베이스 연결 성공"));
+    await mongoose.connect(configs.DB_URL);
   });
 
   afterAll(async () => {
