@@ -10,12 +10,13 @@ import {
   wronguser,
   token,
   wrongtoken,
+  tokenB,
 } from "./test.config";
 
 let testReviewObjectId = "";
 
 beforeAll(async () => {
-  await mongoose.connect(configs.DB_URL).then(() => console.log("데이터베이스 연결 성공"));
+  await mongoose.connect(configs.DB_URL);
 });
 
 describe("리뷰 GET 테스트", () => {
@@ -28,9 +29,7 @@ describe("리뷰 GET 테스트", () => {
   });
 
   test("2. 특정 사용자가 작성한 리뷰들을 받아오는 테스트", async () => {
-    const res = await request(app)
-      .get("/api/review/user/" + user)
-      .send();
+    const res = await request(app).get(`/api/review/user/${user}`).send();
 
     expect(res.statusCode).toEqual(200);
     expect(res.text).toContain("reviews");
@@ -38,9 +37,7 @@ describe("리뷰 GET 테스트", () => {
   });
 
   test("3. 존재하지 않는 사용자가 작성한 리뷰들을 받아오는 테스트", async () => {
-    const res = await request(app)
-      .get("/api/review/user/" + wronguser)
-      .send();
+    const res = await request(app).get(`/api/review/user/${wronguser}`).send();
 
     expect(res.statusCode).toEqual(401);
     expect(res.text).toContain("존재하지 않는 사용자입니다.");
@@ -48,9 +45,7 @@ describe("리뷰 GET 테스트", () => {
   });
 
   test("4. 특정 캠핑장에 작성된 리뷰들을 받아오는 테스트", async () => {
-    const res = await request(app)
-      .get("/api/review/camp/" + campsite)
-      .send();
+    const res = await request(app).get(`/api/review/camp/${campsite}`).send();
 
     expect(res.statusCode).toEqual(200);
     expect(res.text).toContain("reviews");
@@ -58,9 +53,7 @@ describe("리뷰 GET 테스트", () => {
   });
 
   test("5. 존재하지 않는 캠핑장에 작성된 리뷰들을 받아오는 테스트", async () => {
-    const res = await request(app)
-      .get("/api/review/camp/" + wrongcampsite)
-      .send();
+    const res = await request(app).get(`/api/review/camp/${wrongcampsite}`).send();
 
     expect(res.statusCode).toEqual(401);
     expect(res.text).toContain("존재하지 않는 캠핑장입니다.");
@@ -82,10 +75,8 @@ describe("리뷰 POST 테스트", () => {
         author: user,
       });
 
-    testReviewObjectId = res.text.slice(
-      res.text.indexOf(`,"_id":"`) + 8,
-      res.text.indexOf(`,"_id":"`) + 32,
-    );
+    testReviewObjectId = JSON.parse(res.text).review._id;
+
     expect(res.statusCode).toEqual(200);
     expect(res.text).toContain(campsiteName);
   });
@@ -94,7 +85,7 @@ describe("리뷰 POST 테스트", () => {
 describe("리뷰 PUT 테스트", () => {
   test("1. 리뷰 수정 테스트", async () => {
     const res = await request(app)
-      .put("/api/review/" + testReviewObjectId)
+      .put(`/api/review/${testReviewObjectId}`)
       .set("authorization", token)
       .send({
         content: "test - updated",
@@ -110,7 +101,7 @@ describe("리뷰 PUT 테스트", () => {
 
   test("2. 비 로그인 시, 리뷰 수정 테스트", async () => {
     const res = await request(app)
-      .delete("/api/review/" + testReviewObjectId)
+      .delete(`/api/review/${testReviewObjectId}`)
       .set("authorization", wrongtoken)
       .send();
 
@@ -119,13 +110,38 @@ describe("리뷰 PUT 테스트", () => {
   });
 });
 
+describe("리뷰 PATCH 테스트", () => {
+  test("1. 리뷰 좋아요 테스트", async () => {
+    const res = await request(app)
+      .patch(`/api/review/${testReviewObjectId}/like`)
+      .set("authorization", tokenB)
+      .send();
+
+    expect(res.statusCode).toEqual(200);
+  });
+
+  test("2. 리뷰 좋아요 취소 테스트", async () => {
+    const res = await request(app)
+      .patch(`/api/review/${testReviewObjectId}/unlike`)
+      .set("authorization", tokenB)
+      .send();
+
+    expect(res.statusCode).toEqual(200);
+  });
+});
+
 describe("리뷰 DELETE 테스트", () => {
   test("1. 리뷰 삭제 테스트", async () => {
     const res = await request(app)
-      .delete("/api/review/" + testReviewObjectId)
+      .delete(`/api/review/${testReviewObjectId}`)
       .set("authorization", token)
       .send();
 
     expect(res.statusCode).toEqual(200);
   });
+});
+
+afterAll(async () => {
+  await mongoose.connection.close();
+  await mongoose.disconnect();
 });
