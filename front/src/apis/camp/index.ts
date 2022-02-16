@@ -51,14 +51,14 @@ const getCamp = async (campId: string) => {
 };
 
 const bookmarkCamp = async (campId: string) => {
-  const result = await axios.get(`camp/${campId}/bookmark`);
+  const result = await axios.patch(`camp/${campId}/bookmark`);
   const { data } = result;
 
   return data;
 };
 
 const unBookmarkCamp = async (campId: string) => {
-  const result = await axios.get(`camp/${campId}/bookmark`);
+  const result = await axios.patch(`camp/${campId}/bookmark`);
   const { data } = result;
 
   return data;
