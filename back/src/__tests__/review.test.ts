@@ -83,10 +83,8 @@ describe("리뷰 POST 테스트", () => {
         author: user,
       });
 
-    testReviewObjectId = res.text.slice(
-      res.text.indexOf(`,"_id":"`) + 8,
-      res.text.indexOf(`,"_id":"`) + 32,
-    );
+    testReviewObjectId = JSON.parse(res.text).review._id;
+
     expect(res.statusCode).toEqual(200);
     expect(res.text).toContain(campsiteName);
   });
@@ -127,7 +125,6 @@ describe("리뷰 PATCH 테스트", () => {
       .set("authorization", tokenB)
       .send();
 
-    console.log(res.text);
     expect(res.statusCode).toEqual(200);
   });
 
@@ -137,7 +134,6 @@ describe("리뷰 PATCH 테스트", () => {
       .set("authorization", tokenB)
       .send();
 
-    console.log(res.text);
     expect(res.statusCode).toEqual(200);
   });
 });
@@ -151,4 +147,9 @@ describe("리뷰 DELETE 테스트", () => {
 
     expect(res.statusCode).toEqual(200);
   });
+});
+
+afterAll(async () => {
+  await mongoose.connection.close();
+  await mongoose.disconnect();
 });
