@@ -9,15 +9,28 @@ const token =
 const tokenB =
   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjA3YTc5MGIxNmY4NjlhYTIyMTZiMjIiLCJpYXQiOjE2NDQ4MDExNjYsImV4cCI6MTY0NjAxMDc2Nn0.Mu1y5PdzdNjVVsTtdkCbVrgro31CPUdnuHlqbNkPjEE";
 const wrongtoken = "";
-
+const keyword = "당진";
 /*
  *   campsite: 올바른 Campsite ObjectId
  *   wrongcampsite: 올바르지 않은 Campsite ObjectId
  *   campsiteName: ObjectId가 campsite인 캠핑장의 이름
  *   user: 올바른 User ObjectId
+ *   userB: 올바른 User ObjectId
  *   wronguser: 올바르지 않은 Campsite ObjectId
  *   token: 올바른 token
- *  wrongtoken: 올바르지 않은 token
+ *   tokenB: 올바른 token
+ *   wrongtoken: 올바르지 않은 token
  */
 
-export { campsite, wrongcampsite, campsiteName, user, userB, wronguser, token, tokenB, wrongtoken };
+export {
+  campsite,
+  wrongcampsite,
+  campsiteName,
+  user,
+  userB,
+  wronguser,
+  token,
+  tokenB,
+  wrongtoken,
+  keyword,
+};
