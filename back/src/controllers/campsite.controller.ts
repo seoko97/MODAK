@@ -64,18 +64,34 @@ export class CampsiteController {
     res.json({ status: true, camp });
   };
 
-  bookmark: RequestHandler = async (req, res) => {
+  bookmark: RequestHandler = async (req, res, next) => {
     const { _id: userId } = req.user as ITokenUser;
     const { id: campId } = req.params;
+
+    const camp = await this.campsiteService.getCampsByQuery(
+      { _id: campId, bookmark: { $in: userId } },
+      {},
+      1,
+    );
+
+    if (camp[0]) return next({ message: "이미 북마크된 캠핑장입니다." });
 
     await this.campsiteService.bookmark(userId, campId);
 
     res.json({ status: true, userId, campId });
   };
 
-  unBookmark: RequestHandler = async (req, res) => {
+  unBookmark: RequestHandler = async (req, res, next) => {
     const { _id: userId } = req.user as ITokenUser;
     const { id: campId } = req.params;
+
+    const camp = await this.campsiteService.getCampsByQuery(
+      { _id: campId, bookmark: { $in: userId } },
+      {},
+      1,
+    );
+
+    if (!camp[0]) return next({ message: "북마크되지 않은 캠핑장입니다." });
 
     await this.campsiteService.unBookmark(userId, campId);
 

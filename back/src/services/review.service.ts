@@ -18,7 +18,11 @@ export class ReviewService {
   }
 
   async getReviewsByUserId(query = {}) {
-    return await this.reviewModel.find(query).limit(10);
+    return await this.reviewModel
+      .find(query)
+      .populate("author", "-refreshToken -source")
+      .populate("location")
+      .limit(10);
   }
 
   async delete(id: string) {

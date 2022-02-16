@@ -123,22 +123,39 @@ export class ReviewController {
 
     res.json({ status: true, images });
   };
-  like: RequestHandler = async (req, res) => {
+  like: RequestHandler = async (req, res, next) => {
     const { _id: userId } = req.user as ITokenUser;
     const { id: reviewId } = req.params;
+
+    const review = await this.reviewService.getReviewsByQuery(
+      { _id: reviewId, likes: { $in: userId } },
+      {},
+      1,
+    );
+
+    if (review[0]) return next({ message: "이미 추천한 리뷰입니다." });
 
     await this.reviewService.like(reviewId, userId);
 
     res.json({ status: true, userId, reviewId });
   };
 
-  unLike: RequestHandler = async (req, res) => {
-    const { _id } = req.user as ITokenUser;
-    const { id } = req.params;
+  unLike: RequestHandler = async (req, res, next) => {
+    const { _id: userId } = req.user as ITokenUser;
+    const { id: reviewId } = req.params;
 
-    await this.reviewService.unLike(id, _id);
+    const review = await this.reviewService.getReviewsByQuery(
+      { _id: reviewId, likes: { $in: userId } },
+      {},
+      1,
+    );
 
-    res.json({ status: true, userId: _id, reviewId: id });
+    // 리뷰가 존재하지 않는다면 실행함
+    if (!review[0]) return next({ message: "추천하지 않은 리뷰입니다." });
+
+    await this.reviewService.unLike(reviewId, userId);
+
+    res.json({ status: true, userId, reviewId });
   };
 }
 
