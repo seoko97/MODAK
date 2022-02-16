@@ -17,7 +17,7 @@ describe("GET /", () => {
   it("유저 정보 조회", async () => {
     const res = await request(app).get("/api/user/6205bad7f13438a35b7804ff").send();
 
-    expect(res.statusCode).toEqual(201);
+    expect(res.statusCode).toEqual(200);
   });
 
   afterAll(async () => {

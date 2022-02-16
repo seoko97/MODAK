@@ -1,6 +1,6 @@
 const campsite = "62062139f6007b0f615edb13";
 const wrongcampsite = "07b0f615e62062139f60db09";
-const campsiteName = "강원도 횡성군 갑천면 외갑천로 301";
+const campsiteName = "당평오토캠핑장";
 const user = "6205bad7f13438a35b7804ff";
 const wronguser = "620538a35bbad7f1347804ff";
 const token =

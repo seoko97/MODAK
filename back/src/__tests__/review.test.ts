@@ -54,7 +54,7 @@ describe("리뷰 GET 테스트", () => {
 
     expect(res.statusCode).toEqual(200);
     expect(res.text).toContain("reviews");
-    if (res.text.length > 40) expect(res.text).toContain(`"location":"${campsite}"`);
+    if (res.text.length > 40) expect(res.text).toContain(campsiteName);
   });
 
   test("5. 존재하지 않는 캠핑장에 작성된 리뷰들을 받아오는 테스트", async () => {
