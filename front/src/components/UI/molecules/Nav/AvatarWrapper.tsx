@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAppSelector } from "@src/store/configureStore";
 import useModal from "@src/hooks/useModal";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { signout } from "@src/reducers/user/action";
 import Avatar from "../../atoms/Avatar";
 import Button from "../../atoms/Button";
 import Link from "../../atoms/Link";
+import Overlay from "../../atoms/Overlay";
 
 const StyledAvatar = styled.div<{ isOpen: boolean }>`
   display: flex;
@@ -13,6 +16,7 @@ const StyledAvatar = styled.div<{ isOpen: boolean }>`
   align-items: center;
 
   position: relative;
+  z-index: 100;
 `;
 
 const Inner = styled.div`
@@ -55,28 +59,36 @@ const AvatarWrapper = () => {
   const { me } = useAppSelector((state) => state.user);
   const [isOpen, onOpen, onClose] = useModal();
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const onSignout = useCallback(() => {
+    dispatch(signout());
+  }, []);
 
   useEffect(() => {
     onClose();
   }, [router.asPath]);
 
   return (
-    <StyledAvatar isOpen={isOpen}>
-      <Inner onClick={onOpen}>
-        <Avatar url={me?.profileImg as string} alt="사진" />
-      </Inner>
-      <MenuBox isOpen={isOpen}>
-        <MenuItem>
-          <span>{me?.nickname} 님</span>
-        </MenuItem>
-        <MenuItem>
-          <Link href={`/user/${me?._id}`}>마이페이지</Link>
-        </MenuItem>
-        <MenuItem>
-          <Button name="로그아웃" />
-        </MenuItem>
-      </MenuBox>
-    </StyledAvatar>
+    <>
+      <StyledAvatar isOpen={isOpen}>
+        <Inner onClick={onOpen}>
+          <Avatar url={me?.profileImg as string} alt="사진" />
+        </Inner>
+        <MenuBox isOpen={isOpen}>
+          <MenuItem>
+            <span>{me?.nickname} 님</span>
+          </MenuItem>
+          <MenuItem>
+            <Link href={`/user/${me?._id}`}>마이페이지</Link>
+          </MenuItem>
+          <MenuItem>
+            <Button name="로그아웃" onClick={onSignout} />
+          </MenuItem>
+        </MenuBox>
+      </StyledAvatar>
+      {isOpen && <Overlay onClick={onClose} />}
+    </>
   );
 };
 
