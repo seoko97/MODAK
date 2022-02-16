@@ -15,7 +15,7 @@ export const asyncFulfilled = (state: ReducerInit) => {
 export const asyncRejected = (state: ReducerInit, payload: IErrPayload) => {
   const { message } = payload;
 
-  state.loading = true;
+  state.loading = false;
   state.done = false;
   state.error = message;
 };
