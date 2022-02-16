@@ -1,149 +1,37 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import Link from "next/link";
-import React, { memo, Props, ReactComponentElement, ReactElement, useState } from "react";
+import React, { memo, ReactElement, useState } from "react";
 import SubTitle from "@atoms/SubTitle";
+import HeartIcon from "@src/components/icons/HeartIcon";
+import PencilIcon from "@src/components/icons/PencilIcon";
 import MyPageProfile from "../../molecules/MypageProfile";
 import Title from "../../atoms/Title";
-import HearctIcon from "@src/components/icons/HeartIcon";
-import PencilIcon from "@src/components/icons/PencilIcon";
-import Tab from "./Tab";
-
-// --- 공통 ---
-
-// ? 아이콘
-const IconBox = styled.div`
-  display: flex;
-`;
-
-const Icons = styled.div`
-  display: flex;
-  box-sizing: border-box;
-  padding: 5px;
-  gap: 10px;
-  justify-content: center;
-  align-items: baseline;
-  font-size: 14px;
-  cursor: pointer;
-  :hover {
-    font-weight: bold;
-    & svg {
-      fill: red;
-    }
-  }
-`;
-
-// ? 캠핑 정보
-const CampInfo = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: baseline;
-`;
-
-const CampLink = styled(Link)`
-  display: flex;
-  cursor: pointer;
-`;
-
-const PhotoBox = styled.div`
-  display: flex;
-  gap: 20px;
-  & img {
-    width: 30%;
-    @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
-      width: 100%;
-      + img {
-        display: none;
-      }
-    }
-  }
-`;
-
-// --- 전체 컨테이너 ---
-const Main = styled.div`
-  padding: 20px;
-`;
-
-// --- 탭 메뉴 컨테이너 ---
-const Container = styled.article``;
-
-// --- 카테고리 ---
-const Tabs = styled.ul`
-  display: flex;
-  justify-content: center;
-  position: relative;
-  margin-bottom: 40px;
-  & ::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 1px;
-    bottom: -20px;
-    background-color: #00010d;
-  }
-`;
-const Category = styled.li`
-  text-align: center;
-  width: 100px;
-  cursor: pointer;
-  transition: color 0.1s;
-  :hover:not(.active) {
-    color: orange;
-  }
-  &.active {
-    color: green;
-  }
-`;
-
-// --- 내 리뷰 ---
-const Review = styled.section`
-  padding-left: 10px;
-  padding-right: 10px;
-  & p {
-    margin-bottom: 10px;
-  }
-`;
-
-const ReviewPost = styled.div`
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 9;
-  -webkit-box-orient: vertical;
-  word-wrap: break-word;
-  line-height: 160%;
-`;
-
-// --- 내 캠핑 기록 ---
-
-const VisitedCamp = styled.div``;
-
-// --- 찜한 캠핑장 ---
-
-const WishCamp = styled.div``;
-
-const Tags = styled.div`
-  display: flex;
-`;
-
-const OtherReview = styled.div``;
-
-const OtherLink = styled(Link)``;
-
-// @ Styled라고 다 이름 붙이지 않아도
-// @ BEM 패턴으로 작명: 관련된 애들을 묶을 수 있음
-// @ material UI...디자인 라이브러리들이 어떻게 컴포넌트 구성하는지 interface 참고
-
-// const Card = styled.div`
-// `;
-// const Title = styled.h1``;
-// Card.Title = Title;
+import Tabs from "../Tabs";
 
 export type TabList = {
   "내 리뷰": ReactElement;
   "나의 캠핑 기록": ReactElement;
   "찜한 캠핑장": ReactElement;
 };
+
+const IconComponent = () => (
+  <IconBox>
+    <Icons>
+      <PencilIcon size={13} /> 10
+    </Icons>
+    <Icons>
+      <HeartIcon size={13} /> 10
+    </Icons>
+  </IconBox>
+);
+
+const HeartIconComponent = () => (
+  <IconBox>
+    <Icons>
+      <HeartIcon size={13} /> 10
+    </Icons>
+  </IconBox>
+);
 
 const MyPage = () => {
   const review = {
@@ -185,11 +73,9 @@ const MyPage = () => {
       <CampInfo>
         <SubTitle size={14}>{createAt}</SubTitle>
         <CampLink href="#">
-          <>@장호비치캠핑장</>
+          <a>@장호비치캠핑장</a>
         </CampLink>
-        <Icons>
-          <HearctIcon size={12}></HearctIcon>14
-        </Icons>
+        <HeartIconComponent />
       </CampInfo>
       <ReviewPost>
         안녕하세요! 저번 주말 선재도의 트리 캠핑장에 다녀왔습니다.<br></br>
@@ -220,14 +106,9 @@ const MyPage = () => {
       <SubTitle>2022-01-28</SubTitle>
       <CampInfo>
         <CampLink href="#">
-          <>@캠핑장 이름/ 주소</>
+          <a>@캠핑장 이름/ 주소</a>
         </CampLink>
-        <IconBox>
-          <Icons>
-            <PencilIcon size={13} /> 10
-            <HearctIcon size={13} /> 10
-          </Icons>
-        </IconBox>
+        <IconComponent />
       </CampInfo>
     </VisitedCamp>
   );
@@ -236,16 +117,11 @@ const MyPage = () => {
     <WishCamp>
       <CampInfo>
         <CampLink href="#">
-          <>
+          <a>
             <p>@캠핑장 이름/ 주소</p>
-          </>
+          </a>
         </CampLink>
-        <IconBox>
-          <Icons>
-            <PencilIcon size={13} /> 10
-            <HearctIcon size={13} /> 10
-          </Icons>
-        </IconBox>
+        <IconComponent />
       </CampInfo>
       <Tags>#가족캠핑 #글램핑</Tags>
       <OtherReview>
@@ -275,24 +151,100 @@ const MyPage = () => {
 
   return (
     <Main>
-      <MyPageProfile></MyPageProfile>
-      <Container>
-        <Tabs>
-          <Tab current={tab} onClick={handleClick}></Tab>
-          {/* <Category className="active">
-            <Title size={14}>내 리뷰</Title>
-          </Category>
-          <Category>
-            <Title size={14}>나의 캠핑 기록</Title>
-          </Category>
-          <Category>
-            <Title size={14}>찜한 캠핑장</Title>
-          </Category> */}
-        </Tabs>
-        {tabList[tab]}
-      </Container>
+      <MyPageProfile />
+      <Tabs current={tab} onClick={handleClick}></Tabs>
+      {tabList[tab]}
     </Main>
   );
 };
+
+const IconBox = styled.div`
+  display: flex;
+`;
+
+const Icons = styled.div`
+  display: flex;
+  box-sizing: border-box;
+  padding: 5px;
+  gap: 6px;
+  justify-content: center;
+  align-items: baseline;
+  font-size: 14px;
+  cursor: pointer;
+  :hover {
+    font-weight: bold;
+  }
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    padding: 0;
+  }
+`;
+
+const CampInfo = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  margin-bottom: 14px;
+  & a {
+    color: #038c5a;
+  }
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    flex-direction: column;
+    gap: 2px;
+  }
+`;
+
+const CampLink = styled(Link)`
+  display: flex;
+  cursor: pointer;
+`;
+
+const PhotoBox = styled.div`
+  display: flex;
+  margin-top: 60px;
+  & img {
+    width: 33.3%;
+    @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+      width: 100%;
+      + img {
+        display: none;
+      }
+    }
+  }
+`;
+
+// --- 전체 컨테이너 ---
+const Main = styled.div`
+  padding: 20px;
+`;
+
+const Review = styled.section`
+  padding-left: 10px;
+  padding-right: 10px;
+  & p {
+    margin-bottom: 10px;
+  }
+`;
+
+const ReviewPost = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 9;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  line-height: 160%;
+`;
+
+const VisitedCamp = styled.div``;
+
+const WishCamp = styled.div``;
+
+const Tags = styled.div`
+  display: flex;
+`;
+
+const OtherReview = styled.div``;
+
+const OtherLink = styled(Link)``;
 
 export default memo(MyPage);
