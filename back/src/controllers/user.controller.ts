@@ -1,8 +1,15 @@
 import { RequestHandler } from "express";
+import fs from "fs";
 import { UserService, userService } from "@services/user.service";
 import { ITokenUser } from "@src/types/User";
 import { checkValid } from "@src/utils/checkIdValid";
+import resizeImage from "@src/utils/resizeImage";
 
+try {
+  fs.accessSync("uploads");
+} catch (error) {
+  fs.mkdirSync("uploads");
+}
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -33,6 +40,18 @@ export class UserController {
     const user = await this.userService.updateByQuery({ _id }, data);
 
     res.status(201).json({ status: true, user });
+  };
+
+  uploadProfileImage: RequestHandler = async (req, res, next) => {
+    const photo = req.file as Express.Multer.File;
+
+    if (!photo) return next({ message: "이미지가 존재하지 않습니다." });
+
+    await resizeImage([photo]);
+
+    const image = photo.filename;
+
+    res.json({ status: true, image });
   };
 }
 
