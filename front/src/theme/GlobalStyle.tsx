@@ -32,9 +32,15 @@ const GlobalStyle = createGlobalStyle`
         outline: none;
       }
       & * {
-        font-family: "Quicksand", "Noto Sans KR", sans-serif !important;
+        font-family:'NanumBarunGothic' sans-serif !important;
+        font-family:'NanumBarunGothicLight' !important;
+        font-family:'NanumBarunGothicBold' !important;
+        font-family: 'NanumBarunGothicExtraLight' !important; 
         box-sizing: border-box;
       }
+
+      input, textarea, button { appearance: none; -moz-appearance: none; -webkit-appearance: none; border-radius: 0; -webkit-border-radius: 0; -moz-border-radius: 0; }
+
 `;
 
 export default GlobalStyle;

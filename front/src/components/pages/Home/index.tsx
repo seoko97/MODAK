@@ -1,45 +1,77 @@
-import React, { useEffect } from "react";
+import React from "react";
+import Image from "next/image";
 import { NextPage } from "next";
-import RowFrame from "@templates/RowFrame";
+import styled from "styled-components";
 import { useAppSelector } from "@src/store/configureStore";
-import GridChooseCamp from "@src/components/UI/organisms/GridChooseCamp";
-import useScroll from "@src/hooks/useScroll";
-import useThrottle from "@src/hooks/useThrottle";
-import { useDispatch } from "react-redux";
-import { getSigninUser } from "@src/reducers/user/action";
 
-// const Home: NextPage = () => {
-//   const { mainReviews } = useAppSelector((state) => state.reviews);
-//   const { mainCamps } = useAppSelector((state) => state.camps);
-//   const dispatch = useDispatch();
-//   const [sh, ch] = useScroll();
+import RowFrame from "@templates/RowFrame";
 
-//   const throttle = useThrottle(async (asd) => {
-//     const a = await dispatch(getSigninUser());
-//   }, 1000);
+import GridChooseCamp from "@organisms/GridChooseCamp";
+import CardSlider from "@organisms/CardSlider";
 
-//   useEffect(() => {
-//     if (sh + 300 >= ch) throttle("a");
-//   }, [sh, ch]);
+import MainCampCard from "@molecules/MainCampCard";
+import MainReview from "@molecules/MainReview";
+import MainSearchForm from "@molecules/MainSearchForm";
 
-//   return (
-//     <RowFrame>
-//       <GridChooseCamp />
-//       <div style={{ height: "3000px" }} />
-//     </RowFrame>
-//   );
-// };
+const MainHeader = styled.div`
+  position: relative;
+  width: 100% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+`;
+
+const Inner = styled.div`
+  width: 100%;
+  padding: 120px 20px;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  gap: 20px;
+  text-align: center;
+
+  & > h2 {
+    font-size: 25px;
+    font-weight: bold;
+  }
+
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    padding: 120px 10px;
+    & > h2 {
+      font-size: 20px;
+    }
+  }
+`;
 
 const Home: NextPage = () => {
   const { mainReviews } = useAppSelector((state) => state.reviews);
   const { mainCamps } = useAppSelector((state) => state.camps);
-  const dispatch = useDispatch();
-  const [sh, ch] = useScroll();
 
   return (
     <RowFrame>
+      <MainHeader>
+        <Image priority={true} src="/tent.jpg" alt="cover" layout="fill" objectFit="cover" />
+        <Inner>
+          <h2>캠핑장 정보 어디에서 찾으세요?</h2>
+          <MainSearchForm />
+        </Inner>
+      </MainHeader>
       <GridChooseCamp />
-      <div style={{ height: "3000px" }} />
+      <CardSlider title="인기 캠핑장">
+        {mainCamps.map((camp) => (
+          <MainCampCard key={camp._id} camp={camp} url={`/camp/${camp._id}`} />
+        ))}
+      </CardSlider>
+      <CardSlider title="인기 리뷰">
+        {mainReviews.map((review) => (
+          <MainReview review={review} key={review._id} />
+        ))}
+      </CardSlider>
     </RowFrame>
   );
 };

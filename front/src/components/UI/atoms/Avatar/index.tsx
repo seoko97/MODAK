@@ -22,9 +22,7 @@ const StyledAvatar = styled.img<Pick<Props, "size">>`
 const Avatar: FC<Props> = ({ size, url, alt }) => (
   <StyledAvatar alt={alt} width={size} height={size} src={url} size={size as number} />
 );
-
 Avatar.defaultProps = {
-  url: "/post.jpg",
   size: 30,
 };
 

@@ -16,6 +16,10 @@ const StyledCamp = styled.div<Pick<Props, "src">>`
   height: 200px;
   position: relative;
   cursor: pointer;
+
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    height: 150px;
+  }
 `;
 
 const GridCampInfo = ({ to, title, description, src }: Props) => {
@@ -31,7 +35,4 @@ const GridCampInfo = ({ to, title, description, src }: Props) => {
   );
 };
 
-GridCampInfo.defaultProps = {
-  src: "/post.jpg",
-};
 export default GridCampInfo;

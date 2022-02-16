@@ -20,4 +20,5 @@ export interface IUserState {
   signout: ReducerInit;
   getUserInfo: ReducerInit;
   editUserInfo: ReducerInit;
+  uploadProfileImg: ReducerInit;
 }

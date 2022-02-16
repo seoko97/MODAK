@@ -4,14 +4,14 @@ import axios from "axios";
 // 로그인 유저 정보
 const getSinginUser = async () => {
   const result = await axios.get("user");
-  const { data } = result;
 
-  return data;
+  return result;
 };
 
 // 유저 정보
 const getUserInfo = async (id: string) => {
   const result = await axios.get(`user/${id}`);
+
   const { data } = result;
 
   return data;
@@ -33,4 +33,12 @@ const signout = async () => {
   return data;
 };
 
-export default { editUserInfo, getSinginUser, getUserInfo, signout };
+// 이미지 업로드
+const patchProfileImage = async (body: FormData) => {
+  const result = await axios.post("user/image", body);
+  const { data } = result;
+
+  return data;
+};
+
+export default { editUserInfo, getSinginUser, getUserInfo, signout, patchProfileImage };
