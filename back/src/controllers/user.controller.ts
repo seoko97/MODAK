@@ -10,7 +10,7 @@ export class UserController {
     const { _id } = req.user as ITokenUser;
     const user = await this.userService.getById(_id, { refreshToken: 0 });
 
-    res.status(201).json({ status: true, user });
+    res.status(200).json({ status: true, user });
   };
 
   getUserInfo: RequestHandler = async (req, res, next) => {
@@ -19,7 +19,7 @@ export class UserController {
     if (!checkValid(id)) return next({ message: "존재하지 않는 유저입니다." });
     const user = await this.userService.getById(id, { refreshToken: 0 });
 
-    res.status(201).json({ status: true, user });
+    res.status(200).json({ status: true, user });
   };
 
   editUserInformation: RequestHandler = async (req, res, next) => {
