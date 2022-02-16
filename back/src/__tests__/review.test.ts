@@ -1,6 +1,6 @@
-import app from "@src/app";
 import mongoose from "mongoose";
 import request from "supertest";
+import app from "@src/app";
 import { configs } from "@utils/constants";
 import {
   campsite,
@@ -12,7 +12,6 @@ import {
   wrongtoken,
 } from "./test.config";
 
-const doublequote = '"';
 let testReviewObjectId = "";
 
 beforeAll(async () => {
@@ -83,7 +82,10 @@ describe("리뷰 POST 테스트", () => {
         author: user,
       });
 
-    testReviewObjectId = res.text.split(doublequote)[91];
+    testReviewObjectId = res.text.slice(
+      res.text.indexOf(`,"_id":"`) + 8,
+      res.text.indexOf(`,"_id":"`) + 32,
+    );
     expect(res.statusCode).toEqual(200);
     expect(res.text).toContain(campsiteName);
   });
