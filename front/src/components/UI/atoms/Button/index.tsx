@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 interface Props extends HTMLProps<HTMLButtonElement> {
   name: string;
-  onClick?: () => void;
+  onClick: () => void;
   type?: "button" | "submit";
 }
 
@@ -39,4 +39,4 @@ Button.defaultProps = {
   type: "button",
 };
 
-export default memo(Button);
+export default Button;

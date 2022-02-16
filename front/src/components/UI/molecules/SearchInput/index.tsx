@@ -17,6 +17,7 @@ const StyledInputBox = styled.div`
   margin-left: 40px;
   position: relative;
   width: 100%;
+  max-width: 400px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -108,6 +109,7 @@ const InputWrapper = () => {
             onChange={onChangeValue}
             placeholder="어디로 가시나요?"
             ref={inputRef}
+            onFocus={onOpen}
           />
         </InputInner>
         {isOpen && (

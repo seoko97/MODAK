@@ -20,6 +20,7 @@ export interface ICamp {
   bookmark: string[];
   views: number;
   totalReview: number;
+  totalBookmark: number;
   createdAt: Date;
   updatedAt: Date;
 }

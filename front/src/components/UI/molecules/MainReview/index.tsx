@@ -1,57 +1,59 @@
 import Link from "@atoms/Link";
 import React from "react";
 import styled from "styled-components";
-import Image from "next/image";
+import { IReview } from "@src/types/reducers/review";
+import { url } from "@src/apis";
+import Avatar from "@atoms/Avatar";
+
 import LocationIcon from "@icons/LocationIcon";
 import CalendarIcon from "@icons/CalendarIcon";
 import HeartIcon from "@icons/HeartIcon";
-import Avatar from "../../atoms/Avatar";
 
 interface Props {
-  to: string; // 클릭 시 이동하는 곳
-  author: string; // 사용해서 profile과 name 가져오기(임시)
-  createAt: string;
-  content: string;
-  likes: number; // string[] (임시)
-  url: string;
+  review: IReview;
 }
+const limitStr = (str: string) => (str.length >= 25 ? `${str.substring(0, 25)}...` : str);
 
-const MainReview = ({ to, author, content, createAt, likes, url }: Props) => {
+const MainReview = ({ review }: Props) => {
+  const { author, content, count, photos, createdAt, location } = review;
+  const { nickname, profileImg } = author;
+
   return (
     <>
-      <Link href={to}>
+      <Link href={`/camp/${location._id}`}>
         <StyledMainReviewContainer>
-          {/* 카드 이미지 */}
           <StyledCardImage>
-            <Image alt="Mountains" src="/post.jpg" layout="fill" objectFit="cover" />
+            <div>
+              <img alt="Mountains" src={photos[0] ? `${url}/${photos[0]}` : "/tent.jpg"} />
+            </div>
           </StyledCardImage>
 
           {/* 카드내용 : 유저정보, 리뷰정보로 구성 */}
           <StyledCardContentBox>
             <StyledUserInfo>
-              <Avatar url="/post.jpg" alt="사진" />
-              <span>홍길동홍길동홍길동홍</span>
+              <Avatar url={profileImg} alt="사진" />
+              <span>{nickname}</span>
             </StyledUserInfo>
 
             <StyledReviewInfo>
               <StyledReviewIconBox>
                 <LocationIcon size={20} />
-                <span>캠프여주</span>
+                <span>{location.name}</span>
               </StyledReviewIconBox>
 
               <div>
-                <p>시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.</p>
+                <p>{limitStr(content)}</p>
               </div>
 
               <StyledDateLike>
                 <StyledReviewIconBox>
                   <CalendarIcon size={20} />
-                  <span>22.02.03</span>
+                  <span>{String(createdAt).substring(0, 10)}</span>
                 </StyledReviewIconBox>
 
                 <StyledReviewIconBox>
                   <HeartIcon size={20} />
-                  <span>123,456</span>
+                  <span>{count.toLocaleString()}</span>
                 </StyledReviewIconBox>
               </StyledDateLike>
             </StyledReviewInfo>
@@ -62,39 +64,44 @@ const MainReview = ({ to, author, content, createAt, likes, url }: Props) => {
   );
 };
 
-MainReview.defaultProps = {
-  to: "#",
-  author: "홍길동홍길동홍길동홍길동홍길동홍길동홍길동",
-  content:
-    "시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.시설이 너무 좋습니다.",
-  createAt: "22.02.03",
-  likes: 123456,
-  url: "/post.jpg",
-};
-
 export default MainReview;
 
 // 리뷰 컨테이너
 const StyledMainReviewContainer = styled.div`
-  position: relative;
-  width: 320px; // 추후 수정
-  height: 480px; // 추후 수정
-
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+  width: 95%;
+  margin: 0 auto;
   border-radius: 8px;
+  box-shadow: 1px 2px 6px 0px rgb(158 154 153 / 32%);
+
+  & * {
+    color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
+  }
+
   cursor: pointer;
 `;
 
 const StyledCardImage = styled.div`
-  position: relative;
   width: 100%;
-  flex: 1;
+
+  & > div {
+    position: relative;
+    width: 100%;
+    padding-bottom: 200px;
+  }
 
   & img {
     border-radius: 8px 8px 0 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: ${({ theme }) => theme.BP.PC}) {
+    & > div {
+      padding-bottom: 70%;
+      max-height: 320px;
+    }
   }
 `;
 
@@ -103,8 +110,8 @@ const StyledCardContentBox = styled.div`
   height: 50%;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
   padding: 20px;
+  gap: 10px;
 
   & > div:first-of-type {
     margin-bottom: 10px;
@@ -124,7 +131,7 @@ const StyledReviewInfo = styled.div`
   flex: 1;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  gap: 20px;
 `;
 
 const StyledDateLike = styled.div`
@@ -136,8 +143,9 @@ const StyledDateLike = styled.div`
 
 const StyledReviewIconBox = styled.div`
   display: flex;
-  /* justify-content: flex-end; */
+  width: auto;
   align-items: center;
+
   gap: 5px;
   color: #757575;
 
@@ -145,7 +153,8 @@ const StyledReviewIconBox = styled.div`
     fill: #757575;
   }
 
-  div + span {
+  & > span {
+    line-height: 1;
     font-size: 14px;
   }
 `;
