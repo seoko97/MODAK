@@ -6,7 +6,7 @@ import { authService } from "@services/auth.service";
 import { ITokenUser } from "@src/types/User";
 
 const EXPIRED = {
-  access: 1000 * 60 * 20,
+  access: 1000 * 60 * 60,
   refresh: 1000 * 60 * 60 * 24 * 14,
 };
 
@@ -81,8 +81,3 @@ export const verifyMiddleware: RequestHandler = (...arg) => {
   ExpriedJwtAuthGuard(...arg);
   RefreshJwtAuthGuard(...arg);
 };
-
-// 엑세스 토큰 만료
-// 리프레시 토큰 확인
-// 리프레시 토큰 사용 가능
-// 액세스 토큰과 리프레시 토큰 확인

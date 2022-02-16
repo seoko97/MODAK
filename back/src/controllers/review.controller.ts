@@ -40,7 +40,7 @@ export class ReviewController {
     if (!findCamp) return next({ message: "존재하지 않는 캠핑장입니다." });
 
     const query = { location } as IKeyValueString;
-    lastId && (query._id = { $gt: lastId });
+    lastId && (query._id = { $lt: lastId });
 
     const reviews = await this.reviewService.getReviewsByQuery(query, { count: -1, _id: -1 }, 10);
 
@@ -78,7 +78,10 @@ export class ReviewController {
     });
 
     await this.userService.updateByQuery({ _id }, { $inc: { reviewCount: 1 } });
-    await this.campsiteService.update(campId, { $inc: { totalReview: 1 } });
+    await this.campsiteService.update(campId, {
+      $push: { photo: { $each: photos } },
+      $inc: { totalReview: 1 },
+    });
 
     res.send({ status: true, review });
   };

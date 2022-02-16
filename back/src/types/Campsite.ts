@@ -1,5 +1,4 @@
 import { Model, Types } from "mongoose";
-import { IReviewDocument } from "./Review";
 import { IUserDocument } from "./User";
 
 export interface ICampsite {

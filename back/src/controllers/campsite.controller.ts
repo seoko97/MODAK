@@ -12,7 +12,7 @@ export class CampsiteController {
     const camps = await this.campsiteService.getCampsByQuery(
       {},
       { totalBookmark: -1, views: -1 },
-      10,
+      6,
     );
 
     res.json({ status: true, camps });
@@ -28,12 +28,27 @@ export class CampsiteController {
     const target = {} as IKeyValueString;
     sorted && (target[`${sorted}`] = -1);
 
-    if (lastId) {
-      if (query.$and) query.$and.push({ _id: { $gt: lastId } });
-      else query._id = { $gt: lastId };
-    }
+    if (lastId) query._id = { $lt: lastId };
 
     const camps = await this.campsiteService.getCampsByQuery(query, target, 10);
+
+    res.json({ status: true, camps });
+  };
+
+  getUserCamps: RequestHandler = async (req, res, next) => {
+    const { lastId } = req.query;
+    const { userId } = req.params;
+
+    if (lastId && !checkValid(lastId as string))
+      return next({ message: "유효하지 않은 정보입니다." });
+
+    const query = lastId ? { _id: { $lt: lastId } } : {};
+
+    const camps = await this.campsiteService.getCampsByQuery(
+      { ...query, bookmark: userId },
+      {},
+      10,
+    );
 
     res.json({ status: true, camps });
   };
@@ -65,6 +80,13 @@ export class CampsiteController {
     await this.campsiteService.unBookmark(userId, campId);
 
     res.json({ status: true, userId, campId });
+  };
+
+  search: RequestHandler = async (req, res) => {
+    const { keyword } = req.params;
+    const camps = await this.campsiteService.getCampsByKeyword(keyword);
+
+    res.json({ status: true, camps });
   };
 }
 

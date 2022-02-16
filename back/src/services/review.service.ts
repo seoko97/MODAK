@@ -9,7 +9,12 @@ export class ReviewService {
   ) {}
 
   async getReviewsByQuery(query = {}, target = {}, limit: number) {
-    return await this.reviewModel.find(query).sort(target).populate("author").limit(limit);
+    return await this.reviewModel
+      .find(query)
+      .sort(target)
+      .populate("author", "-refreshToken -source")
+      .populate("location", "_id name address")
+      .limit(limit);
   }
 
   async getReviewsByUserId(query = {}) {
