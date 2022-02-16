@@ -16,7 +16,8 @@ const getMainReview = async () => {
 
 // 유저 페이지 리뷰
 const getUserReviews = async ({ userId, lastId }: UserReviewProps) => {
-  const result = await axios.get(`review/user/${userId}?lastId=${lastId}`);
+  const query = lastId ? `?lastId=${lastId}` : "";
+  const result = await axios.get(`review/user/${userId}${query}`);
   const { data } = result;
 
   return data;

@@ -1,24 +1,27 @@
-import React from "react";
+import React, { memo, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
-import { TabList } from ".";
 
 interface Props {
-  current: keyof TabList;
-  onClick: (tab: keyof TabList) => void;
+  current: string;
+  onClick: (e: any) => void;
 }
 const Container = styled.div`
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 10px;
-  margin: 10px 0;
+  justify-content: center;
+  margin-bottom: 40px;
+  margin-top: 40px;
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    flex-direction: column;
+    gap: 6px;
+  }
 `;
 
 const EachTab = styled.span<{ active: boolean }>`
-  font-size: 14px;
+  font-size: 18px;
   color: #757575;
   cursor: pointer;
-
+  margin: auto;
   ${(props) =>
     props.active &&
     css`
@@ -36,14 +39,14 @@ const EachTab = styled.span<{ active: boolean }>`
     `}
 `;
 
-const tabs: (keyof TabList)[] = ["내 리뷰", "나의 캠핑 기록", "찜한 캠핑장"];
+const tabs = ["내 리뷰", "나의 캠핑 기록", "찜한 캠핑장"];
 
-const Tap = ({ current, onClick }: Props) => {
+const Taps = ({ current, onClick }: Props) => {
   return (
     <Container>
       {tabs.map((tab, idx) => {
         return (
-          <EachTab key={idx} active={current === tab} onClick={() => onClick(tab)}>
+          <EachTab key={idx} active={current === tab} onClick={onClick}>
             {tab}
           </EachTab>
         );
@@ -52,4 +55,4 @@ const Tap = ({ current, onClick }: Props) => {
   );
 };
 
-export default Tap;
+export default memo(Taps);

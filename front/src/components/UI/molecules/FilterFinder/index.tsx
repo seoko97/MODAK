@@ -71,6 +71,10 @@ const FinderContainer = styled.form`
   box-shadow: 3px 4px 5px rgba(0, 0, 0, 0.1);
   padding: 30px 50px;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
+
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    padding: 20px;
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -78,6 +82,7 @@ const ButtonContainer = styled.div`
   justify-content: flex-end;
 
   input {
+    border-radius: 4px;
     border: none;
     padding: 10px 20px;
 
@@ -87,6 +92,19 @@ const ButtonContainer = styled.div`
   }
 
   input + input {
-    margin-left: 30px;
+    margin-left: 20px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    input {
+      width: 50px;
+      height: 20px;
+      font-size: 10px;
+      padding: 0;
+    }
+
+    input + input {
+      margin-left: 10px;
+    }
   }
 `;
