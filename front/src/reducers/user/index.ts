@@ -38,7 +38,7 @@ const user = createSlice({
       })
       .addCase(getSigninUser.fulfilled, (state, action) => {
         asyncFulfilled(state.signin);
-        state.me = action.payload.user;
+        state.me = action.payload.data.user;
       })
       .addCase(getSigninUser.rejected, (state, action) => {
         asyncRejected(state.signin, action.payload as IErrPayload);

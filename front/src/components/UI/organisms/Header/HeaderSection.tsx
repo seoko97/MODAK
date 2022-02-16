@@ -44,6 +44,12 @@ const Inner = styled(RowFrame)`
   }
 `;
 
+const LogoBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
 const HeaderSection = () => {
   const { me } = useAppSelector((state) => state.user);
 
@@ -51,10 +57,12 @@ const HeaderSection = () => {
     <>
       <Container>
         <Inner>
-          <Link href="/">
-            <Logo />
-          </Link>
-          <SearchInput />
+          <LogoBox>
+            <Link href="/">
+              <Logo />
+            </Link>
+            <SearchInput />
+          </LogoBox>
           <Nav user={me} />
         </Inner>
       </Container>

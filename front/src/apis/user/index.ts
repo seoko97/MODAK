@@ -4,14 +4,14 @@ import axios from "axios";
 // 로그인 유저 정보
 const getSinginUser = async () => {
   const result = await axios.get("user");
-  const { data } = result;
 
-  return data;
+  return result;
 };
 
 // 유저 정보
 const getUserInfo = async (id: string) => {
   const result = await axios.get(`user/${id}`);
+
   const { data } = result;
 
   return data;
