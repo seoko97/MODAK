@@ -1,30 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Tab 테스트 렌더 확인 1`] = `
-<div
-  className="sc-bdvvtL fBESFL"
-  role="tablist"
->
-  <span
-    className="sc-gsDKAQ gmALvb"
-    onClick={[Function]}
-    role="tab"
+<div>
+  <div
+    class="sc-bdvvtL fBESFL"
+    role="tablist"
   >
-    내 리뷰
-  </span>
-  <span
-    className="sc-gsDKAQ fFTkaf"
-    onClick={[Function]}
-    role="tab"
-  >
-    나의 캠핑 기록
-  </span>
-  <span
-    className="sc-gsDKAQ fFTkaf"
-    onClick={[Function]}
-    role="tab"
-  >
-    찜한 캠핑장
-  </span>
+    <span
+      class="sc-gsDKAQ fFTkaf"
+      role="tab"
+    >
+      내 리뷰
+    </span>
+    <span
+      class="sc-gsDKAQ fFTkaf"
+      role="tab"
+    >
+      나의 캠핑 기록
+    </span>
+    <span
+      class="sc-gsDKAQ fFTkaf"
+      role="tab"
+    >
+      찜한 캠핑장
+    </span>
+  </div>
 </div>
 `;

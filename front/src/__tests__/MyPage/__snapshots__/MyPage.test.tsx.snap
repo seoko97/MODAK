@@ -30,6 +30,7 @@ exports[`마이페이지 테스트 렌더 확인 1`] = `
         <button
           className="sc-llYSUQ ixogRH"
           onClick={[Function]}
+          title="EditProfile"
         >
           <svg
             className="sc-dkPtRN jediSo"
