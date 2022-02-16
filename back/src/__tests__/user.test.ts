@@ -62,8 +62,12 @@ describe("유저페이지 PUT 테스트", () => {
         intro: "한줄소개 수정됨",
       });
 
-    console.log(res.text);
     expect(res.statusCode).toEqual(401);
     expect(res.text).toContain("내 정보만 수정할 수 있습니다.");
   });
+});
+
+afterAll(async () => {
+  await mongoose.connection.close();
+  await mongoose.disconnect();
 });
