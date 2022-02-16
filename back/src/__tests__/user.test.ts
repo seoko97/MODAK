@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import request from "supertest";
 import app from "@src/app";
 import { configs } from "@utils/constants";
-import { user, wronguser, token, wrongtoken } from "./test.config";
+import { user, userB, wronguser, token, tokenB, wrongtoken } from "./test.config";
 
 beforeAll(async () => {
   await mongoose.connect(configs.DB_URL).then(() => console.log("데이터베이스 연결 성공"));
@@ -37,5 +37,33 @@ describe("유저페이지 GET 테스트", () => {
 
     expect(res.statusCode).toEqual(200);
     expect(res.text).toContain("null");
+  });
+});
+
+describe("유저페이지 PUT 테스트", () => {
+  test("1. 로그인된 상태로 유저 정보를 수정하는 경우", async () => {
+    const res = await request(app)
+      .put("/api/user/" + userB)
+      .set("authorization", tokenB)
+      .send({
+        nickname: "이름",
+        intro: "한줄소개",
+      });
+
+    expect(res.statusCode).toEqual(201);
+  });
+
+  test("2. 로그인된 상태로 타 유저 정보를 수정하는 경우", async () => {
+    const res = await request(app)
+      .put("/api/user/" + user)
+      .set("authorization", tokenB)
+      .send({
+        nickname: "이름 수정됨",
+        intro: "한줄소개 수정됨",
+      });
+
+    console.log(res.text);
+    expect(res.statusCode).toEqual(401);
+    expect(res.text).toContain("내 정보만 수정할 수 있습니다.");
   });
 });
