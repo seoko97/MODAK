@@ -3,7 +3,7 @@ import { asyncFulfilled, asyncPending, asyncRejected, reducerUtils } from "@lib/
 import { IUserState } from "@src/types/reducers/user";
 import { IErrPayload } from "@src/types/reducers/init";
 
-import { editUserInfo, getSigninUser, getUserInfo, signout } from "./action";
+import { editUserInfo, getSigninUser, getUserInfo, signout, uploadProfileImg } from "./action";
 
 export const initialState: IUserState = {
   me: null, // 로그인 유저 정보
@@ -12,6 +12,7 @@ export const initialState: IUserState = {
   signout: reducerUtils.init(),
   getUserInfo: reducerUtils.init(),
   editUserInfo: reducerUtils.init(),
+  uploadProfileImg: reducerUtils.init(),
 };
 
 const user = createSlice({
@@ -71,6 +72,18 @@ const user = createSlice({
       .addCase(getUserInfo.rejected, (state, action) => {
         asyncRejected(state.getUserInfo, action.payload as IErrPayload);
         state.userInfo = null;
+      })
+
+      // 프로필 사진 수정
+      .addCase(uploadProfileImg.pending, (state) => {
+        asyncPending(state.uploadProfileImg);
+      })
+      .addCase(uploadProfileImg.fulfilled, (state, action) => {
+        asyncFulfilled(state.uploadProfileImg);
+        if (state.me) state.me.profileImg = action.payload.image;
+      })
+      .addCase(uploadProfileImg.rejected, (state, action) => {
+        asyncRejected(state.uploadProfileImg, action.payload as IErrPayload);
       }),
 });
 

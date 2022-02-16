@@ -33,4 +33,12 @@ const signout = async () => {
   return data;
 };
 
-export default { editUserInfo, getSinginUser, getUserInfo, signout };
+// 이미지 업로드
+const patchProfileImage = async (body: FormData) => {
+  const result = await axios.post("user/image", body);
+  const { data } = result;
+
+  return data;
+};
+
+export default { editUserInfo, getSinginUser, getUserInfo, signout, patchProfileImage };
