@@ -1,10 +1,10 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
-import { TabList } from "../myPage";
 
 interface Props {
-  current: keyof TabList;
-  onClick: (tab: keyof TabList) => void;
+  current: string;
+  onClick: (e: any) => void;
 }
 const Container = styled.div`
   display: flex;
@@ -39,14 +39,14 @@ const EachTab = styled.span<{ active: boolean }>`
     `}
 `;
 
-const tabs: (keyof TabList)[] = ["내 리뷰", "나의 캠핑 기록", "찜한 캠핑장"];
+const tabs = ["내 리뷰", "나의 캠핑 기록", "찜한 캠핑장"];
 
 const Taps = ({ current, onClick }: Props) => {
   return (
     <Container>
       {tabs.map((tab, idx) => {
         return (
-          <EachTab key={idx} active={current === tab} onClick={() => onClick(tab)}>
+          <EachTab key={idx} active={current === tab} onClick={onClick}>
             {tab}
           </EachTab>
         );
@@ -55,4 +55,4 @@ const Taps = ({ current, onClick }: Props) => {
   );
 };
 
-export default Taps;
+export default memo(Taps);

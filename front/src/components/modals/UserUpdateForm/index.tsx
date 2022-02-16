@@ -4,15 +4,17 @@ import ModalLayout from "@src/components/modals/ModalLayout";
 import { User } from "@src/components/UI/molecules/MypageProfile";
 import TrashCanIcon from "@src/components/icons/TrashCanIcon";
 import ExitIcon from "@src/components/icons/ExitIcon";
+import { useAppSelector } from "@src/store/configureStore";
+import { EditUserData } from "@src/types/apis/user";
+import { IUser } from "@src/types/reducers/user";
 
 interface Props {
   onClick: () => void;
-  user: User;
-  updateUser: (user: User) => void;
 }
 
-const UserUpdate = ({ onClick, user, updateUser }: Props) => {
-  const { nickname, intro, profile } = user;
+const UserUpdate = ({ onClick }: Props) => {
+  const { me } = useAppSelector((state) => state.user);
+  const { nickname, intro, profileImg } = me as EditUserData;
   const imageRef = React.useRef<HTMLInputElement | null>(null);
   const nameRef = useRef<HTMLInputElement | null>(null);
   const introRef = useRef<HTMLTextAreaElement | null>(null);
@@ -26,25 +28,25 @@ const UserUpdate = ({ onClick, user, updateUser }: Props) => {
     if (e.currentTarget === null) {
       return;
     }
-    const updated: User = { ...user, [e.currentTarget.name]: e.currentTarget.value };
-    updateUser(updated);
+    const updated: IUser = { ...me, [e.currentTarget.name]: e.currentTarget.value };
+    // updateUser(updated);
   };
 
   // ! 이미지 url을 받아와서 바꿔야함.
   const onChangeImage = async () => {
-    updateUser({
-      ...user,
-      profile:
-        "https://images.unsplash.com/photo-1579783483458-83d02161294e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1397&q=80",
-    });
+    // updateUser({
+    //   ...me,
+    //   profileImg:
+    //     "https://images.unsplash.com/photo-1579783483458-83d02161294e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1397&q=80",
+    // });
   };
 
   const deleteImage = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    updateUser({
-      ...user,
-      profile: "",
-    });
+    // updateUser({
+    //   ...me,
+    //   profile: "",
+    // });
   };
 
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
@@ -55,8 +57,8 @@ const UserUpdate = ({ onClick, user, updateUser }: Props) => {
       return;
     }
     const _intro = e.target.intro.value;
-    const updated = { ...user, nickname: _nickname, introduce: _intro };
-    updateUser(updated);
+    // const updated = { ...me, nickname: _nickname, intro: _intro };
+    // updateUser(updated);
     onClick();
   };
 
@@ -84,7 +86,7 @@ const UserUpdate = ({ onClick, user, updateUser }: Props) => {
               onChange={onChangeImage}
             />
             <ImageContainer onClick={onChangeClick}>
-              <ProfileImage src={profile} alt="profile__image"></ProfileImage>
+              <ProfileImage src={profileImg} alt="profile__image"></ProfileImage>
             </ImageContainer>
             <DeleteImage onClick={deleteImage}>
               <TrashCanIcon />
@@ -99,11 +101,6 @@ const UserUpdate = ({ onClick, user, updateUser }: Props) => {
             ref={nameRef}
             value={nickname}
             onChange={onChange}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-              }
-            }}
           />
         </EditContainer>
         <EditContainer>
@@ -119,7 +116,7 @@ const UserUpdate = ({ onClick, user, updateUser }: Props) => {
   );
 };
 
-const Container = styled.form`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
