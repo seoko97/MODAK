@@ -2,7 +2,7 @@ import { IReview } from "../reducers/review";
 
 export interface UserReviewProps {
   userId: string;
-  lastId: string;
+  lastId?: string;
 }
 
 export interface CampReviewProps {
