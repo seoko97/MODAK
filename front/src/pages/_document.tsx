@@ -31,7 +31,12 @@ class MyDocument extends Document {
   render() {
     return (
       <Html lang="ko">
-        <Head></Head>
+        <Head>
+          <link
+            href="https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css"
+            rel="stylesheet"
+          />
+        </Head>
         <body>
           <Main />
           <NextScript />
