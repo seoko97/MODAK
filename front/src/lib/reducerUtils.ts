@@ -1,4 +1,4 @@
-import { IErrPayload, ReducerInit } from "@src/types/reducers/init";
+import { IErrPayload, ReducerInit } from "@type/reducers/init";
 
 export const asyncPending = (state: ReducerInit) => {
   state.loading = true;

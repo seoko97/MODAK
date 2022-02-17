@@ -1,4 +1,4 @@
-import React, { FC, HTMLProps, memo } from "react";
+import React, { FC, HTMLProps } from "react";
 import styled from "styled-components";
 
 interface Props extends HTMLProps<HTMLButtonElement> {

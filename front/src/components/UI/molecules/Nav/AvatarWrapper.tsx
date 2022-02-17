@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useState } from "react";
-import styled from "styled-components";
-import { useAppSelector } from "@src/store/configureStore";
-import useModal from "@src/hooks/useModal";
+import React, { useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-import { signout } from "@src/reducers/user/action";
-import Avatar from "../../atoms/Avatar";
-import Button from "../../atoms/Button";
-import Link from "../../atoms/Link";
-import Overlay from "../../atoms/Overlay";
+import styled from "styled-components";
+import { AppDispatch, useAppSelector } from "@store/configureStore";
+import useModal from "@hooks/useModal";
+import { signout } from "@reducers/user/action";
+import Avatar from "@atoms/Avatar";
+import Button from "@atoms/Button";
+import Link from "@atoms/Link";
+import Overlay from "@atoms/Overlay";
 
 const StyledAvatar = styled.div<{ isOpen: boolean }>`
   display: flex;
@@ -59,7 +59,7 @@ const AvatarWrapper = () => {
   const { me } = useAppSelector((state) => state.user);
   const [isOpen, onOpen, onClose] = useModal();
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const onSignout = useCallback(() => {
     dispatch(signout());

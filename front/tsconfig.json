@@ -24,12 +24,15 @@
       "@templates/*": ["src/components/UI/templates/*"],
       "@molecules/*": ["src/components/UI/molecules/*"],
       "@organisms/*": ["src/components/UI/organisms/*"],
+      "@modals/*": ["src/components/modals/*"],
       "@icons/*": ["src/components/icons/*"],
       "@hooks/*": ["src/hooks/*"],
       "@types/*": ["src/types/*"],
       "@lib/*": ["src/lib/*"],
       "@reducers/*": ["src/reducers/*"],
-      "@apis/*": ["src/apis/*"]
+      "@apis/*": ["src/apis/*"],
+      "@store/*": ["src/store/*"],
+      "@type/*": ["src/types/*"]
     }
   },
   "typeRoots": ["./node_modules/@types", "./src/types"],

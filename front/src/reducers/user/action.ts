@@ -1,5 +1,5 @@
-import { userAPI } from "@src/apis";
-import { createActionByProps, createAction } from "@src/lib/createActionHandler";
+import { userAPI } from "@apis/.";
+import { createActionByProps, createAction } from "@lib/createActionHandler";
 
 const signout = createAction("user/signout", userAPI.signout);
 const getSigninUser = createAction("user/signinUser", userAPI.getSinginUser);

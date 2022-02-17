@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import ClipLoader from "react-spinners/ClipLoader";
 
-import { useAppSelector } from "@src/store/configureStore";
+import { AppDispatch, useAppSelector } from "@store/configureStore";
 import useDebounce from "@hooks/useDebounce";
 import useInput from "@hooks/useInput";
 import { getCampsByKeyword } from "@reducers/camps/action";
@@ -92,8 +92,8 @@ const ListWrapper = styled.div<{ isLoading: boolean }>`
 
 const MobileSearchForm = ({ onClose, isOpen }: Props) => {
   const [value, onChangeValue, setValue] = useInput();
+  const dispatch: AppDispatch = useDispatch();
   const { search, searchCamps } = useAppSelector((state) => state.camps);
-  const dispatch = useDispatch();
 
   const debounce = useDebounce(async (value: string) => {
     await dispatch(getCampsByKeyword(value));

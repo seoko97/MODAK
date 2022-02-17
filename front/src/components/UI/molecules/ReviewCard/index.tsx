@@ -1,3 +1,4 @@
+import { useDispatch } from "react-redux";
 import React, { memo, useMemo, useCallback } from "react";
 import Link from "@atoms/Link";
 import SubTitle from "@atoms/SubTitle";
@@ -5,12 +6,13 @@ import Avatar from "@atoms/Avatar";
 import Title from "@atoms/Title";
 import HeartIcon from "@icons/HeartIcon";
 import PencilIcon from "@icons/PencilIcon";
-import { IReview } from "@src/types/reducers/review";
-import { url } from "@src/apis";
-import { likeReview, unLikeReview } from "@src/reducers/review/action";
-import { useDispatch } from "react-redux";
+import { IReview } from "@type/reducers/review";
+import { ResRvLk } from "@type/apis/review";
+import { AppDispatch, useAppSelector } from "@store/configureStore";
+import { likeReview, unLikeReview } from "@reducers/review/action";
+import { likedReview, unLikedReview } from "@reducers/reviews";
+import { url } from "@apis/.";
 import Rating from "./Rating";
-import { useAppSelector } from "../../../../store/configureStore";
 import {
   StyledContainer,
   StyledProfileContainer,
@@ -29,22 +31,28 @@ interface Props {
 }
 
 const ReviewCard = ({ review }: Props) => {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const { me } = useAppSelector((state) => state.user);
   const { _id, content, photos, author, createdAt, rating, count, likes } = review;
-  const { _id: userId, nickname, profileImg, reviewCount, totalLike } = author;
+  const { _id: userId, nickname, profileImg, reviewCount } = author;
 
   const likedUser = useMemo(() => {
     if (!me) return false;
     return likes.includes(userId);
-  }, [me]);
+  }, [me, likes]);
 
   const onClickLiked = useCallback(async () => {
-    if (me) await dispatch(likeReview(_id));
+    if (me) {
+      const review = await dispatch(likeReview(_id));
+      dispatch(likedReview(review.payload as ResRvLk));
+    }
   }, [me, _id]);
 
   const onClickUnLiked = useCallback(async () => {
-    if (me) await dispatch(unLikeReview(_id));
+    if (me) {
+      const review = await dispatch(unLikeReview(_id));
+      dispatch(unLikedReview(review.payload as ResRvLk));
+    }
   }, [me, _id]);
 
   return (

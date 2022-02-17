@@ -1,7 +1,7 @@
 import { reducerUtils, asyncPending, asyncFulfilled, asyncRejected } from "@lib/reducerUtils";
 import { createSlice } from "@reduxjs/toolkit";
-import { IErrPayload } from "@src/types/reducers/init";
-import { IReviewState } from "@src/types/reducers/review";
+import { IErrPayload } from "@type/reducers/init";
+import { IReviewState } from "@type/reducers/review";
 import { createReview, deleteReview, editReview, likeReview, unLikeReview } from "./action";
 
 export const initialState: IReviewState = {

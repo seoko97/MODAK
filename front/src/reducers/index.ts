@@ -1,9 +1,9 @@
 import { HYDRATE } from "next-redux-wrapper";
 import { AnyAction, combineReducers } from "@reduxjs/toolkit";
 
-import { IUserState } from "@src/types/reducers/user";
-import { IReviewsState, IReviewState } from "@src/types/reducers/review";
-import { ICampsState, ICampState } from "@src/types/reducers/camp";
+import { IUserState } from "@type/reducers/user";
+import { IReviewsState, IReviewState } from "@type/reducers/review";
+import { ICampsState, ICampState } from "@type/reducers/camp";
 
 import user from "./user";
 import review from "./review";

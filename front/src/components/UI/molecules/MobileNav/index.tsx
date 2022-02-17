@@ -1,10 +1,8 @@
-import ExitIcon from "@src/components/icons/ExitIcon";
-import SunIcon from "@src/components/icons/SunIcon";
-import TentIcon from "@src/components/icons/TentIcon";
-import SigninModal from "@src/components/modals/SigninModal";
-import useModal from "@src/hooks/useModal";
-import { signout } from "@src/reducers/user/action";
-import { useAppSelector } from "@src/store/configureStore";
+import TentIcon from "@icons/TentIcon";
+import SigninModal from "@modals/SigninModal";
+import useModal from "@hooks/useModal";
+import { signout } from "@reducers/user/action";
+import { AppDispatch, useAppSelector } from "@store/configureStore";
 import React, { useCallback, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
@@ -88,7 +86,7 @@ const MobileNav = ({ onClose, isOpen }: Props) => {
   const bodyRef = useRef<HTMLElement | null>(null);
   const [isOpenLogin, onShowForm, onCloseForm] = useModal();
   const { me } = useAppSelector((state) => state.user);
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const onSignout = useCallback(() => {
     dispatch(signout());

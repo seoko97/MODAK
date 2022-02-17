@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Slider, { Settings } from "react-slick";
 import TitleBox from "@molecules/TitleBox";
 
-import { useAppSelector } from "@src/store/configureStore";
+import { useAppSelector } from "@store/configureStore";
 import { NextArrow, PrevArrow } from "./arrow";
 
 const Container = styled.article`

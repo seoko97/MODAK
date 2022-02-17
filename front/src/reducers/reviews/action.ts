@@ -1,5 +1,5 @@
-import { reviewAPI } from "@src/apis";
-import { createActionByProps, createAction } from "@src/lib/createActionHandler";
+import { reviewAPI } from "@apis/.";
+import { createActionByProps, createAction } from "@lib/createActionHandler";
 
 const getMainReviews = createAction("reviews/getMainReviews", reviewAPI.getMainReview);
 const getUserReviews = createActionByProps("reviews/getUserReviews", reviewAPI.getUserReviews);

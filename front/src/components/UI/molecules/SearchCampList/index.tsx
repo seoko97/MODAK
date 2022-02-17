@@ -1,7 +1,7 @@
-import { ICamp } from "@src/types/reducers/camp";
 import React, { memo } from "react";
 import styled from "styled-components";
-import Link from "../../atoms/Link";
+import { ICamp } from "@type/reducers/camp";
+import Link from "@atoms/Link";
 
 interface Props {
   camps: Pick<ICamp, "_id" | "name" | "lineIntro">[];
@@ -53,4 +53,4 @@ const SearchCampList = ({ camps }: Props) => {
   );
 };
 
-export default SearchCampList;
+export default memo(SearchCampList);

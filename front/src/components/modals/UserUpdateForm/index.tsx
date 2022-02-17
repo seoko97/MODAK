@@ -1,12 +1,11 @@
 import React, { SetStateAction, useRef, Dispatch } from "react";
 import styled, { css } from "styled-components";
-import ModalLayout from "@src/components/modals/ModalLayout";
-import { User } from "@src/components/UI/molecules/MypageProfile";
-import TrashCanIcon from "@src/components/icons/TrashCanIcon";
-import ExitIcon from "@src/components/icons/ExitIcon";
-import { useAppSelector } from "@src/store/configureStore";
-import { EditUserData } from "@src/types/apis/user";
-import { IUser } from "@src/types/reducers/user";
+import ModalLayout from "@modals/ModalLayout";
+import TrashCanIcon from "@icons/TrashCanIcon";
+import ExitIcon from "@icons/ExitIcon";
+import { useAppSelector } from "@store/configureStore";
+import { EditUserData } from "@type/apis/user";
+import { IUser } from "@type/reducers/user";
 
 interface Props {
   onClick: () => void;

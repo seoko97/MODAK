@@ -1,8 +1,8 @@
 import Link from "@atoms/Link";
 import React from "react";
 import styled from "styled-components";
-import { IReview } from "@src/types/reducers/review";
-import { url } from "@src/apis";
+import { IReview } from "@type/reducers/review";
+import { url } from "@apis/.";
 import Avatar from "@atoms/Avatar";
 
 import LocationIcon from "@icons/LocationIcon";

@@ -2,7 +2,7 @@ import React from "react";
 import Slick, { Settings } from "react-slick";
 import styled from "styled-components";
 import { NextArrow, PrevArrow } from "@organisms/CardSlider/arrow";
-import { url } from "@src/apis";
+import { url } from "@apis/.";
 import ModalLayout from "../ModalLayout";
 
 interface Props {

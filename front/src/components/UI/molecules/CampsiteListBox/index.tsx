@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import Link from "@atoms/Link";
 
-import BookmarkIcon from "@src/components/icons/BookmarkIcon";
-import CommentIcon from "@src/components/icons/CommentIcon";
-import { ICamp } from "@src/types/reducers/camp";
-import { url } from "@src/apis";
+import BookmarkIcon from "@icons/BookmarkIcon";
+import CommentIcon from "@icons/CommentIcon";
+import { ICamp } from "@type/reducers/camp";
+import { url } from "@apis/.";
 
 interface Props {
   camp: ICamp;
@@ -70,6 +70,7 @@ CampSiteListBox.defaultProps = {
 export default CampSiteListBox;
 
 const CardWrapper = styled.div`
+  width: 100%;
   display: flex;
   margin: 30px auto 0;
   padding-bottom: 30px;

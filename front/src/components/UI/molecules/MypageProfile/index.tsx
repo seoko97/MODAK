@@ -1,7 +1,7 @@
 import React from "react";
-import useModal from "@src/hooks/useModal";
-import { useAppSelector } from "@src/store/configureStore";
-import { EditUserData } from "@src/types/apis/user";
+import useModal from "@hooks/useModal";
+import { useAppSelector } from "@store/configureStore";
+import { EditUserData } from "@type/apis/user";
 import ProfileImage from "./ProfileImage";
 import ProfileInfo from "./ProfileInfo";
 import Style from "./styles";

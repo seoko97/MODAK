@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { NextPage } from "next";
 import styled from "styled-components";
-import { useAppSelector } from "@src/store/configureStore";
+import { useAppSelector } from "@store/configureStore";
 
 import RowFrame from "@templates/RowFrame";
 

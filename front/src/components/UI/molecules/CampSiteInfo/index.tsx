@@ -1,19 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 import RowFrame from "@templates/RowFrame";
-import { ICamp } from "@src/types/reducers/camp";
-import { useAppSelector } from "@src/store/configureStore";
+import { ICamp } from "@type/reducers/camp";
+import { useAppSelector } from "@store/configureStore";
 
 const CampSiteInfo = () => {
   const { singleCamp } = useAppSelector((state) => state.camp);
 
-  const { address, intro, tel, animal, category, rental, photos } = singleCamp as ICamp;
+  const { address, intro, tel, animal, category, rental, firstImage } = singleCamp as ICamp;
   return (
     <>
       <RowFrame>
         <CampSiteContainer>
           <CampSiteImage>
-            <img alt="캠핑장 소개 사진" src="/post.jpg" />
+            <img alt="캠핑장 소개 사진" src={firstImage || "/tent.jpg"} />
           </CampSiteImage>
 
           <CampSiteContentBox>

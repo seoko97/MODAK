@@ -3,13 +3,13 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import ClipLoader from "react-spinners/ClipLoader";
 import MagnifierIcon from "@icons/MagnifierIcon";
-import useModal from "@src/hooks/useModal";
-import useInput from "@src/hooks/useInput";
-import useDebounce from "@src/hooks/useDebounce";
+import useModal from "@hooks/useModal";
+import useInput from "@hooks/useInput";
+import useDebounce from "@hooks/useDebounce";
 import { useDispatch } from "react-redux";
-import { getCampsByKeyword } from "@src/reducers/camps/action";
-import { search as sC } from "@src/reducers/camps";
-import { useAppSelector } from "@src/store/configureStore";
+import { getCampsByKeyword } from "@reducers/camps/action";
+import { search as sC } from "@reducers/camps";
+import { AppDispatch, useAppSelector } from "@store/configureStore";
 import SearchCampList from "@molecules/SearchCampList";
 import Overlay from "@atoms/Overlay";
 
@@ -77,7 +77,7 @@ const InputWrapper = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isOpen, onOpen, onClose] = useModal();
   const [value, onChangeValue, setValue] = useInput();
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
   const { searchCamps, search } = useAppSelector((state) => state.camps);
 

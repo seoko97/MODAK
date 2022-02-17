@@ -4,7 +4,7 @@ import Logo from "@icons/Logo";
 import KakaoIcon from "@icons/kakaoIcon";
 import GoogleIcon from "@icons/GoogleIcon";
 import { url } from "@apis/.";
-import ExitIcon from "@src/components/icons/ExitIcon";
+import ExitIcon from "@icons/ExitIcon";
 import ModalLayout from "../ModalLayout";
 
 interface Props {

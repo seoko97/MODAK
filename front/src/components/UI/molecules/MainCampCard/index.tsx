@@ -2,10 +2,10 @@ import React, { useMemo } from "react";
 import styled from "styled-components";
 import Link from "@atoms/Link";
 
-import PinIcon from "@src/components/icons/Pin";
-import BookmarkIcon from "@src/components/icons/BookmarkIcon";
-import CommentIcon from "@src/components/icons/CommentIcon";
-import { ICamp } from "@src/types/reducers/camp";
+import PinIcon from "@icons/Pin";
+import BookmarkIcon from "@icons/BookmarkIcon";
+import CommentIcon from "@icons/CommentIcon";
+import { ICamp } from "@type/reducers/camp";
 
 interface Props {
   camp: ICamp;

@@ -1,19 +1,20 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import styled, { css } from "styled-components";
 import Title from "@atoms/Title";
 import Button from "@atoms/Button";
 import LookIcon from "@icons/LookIcon";
-import CommentIcon from "@src/components/icons/CommentIcon";
+import CommentIcon from "@icons/CommentIcon";
 import HeartIcon from "@icons/HeartIcon";
-import useModal from "@src/hooks/useModal";
-import ReviewForm from "@src/components/modals/ReviewForm";
-import { ICamp } from "@src/types/reducers/camp";
-import { useAppSelector } from "@src/store/configureStore";
+import useModal from "@hooks/useModal";
+import ReviewForm from "@modals/ReviewForm";
+import { ICamp } from "@type/reducers/camp";
+import { AppDispatch, useAppSelector } from "@store/configureStore";
 import { useDispatch } from "react-redux";
-import { bookmark, unbookmark } from "@src/reducers/camp/action";
+import { bookmark, unbookmark } from "@reducers/camp/action";
+import Router from "next/router";
 
 const CampSiteCoverImg = () => {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const {
     singleCamp,
     bookmark: bmState,
@@ -21,6 +22,10 @@ const CampSiteCoverImg = () => {
   } = useAppSelector((state) => state.camp);
 
   const { me } = useAppSelector((state) => state.user);
+
+  useEffect(() => {
+    if (!singleCamp) Router.push("/");
+  }, []);
 
   const {
     _id,
@@ -47,7 +52,7 @@ const CampSiteCoverImg = () => {
 
   const onClickUnBookMark = useCallback(async () => {
     if (me) await dispatch(unbookmark(_id));
-  }, [_id]);
+  }, [_id, bookMarkedUser]);
 
   return (
     <>
@@ -78,7 +83,7 @@ const CampSiteCoverImg = () => {
 
             <ButtonBox>
               <Button onClick={onOpen} name="후기작성" />
-              {isOpen && <ReviewForm onClick={onClose} camp={name} />}
+              {isOpen && <ReviewForm onClick={onClose} camp={singleCamp as ICamp} />}
               <Button
                 name={bookMarkedUser ? "위시리스트 제거" : "위시리스트 추가"}
                 onClick={bookMarkedUser ? onClickUnBookMark : onClickBookMark}
@@ -110,7 +115,7 @@ const CampCoverImgBox = styled.div<Pick<ICamp, "photos">>`
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
-  background-image: url("/post.jpg");
+  background-image: url(${({ photos }) => photos[0] || "/tent.jpg"});
   background-size: cover;
   overflow: hidden;
 

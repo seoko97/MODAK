@@ -1,6 +1,6 @@
-import HeartIcon from "@src/components/icons/HeartIcon";
-import PencilIcon from "@src/components/icons/PencilIcon";
-import { ICamp } from "@src/types/reducers/camp";
+import HeartIcon from "@icons/HeartIcon";
+import PencilIcon from "@icons/PencilIcon";
+import { ICamp } from "@type/reducers/camp";
 import React from "react";
 import SubTitle from "../../atoms/SubTitle";
 import Style from "./styles";

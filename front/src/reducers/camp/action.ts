@@ -1,5 +1,5 @@
-import { campAPI } from "@src/apis";
-import { createActionByProps } from "@src/lib/createActionHandler";
+import { campAPI } from "@apis/.";
+import { createActionByProps } from "@lib/createActionHandler";
 
 const getCamp = createActionByProps("camp/getCamp", campAPI.getCamp);
 const bookmark = createActionByProps("camp/bookmark", campAPI.bookmarkCamp);

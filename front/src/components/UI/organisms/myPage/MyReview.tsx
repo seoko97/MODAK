@@ -1,8 +1,8 @@
-import { url } from "@src/apis";
-import HeartIcon from "@src/components/icons/HeartIcon";
-import { IReview } from "@src/types/reducers/review";
 import React from "react";
-import SubTitle from "../../atoms/SubTitle";
+import HeartIcon from "@icons/HeartIcon";
+import { IReview } from "@type/reducers/review";
+import SubTitle from "@atoms/SubTitle";
+import { url } from "@apis/.";
 import Style from "./styles";
 
 interface Props {

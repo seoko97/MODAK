@@ -6,7 +6,7 @@ import Logo from "@icons/Logo";
 import Nav from "@molecules/Nav";
 import SearchInput from "@molecules/SearchInput";
 import Link from "@atoms/Link";
-import { useAppSelector } from "@src/store/configureStore";
+import { useAppSelector } from "@store/configureStore";
 
 const Container = styled.header`
   width: 100%;
