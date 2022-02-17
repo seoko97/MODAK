@@ -1,12 +1,16 @@
-import React, { memo } from "react";
+import React, { memo, useMemo, useCallback } from "react";
 import Link from "@atoms/Link";
 import SubTitle from "@atoms/SubTitle";
 import Avatar from "@atoms/Avatar";
 import Title from "@atoms/Title";
-import HearctIcon from "@icons/HeartIcon";
+import HeartIcon from "@icons/HeartIcon";
 import PencilIcon from "@icons/PencilIcon";
+import { IReview } from "@src/types/reducers/review";
+import { url } from "@src/apis";
+import { likeReview, unLikeReview } from "@src/reducers/review/action";
+import { useDispatch } from "react-redux";
 import Rating from "./Rating";
-
+import { useAppSelector } from "../../../../store/configureStore";
 import {
   StyledContainer,
   StyledProfileContainer,
@@ -20,53 +24,58 @@ import {
   LinkInner,
 } from "./style";
 
-interface Author {
-  _id: string;
-  nickname: string;
-  profile: string;
-  likes: number;
-  posts: number; // 변경될듯
-}
 interface Props {
-  _id: number;
-  content: string;
-  photos?: string[];
-  author: Author;
-  createAt: string;
-  rating: string; // "평가 아이콘 관련"
+  review: IReview;
 }
 
-const ReviewCard = ({ _id, content, photos, author, createAt, rating }: Props) => {
-  const { nickname, profile, likes, posts } = author;
+const ReviewCard = ({ review }: Props) => {
+  const dispatch = useDispatch();
+  const { me } = useAppSelector((state) => state.user);
+  const { _id, content, photos, author, createdAt, rating, count, likes } = review;
+  const { _id: userId, nickname, profileImg, reviewCount, totalLike } = author;
+
+  const likedUser = useMemo(() => {
+    if (!me) return false;
+    return likes.includes(userId);
+  }, [me]);
+
+  const onClickLiked = useCallback(async () => {
+    if (me) await dispatch(likeReview(_id));
+  }, [me, _id]);
+
+  const onClickUnLiked = useCallback(async () => {
+    if (me) await dispatch(unLikeReview(_id));
+  }, [me, _id]);
+
   return (
     <StyledContainer>
       <StyledProfileContainer>
         <StyledProfile>
           <Link href="/user/1">
             <LinkInner>
-              <Avatar size={70} url={profile} alt="유저프로필" />
+              <Avatar size={70} url={profileImg} alt="유저프로필" />
               <Title size={14}>{nickname}</Title>
             </LinkInner>
           </Link>
           <StyledProfileIconBox>
             <IconWrapper>
               <PencilIcon size={13} />
-              <span>{posts}</span>
+              <span>{reviewCount}</span>
             </IconWrapper>
-            <StyledReviewIconBox>
-              <HearctIcon size={13} />
-              <span>{likes}</span>
+            <StyledReviewIconBox onClick={likedUser ? onClickUnLiked : onClickLiked}>
+              <HeartIcon size={13} className={likedUser ? "liked" : ""} />
+              <span>{count}</span>
             </StyledReviewIconBox>
           </StyledProfileIconBox>
         </StyledProfile>
         <Rating rating={rating} />
       </StyledProfileContainer>
       <StyledReviewCard>
-        <SubTitle>{createAt}</SubTitle>
+        <SubTitle>{createdAt}</SubTitle>
         <p>{content.length > 1000 ? `${content.substring(0, 1000)}...더보기` : content}</p>
         <StyledReviewPhotos>
           {photos?.map((photo, idx) => (
-            <img key={idx} src={photo} alt="reviewPhoto" />
+            <img key={idx} src={`${url}/${photo}`} alt="reviewPhoto" />
           ))}
         </StyledReviewPhotos>
 
@@ -76,22 +85,6 @@ const ReviewCard = ({ _id, content, photos, author, createAt, rating }: Props) =
       </StyledReviewCard>
     </StyledContainer>
   );
-};
-
-// 테스트용 데이터
-ReviewCard.defaultProps = {
-  _id: 1,
-  content:
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa illum corporis dignissimos ducimus cum earum ipsa magnam! Obcaecati nemo, voluptatibus, deleniti nesciunt molestiae, debitis suscipit corporis perspiciatis enim impedit architecto. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa illum corporis dignissimos ducimus cum earum ipsa magnam! Obcaecati nemo, voluptatibus, deleniti nesciunt molestiae, debitis suscipit corporis perspiciatis enim impedit architecto. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa illum corporis dignissimos ducimus cum earum ipsa magnam! Obcaecati nemo, voluptatibus, deleniti nesciunt molestiae, debitis suscipit corporis perspiciatis enim impedit architecto. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa illum corporis dignissimos ducimus cum earum ipsa magnam! Obcaecati nemo, voluptatibus, deleniti nesciunt molestiae, debitis suscipit corporis perspiciatis enim impedit architecto.",
-  photos: ["/post.jpg", "/post.jpg", "/post.jpg"],
-  author: {
-    _id: "2",
-    nickname: "김불멍",
-    profile: "/post.jpg",
-    likes: 123,
-    posts: 13,
-  },
-  createAt: "2022-01-28",
 };
 
 export default memo(ReviewCard);

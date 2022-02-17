@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import styled, { css } from "styled-components";
 import Title from "@atoms/Title";
 import Button from "@atoms/Button";
@@ -7,30 +7,47 @@ import CommentIcon from "@src/components/icons/CommentIcon";
 import HeartIcon from "@icons/HeartIcon";
 import useModal from "@src/hooks/useModal";
 import ReviewForm from "@src/components/modals/ReviewForm";
+import { ICamp } from "@src/types/reducers/camp";
+import { useAppSelector } from "@src/store/configureStore";
+import { useDispatch } from "react-redux";
+import { bookmark, unbookmark } from "@src/reducers/camp/action";
 
-interface Props {
-  // _id: object;
-  name: string;
-  lineIntro: string;
-  thema: string[];
-  environment: string[];
-  photos: string; // string[];
-  reviews: string[];
-  bookmark: string[];
-  views: number;
-}
+const CampSiteCoverImg = () => {
+  const dispatch = useDispatch();
+  const {
+    singleCamp,
+    bookmark: bmState,
+    unbookmark: ubmState,
+  } = useAppSelector((state) => state.camp);
 
-const CampSiteConverImg = ({
-  name,
-  lineIntro,
-  thema,
-  environment,
-  photos,
-  reviews,
-  bookmark,
-  views,
-}: Props) => {
+  const { me } = useAppSelector((state) => state.user);
+
+  const {
+    _id,
+    name,
+    lineIntro,
+    thema,
+    environment,
+    totalBookmark,
+    photos,
+    totalReview,
+    views,
+    bookmark: bmList,
+  } = singleCamp as ICamp;
+
   const [isOpen, onOpen, onClose] = useModal();
+  const bookMarkedUser = useMemo(() => {
+    if (!me) return false;
+    return bmList.includes(me._id);
+  }, [me?._id, bmList]);
+
+  const onClickBookMark = useCallback(async () => {
+    if (me) await dispatch(bookmark(_id));
+  }, [_id]);
+
+  const onClickUnBookMark = useCallback(async () => {
+    if (me) await dispatch(unbookmark(_id));
+  }, [_id]);
 
   return (
     <>
@@ -47,22 +64,26 @@ const CampSiteConverImg = ({
             <IconBox>
               <RowIcon>
                 <LookIcon size={20} />
-                <span>{views}</span>
+                <span>{views || 0}</span>
               </RowIcon>
               <RowIcon>
                 <CommentIcon size={20} />
-                <span>{reviews.length}</span>
+                <span>{totalReview || 0}</span>
               </RowIcon>
               <RowIcon>
                 <HeartIcon size={16} />
-                <span>{bookmark.length}</span>
+                <span>{totalBookmark || 0}</span>
               </RowIcon>
             </IconBox>
 
             <ButtonBox>
               <Button onClick={onOpen} name="후기작성" />
               {isOpen && <ReviewForm onClick={onClose} camp={name} />}
-              <Button name="위시리스트 추가" />
+              <Button
+                name={bookMarkedUser ? "위시리스트 제거" : "위시리스트 추가"}
+                onClick={bookMarkedUser ? onClickUnBookMark : onClickBookMark}
+                disabled={bmState.loading || ubmState.loading}
+              />
             </ButtonBox>
           </IconContainer>
 
@@ -80,21 +101,9 @@ function makeTagList(list: string[]) {
   return lists;
 }
 
-CampSiteConverImg.defaultProps = {
-  // _id: { $oid: "61fbf0897e326ea95e9e5999" },
-  name: "달천공원오토캠핑장",
-  lineIntro: "사계절 서로 다른 매력의 캠핑을 즐길 수 있는 곳",
-  thema: ["일출명소", "일몰명소", "봄꽃여행", "여름물놀이", "걷기길"],
-  environment: ["산", "숲", "계곡", "도심"],
-  photos: "/post.jpg",
-  reviews: ["1", "2", "3", "4"],
-  bookmark: ["1", "2", "3", "4", "2", "3", "4", "2", "3", "4"],
-  views: 0,
-};
+export default CampSiteCoverImg;
 
-export default CampSiteConverImg;
-
-const CampCoverImgBox = styled.div<Pick<Props, "photos">>`
+const CampCoverImgBox = styled.div<Pick<ICamp, "photos">>`
   position: relative;
   width: 100%;
   display: flex;

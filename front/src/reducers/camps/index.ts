@@ -30,13 +30,15 @@ const camps = createSlice({
   extraReducers: (builder) =>
     builder
       // 캠핑장 정보 불러오기
-      .addCase(getCamps.pending, (state, acton) => {
+      .addCase(getCamps.pending, (state, action) => {
         asyncPending(state.getCamps);
-        state.mainCamps = [];
+        if (!action.meta.arg.lastId) {
+          state.mainCamps = [];
+        }
       })
       .addCase(getCamps.fulfilled, (state, action) => {
         asyncFulfilled(state.getCamps);
-        state.mainCamps = action.payload.camps;
+        state.mainCamps = [...state.mainCamps, ...action.payload.camps];
       })
       .addCase(getCamps.rejected, (state, action) => {
         asyncRejected(state.getCamps, action.payload as IErrPayload);

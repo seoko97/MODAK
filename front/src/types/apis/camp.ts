@@ -7,4 +7,5 @@ type CampQueryDTO = Pick<
 
 export interface CampQueryData extends Partial<CampQueryDTO> {
   lastId?: string;
+  sorted?: string;
 }

@@ -123,7 +123,7 @@ const MobileNav = ({ onClose, isOpen }: Props) => {
           </li>
         )}
         <NavBox>
-          <Link href="/campsite">
+          <Link href="/camp">
             <span>Campsite</span>
           </Link>
           <Link href="/review">

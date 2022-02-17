@@ -87,8 +87,6 @@ const IconBox = css`
   color: #757575;
 
   svg {
-    fill: #757575;
-
     & + span {
       font-size: 14px;
     }
@@ -118,16 +116,13 @@ const StyledReviewIconBox = styled.button`
   border: none;
   cursor: pointer;
   background-color: transparent;
+  svg.liked {
+    fill: #bd1e1e;
+  }
 
   & svg {
     fill: #757575;
-    transition: all 0.15s;
-  }
-
-  :hover {
-    & svg {
-      fill: #bd1e1e;
-    }
+    /* bd1e1e */
   }
 `;
 

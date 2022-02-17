@@ -4,35 +4,20 @@ import Link from "@atoms/Link";
 
 import BookmarkIcon from "@src/components/icons/BookmarkIcon";
 import CommentIcon from "@src/components/icons/CommentIcon";
+import { ICamp } from "@src/types/reducers/camp";
+import { url } from "@src/apis";
 
 interface Props {
-  toUrl: string;
-  imgUrl: string;
-  name: string;
-  category: string[];
-  address: string;
-  tel: string;
-  tagContent: string[];
-  likesCount: number;
-  commentsCount: number;
+  camp: ICamp;
 }
 
-const CampSiteListBox = ({
-  toUrl,
-  imgUrl,
-  name,
-  category,
-  address,
-  tel,
-  tagContent,
-  likesCount,
-  commentsCount,
-}: Props) => {
+const CampSiteListBox = ({ camp }: Props) => {
+  const { _id, name, address, tel, totalBookmark, totalReview, photos, environment, thema } = camp;
   return (
-    <Link href={toUrl}>
+    <Link href={`/camp/${_id}`}>
       <CardWrapper>
         <ImgWrapper>
-          <img src={imgUrl} alt={`${name} 사진`} />
+          <img src={!photos[0] ? "/tent.jpg" : `${url}/${photos[0]}`} alt={`${name} 사진`} />
         </ImgWrapper>
         <CampSiteInfo>
           <CardInfoHeader>
@@ -40,11 +25,11 @@ const CampSiteListBox = ({
             <CountsWrapper>
               <CountContainer>
                 <BookmarkIcon size={20} />
-                <span>{likesCount.toLocaleString()}</span>
+                <span>{totalBookmark || 0}</span>
               </CountContainer>
               <CountContainer>
                 <CommentIcon size={20} />
-                <span>{commentsCount.toLocaleString()}</span>
+                <span>{totalReview || 0}</span>
               </CountContainer>
             </CountsWrapper>
           </CardInfoHeader>
@@ -52,16 +37,19 @@ const CampSiteListBox = ({
             <tbody>
               <tr>
                 <th>주소</th>
-                <td>{tel}</td>
+                <td>{address}</td>
               </tr>
               <tr>
                 <th>연락처</th>
-                <td>{address}</td>
+                <td>{tel}</td>
               </tr>
             </tbody>
           </InfoTable>
           <TagsContainer>
-            {tagContent.map((tag) => (
+            {environment.map((tag) => (
+              <li key={tag}>{tag}</li>
+            ))}
+            {thema.map((tag) => (
               <li key={tag}>{tag}</li>
             ))}
           </TagsContainer>
@@ -72,16 +60,11 @@ const CampSiteListBox = ({
 };
 
 CampSiteListBox.defaultProps = {
-  toUrl: "/camp/:id",
-  imgUrl:
+  photos: [
     "https://images.unsplash.com/photo-1607908560428-36ff9e0363b7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1635&q=80",
-  name: "엘리스 캠핑장",
-  category: ["일반야영장", "자동차야영장", "카라반"],
-  address: "경기도 가평",
-  tel: "010-1234-5678",
-  tagContent: ["가족캠핑", "반려동물 동반", "wifi"],
-  likesCount: 923456,
-  commentsCount: 123456,
+  ],
+  totalBookmark: 0,
+  totalReview: 0,
 };
 
 export default CampSiteListBox;
@@ -141,7 +124,7 @@ const CampSiteInfo = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  padding: 1em 0;
+  padding: 1em;
   font-size: 0.8em;
 `;
 
