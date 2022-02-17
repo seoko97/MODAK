@@ -1,25 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import styled from "styled-components";
 import StyledCheckbox from "./CheckButton";
 
-const FilterCategory = ({ category }) => {
-  const [checkedOptions, setCheckedOptions] = useState([]);
+interface Props {
+  category: {
+    name: string;
+    options: string[];
+  };
+  checked: (title: string, list: string[]) => void;
+  query: any;
+}
+
+const FilterCategory = ({ category, checked, query }: Props) => {
+  console.log(query);
+  const [checkedOptions, setCheckedOptions] = useState<string[]>([]);
   const [filterNameActive, setFilterNameActive] = useState(false);
-
-  const toggleHandler = (e) => {
-    setFilterNameActive(!filterNameActive);
-  };
-
-  const checkedOptionsHandler = (value, isChecked) => {
-    if (isChecked) {
-      setCheckedOptions([...checkedOptions, value]);
-    } else if (!isChecked && checkedOptions.find((one) => one === value)) {
-      const filter = checkedOptions.filter((one) => one !== value);
-      setCheckedOptions([...filter]);
+  const title = useMemo(() => {
+    switch (category.name) {
+      case "지역":
+        return "address";
+      case "주변환경":
+        return "environment";
+      case "부대시설":
+        return "amenities";
+      case "테마":
+        return "thema";
+      default:
+        return "address";
     }
-  };
+  }, []);
 
-  console.log("checkedOptions", checkedOptions);
+  const toggleHandler = useCallback(() => {
+    setFilterNameActive(!filterNameActive);
+  }, [filterNameActive]);
+
+  const onChecked = useCallback(
+    (value: string, isChecked: boolean) => {
+      console.log(value, isChecked);
+      const newOption = [...checkedOptions];
+      if (isChecked) {
+        newOption.push(value);
+      } else {
+        const index = newOption.indexOf(value);
+        newOption.splice(index, 1);
+      }
+      setCheckedOptions(newOption);
+      checked(title, newOption);
+    },
+    [checkedOptions],
+  );
+
+  console.log(title, checkedOptions);
 
   return (
     <StyledFilterList>
@@ -40,7 +71,7 @@ const FilterCategory = ({ category }) => {
             option={option}
             name={category.name}
             key={option}
-            checkedOptionsHandler={checkedOptionsHandler}
+            checkedOptionsHandler={onChecked}
           />
         ))}
       </ul>

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
-
+import { CampQueryData } from "@src/types/apis/camp";
 import FilterCategory from "./FilterCategory";
 
 interface CategoryInfoProps {
@@ -12,15 +12,47 @@ interface Props {
   categories: CategoryInfoProps[];
 }
 
+interface QueryProps {
+  [key: string]: string[];
+}
+
 const FilterFinder = ({ categories }: Props) => {
+  const [query, setQuery] = useState<QueryProps>({
+    address: [],
+    environment: [],
+    thema: [],
+    amenities: [],
+  });
+  const checked = useCallback(
+    (title, list) => {
+      console.log(query);
+      const newQuery = {
+        ...query,
+        [title]: list,
+      };
+      setQuery(newQuery);
+    },
+    [query],
+  );
+
+  // console.log(query);
+
   return (
     <FinderContainer>
       {categories.map((category) => {
-        return <FilterCategory key={category.name} category={category} />;
+        return (
+          <FilterCategory key={category.name} category={category} checked={checked} query={query} />
+        );
       })}
       <ButtonContainer>
         <input type="button" value="초기화" />
-        <input type="submit" value="검색" />
+        <input
+          type="button"
+          value="검색"
+          onClick={() => {
+            console.log(query);
+          }}
+        />
       </ButtonContainer>
     </FinderContainer>
   );
@@ -46,10 +78,6 @@ FilterFinder.defaultProps = {
     {
       name: "주변환경",
       options: ["해변", "산", "숲", "계곡", "강", "호수", "도심"],
-    },
-    {
-      name: "바닥",
-      options: ["파쇄석", "데크", "잔디"],
     },
     {
       name: "부대시설",
