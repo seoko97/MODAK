@@ -8,14 +8,14 @@ describe("GET /", () => {
     await mongoose.connect(configs.DB_URL);
   });
 
-  afterAll(async () => {
-    await mongoose.connection.close();
-    await mongoose.disconnect();
-  });
-
   it("1. 메인 페이지", async () => {
     const res = await request(app).get("/").send();
 
     expect(res.statusCode).toEqual(200);
+  });
+
+  afterAll(async () => {
+    await mongoose.connection.close();
+    await mongoose.disconnect();
   });
 });
