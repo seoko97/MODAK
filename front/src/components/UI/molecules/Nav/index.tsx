@@ -42,8 +42,8 @@ const Nav = ({ user }: Props) => {
   return (
     <>
       <StyledNav>
-        <NavItem text="CampSite" href="/campsite" />
-        <NavItem text="Review" href="/campsite" />
+        <NavItem text="CampSite" href="/camp" />
+        <NavItem text="Review" href="/camp" />
 
         {user ? <AvatarWrapper /> : <Button name="로그인" onClick={onOpen} />}
         {isOpen && <SigninModal onClose={onClose} />}

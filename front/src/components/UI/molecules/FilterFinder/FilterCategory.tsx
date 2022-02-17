@@ -1,25 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback, memo } from "react";
 import styled from "styled-components";
 import StyledCheckbox from "./CheckButton";
 
-const FilterCategory = ({ category }) => {
-  const [checkedOptions, setCheckedOptions] = useState([]);
+interface Props {
+  category: {
+    name: string;
+    options: string[];
+  };
+  checked: (title: string, list: string[]) => void;
+  query: { [key: string]: string[] };
+}
+
+const FilterCategory = ({ category, checked, query }: Props) => {
   const [filterNameActive, setFilterNameActive] = useState(false);
-
-  const toggleHandler = (e) => {
-    setFilterNameActive(!filterNameActive);
-  };
-
-  const checkedOptionsHandler = (value, isChecked) => {
-    if (isChecked) {
-      setCheckedOptions([...checkedOptions, value]);
-    } else if (!isChecked && checkedOptions.find((one) => one === value)) {
-      const filter = checkedOptions.filter((one) => one !== value);
-      setCheckedOptions([...filter]);
+  const title = useMemo(() => {
+    switch (category.name) {
+      case "지역":
+        return "address";
+      case "주변환경":
+        return "environment";
+      case "부대시설":
+        return "amenities";
+      case "테마":
+        return "thema";
+      default:
+        return "address";
     }
-  };
+  }, []);
 
-  console.log("checkedOptions", checkedOptions);
+  const toggleHandler = useCallback(() => {
+    setFilterNameActive(!filterNameActive);
+  }, [filterNameActive]);
+
+  const onChecked = useCallback(
+    (e) => {
+      const { target } = e;
+      const [value, isChecked] = [target.value, target.checked];
+      const newOption = query[title] ? [...query[title]] : [];
+
+      if (isChecked) newOption.push(value);
+      else {
+        const index = newOption.indexOf(value);
+        newOption.splice(index, 1);
+      }
+
+      checked(title, newOption);
+    },
+    [query],
+  );
 
   return (
     <StyledFilterList>
@@ -40,7 +68,7 @@ const FilterCategory = ({ category }) => {
             option={option}
             name={category.name}
             key={option}
-            checkedOptionsHandler={checkedOptionsHandler}
+            checkedOptionsHandler={onChecked}
           />
         ))}
       </ul>
@@ -48,7 +76,7 @@ const FilterCategory = ({ category }) => {
   );
 };
 
-export default FilterCategory;
+export default memo(FilterCategory);
 
 const StyledFilterList = styled.div`
   display: flex;
