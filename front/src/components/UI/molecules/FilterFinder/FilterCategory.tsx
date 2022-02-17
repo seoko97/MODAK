@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, memo } from "react";
 import styled from "styled-components";
 import StyledCheckbox from "./CheckButton";
 
@@ -8,12 +8,10 @@ interface Props {
     options: string[];
   };
   checked: (title: string, list: string[]) => void;
-  query: any;
+  query: { [key: string]: string[] };
 }
 
 const FilterCategory = ({ category, checked, query }: Props) => {
-  console.log(query);
-  const [checkedOptions, setCheckedOptions] = useState<string[]>([]);
   const [filterNameActive, setFilterNameActive] = useState(false);
   const title = useMemo(() => {
     switch (category.name) {
@@ -35,22 +33,21 @@ const FilterCategory = ({ category, checked, query }: Props) => {
   }, [filterNameActive]);
 
   const onChecked = useCallback(
-    (value: string, isChecked: boolean) => {
-      console.log(value, isChecked);
-      const newOption = [...checkedOptions];
-      if (isChecked) {
-        newOption.push(value);
-      } else {
+    (e) => {
+      const { target } = e;
+      const [value, isChecked] = [target.value, target.checked];
+      const newOption = query[title] ? [...query[title]] : [];
+
+      if (isChecked) newOption.push(value);
+      else {
         const index = newOption.indexOf(value);
         newOption.splice(index, 1);
       }
-      setCheckedOptions(newOption);
+
       checked(title, newOption);
     },
-    [checkedOptions],
+    [query],
   );
-
-  console.log(title, checkedOptions);
 
   return (
     <StyledFilterList>
@@ -79,7 +76,7 @@ const FilterCategory = ({ category, checked, query }: Props) => {
   );
 };
 
-export default FilterCategory;
+export default memo(FilterCategory);
 
 const StyledFilterList = styled.div`
   display: flex;

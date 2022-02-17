@@ -1,19 +1,17 @@
-import React, { useCallback } from "react";
+import React, { MouseEvent } from "react";
 import styled from "styled-components";
 
-const StyledCheckbox = ({ option, name, checkedOptionsHandler }) => {
-  const onCheck = useCallback(
-    ({ target }) => {
-      checkedOptionsHandler(target.value, target.checked);
-      console.log(name, option);
-    },
-    [name, option],
-  );
+interface Props {
+  option: string;
+  name: string;
+  checkedOptionsHandler: (e: MouseEvent<HTMLElement>) => void;
+}
 
+const StyledCheckbox = ({ option, name, checkedOptionsHandler }: Props) => {
   return (
     <FilterItemContainer>
       <CheckboxWrapper>
-        <input type="checkbox" name={name} value={option} onClick={onCheck} />
+        <input type="checkbox" name={name} value={option} onClick={checkedOptionsHandler} />
         <p>{option}</p>
       </CheckboxWrapper>
     </FilterItemContainer>
