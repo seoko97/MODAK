@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { asyncFulfilled, asyncPending, asyncRejected, reducerUtils } from "@src/lib/reducerUtils";
-import { ICampState } from "@src/types/reducers/camp";
-import { IErrPayload } from "@src/types/reducers/init";
+import { asyncFulfilled, asyncPending, asyncRejected, reducerUtils } from "@lib/reducerUtils";
+import { ICamp, ICampState } from "@type/reducers/camp";
+import { IErrPayload } from "@type/reducers/init";
 import { bookmark, getCamp, unbookmark } from "./action";
 
 export const initialState: ICampState = {
@@ -25,7 +25,7 @@ const camp = createSlice({
       })
       .addCase(getCamp.fulfilled, (state, action) => {
         asyncFulfilled(state.getCamp);
-        state.singleCamp = action.payload.camp;
+        if (action.payload) state.singleCamp = action.payload.camp;
       })
       .addCase(getCamp.rejected, (state, action) => {
         asyncRejected(state.getCamp, action.payload as IErrPayload);
@@ -37,7 +37,11 @@ const camp = createSlice({
       })
       .addCase(bookmark.fulfilled, (state, action) => {
         asyncFulfilled(state.bookmark);
-        state.singleCamp?.bookmark.push(action.payload.userId);
+        if (action.payload) {
+          const camp = state.singleCamp as ICamp;
+          camp.totalBookmark += 1;
+          camp.bookmark.push(action.payload.userId);
+        }
       })
       .addCase(bookmark.rejected, (state, action) => {
         asyncRejected(state.bookmark, action.payload as IErrPayload);
@@ -49,11 +53,13 @@ const camp = createSlice({
       })
       .addCase(unbookmark.fulfilled, (state, action) => {
         asyncFulfilled(state.unbookmark);
-
-        if (state.singleCamp)
-          state.singleCamp.bookmark = state.singleCamp.bookmark.filter(
-            (id) => id !== action.payload.userId,
+        if (action.payload) {
+          const camp = state.singleCamp as ICamp;
+          camp.totalBookmark -= 1;
+          camp.bookmark = camp.bookmark.filter(
+            (id) => action.payload && id !== action.payload.userId,
           );
+        }
       })
       .addCase(unbookmark.rejected, (state, action) => {
         asyncRejected(state.unbookmark, action.payload as IErrPayload);

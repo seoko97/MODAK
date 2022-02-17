@@ -1,3 +1,4 @@
+import { ResponseDTO } from ".";
 import { ICamp } from "../reducers/camp";
 
 type CampQueryDTO = Pick<
@@ -6,6 +7,23 @@ type CampQueryDTO = Pick<
 >;
 
 export interface CampQueryData extends Partial<CampQueryDTO> {
-  lastId?: string;
   sorted?: string;
+  skip?: number;
+}
+
+export interface ResCp extends ResponseDTO {
+  camp: ICamp;
+}
+
+export interface ResCps extends ResponseDTO {
+  camps: ICamp[];
+}
+
+export interface ResCpBms extends ResponseDTO {
+  userId: string;
+  campId: string;
+}
+
+export interface ResCpSearch extends ResponseDTO {
+  camps: Pick<ICamp, "_id" | "name" | "lineIntro">[];
 }

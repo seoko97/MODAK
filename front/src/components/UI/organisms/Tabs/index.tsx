@@ -1,10 +1,9 @@
-import React, { memo, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { memo, MouseEvent, useEffect } from "react";
 import styled, { css } from "styled-components";
 
 interface Props {
   current: string;
-  onClick: (e: any) => void;
+  onClick: (e: MouseEvent<HTMLInputElement>) => void;
 }
 const Container = styled.div`
   display: flex;

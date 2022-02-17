@@ -1,7 +1,7 @@
 import axios from "axios";
-import { CampQueryData } from "@src/types/apis/camp";
+import { CampQueryData, ResCps, ResCpBms, ResCpSearch, ResCp } from "@type/apis/camp";
 
-interface KeyValueStr {
+export interface KeyValueStr {
   [key: string]: string | string[];
 }
 
@@ -10,7 +10,6 @@ export const getCampQuery = (data: KeyValueStr) => {
 
   const arr = list.map((el) => {
     const e = data[el];
-    if (el === "lastId") return `${el}=${e}`;
     if (typeof e === "string" || e instanceof String) return `${el}=${encodeURI(e as string)}`;
     const a = (data[el] as string[]).map((k) => `${el}=${encodeURI(k)}`);
     return a.join("&");
@@ -19,7 +18,7 @@ export const getCampQuery = (data: KeyValueStr) => {
 };
 
 // 캠핑장 목록
-const getCamps = async ({ ...query }: CampQueryData) => {
+const getCamps = async ({ ...query }: CampQueryData): Promise<ResCps> => {
   const queryStr = getCampQuery(query as KeyValueStr).trim();
   const result = await axios.get(`camp?${queryStr}`);
   const { data } = result;
@@ -28,14 +27,14 @@ const getCamps = async ({ ...query }: CampQueryData) => {
 };
 
 // 메인 페이지 캠핑장 목록
-const getMainCamps = async () => {
+const getMainCamps = async (): Promise<ResCps> => {
   const result = await axios.get("camp/main");
   const { data } = result;
 
   return data;
 };
 
-const getUserCamps = async (userId: string) => {
+const getUserCamps = async (userId: string): Promise<ResCps> => {
   const result = await axios.get(`camp/user/${userId}`);
   const { data } = result;
 
@@ -43,28 +42,28 @@ const getUserCamps = async (userId: string) => {
 };
 
 // 캠핑장 상세 소개
-const getCamp = async (campId: string) => {
+const getCamp = async (campId: string): Promise<ResCp> => {
   const result = await axios.get(`camp/${campId}`);
   const { data } = result;
 
   return data;
 };
 
-const bookmarkCamp = async (campId: string) => {
+const bookmarkCamp = async (campId: string): Promise<ResCpBms> => {
   const result = await axios.patch(`camp/${campId}/bookmark`);
   const { data } = result;
 
   return data;
 };
 
-const unBookmarkCamp = async (campId: string) => {
-  const result = await axios.patch(`camp/${campId}/bookmark`);
+const unBookmarkCamp = async (campId: string): Promise<ResCpBms> => {
+  const result = await axios.patch(`camp/${campId}/unbookmark`);
   const { data } = result;
 
   return data;
 };
 
-const search = async (value: string) => {
+const search = async (value: string): Promise<ResCpSearch> => {
   const result = await axios.get(`camp/search/${value}`);
   const { data } = result;
 

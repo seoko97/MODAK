@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import wrapper, { useAppSelector } from "@src/store/configureStore";
-import { RequestHeader } from "@src/types/apis";
+import wrapper, { useAppSelector } from "@store/configureStore";
+import { PayloadHeaders, RequestHeader } from "@type/apis";
 import { getCamps } from "@reducers/camps/action";
 import { getSigninUser } from "@reducers/user/action";
 import { useRouter } from "next/router";
@@ -38,7 +38,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
   if (cookies) (axios.defaults.headers as RequestHeader).Cookie = cookies;
 
   const signUserRes = await store.dispatch(getSigninUser());
-  const setCookies = (signUserRes.payload as any)?.headers?.["set-cookie"];
+  const setCookies = (signUserRes.payload as PayloadHeaders)?.headers?.["set-cookie"];
   if (setCookies) ctx.res.setHeader("Set-Cookie", setCookies);
 
   await store.dispatch(getCamps(query || {}));

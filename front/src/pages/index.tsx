@@ -1,8 +1,9 @@
 import axios, { HeadersDefaults } from "axios";
-import wrapper from "@src/store/configureStore";
-import { getSigninUser } from "@src/reducers/user/action";
-import { getMainCamps } from "@src/reducers/camps/action";
-import { getMainReviews } from "@src/reducers/reviews/action";
+import wrapper from "@store/configureStore";
+import { getSigninUser } from "@reducers/user/action";
+import { getMainCamps } from "@reducers/camps/action";
+import { getMainReviews } from "@reducers/reviews/action";
+import { PayloadHeaders } from "@src/types/apis";
 
 export { default } from "@pages/Home";
 
@@ -17,7 +18,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
 
   const signUserRes = await store.dispatch(getSigninUser());
 
-  const setCookies = (signUserRes.payload as any)?.headers?.["set-cookie"];
+  const setCookies = (signUserRes.payload as PayloadHeaders)?.headers?.["set-cookie"];
   if (setCookies) ctx.res.setHeader("Set-Cookie", setCookies);
 
   await store.dispatch(getMainCamps());

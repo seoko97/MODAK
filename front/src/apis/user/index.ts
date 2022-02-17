@@ -1,15 +1,16 @@
-import { EditUserData } from "@src/types/apis/user";
-import axios from "axios";
+import { ResImg, ResponseDTO } from "@src/types/apis";
+import { EditUserData, ResUs } from "@type/apis/user";
+import axios, { AxiosResponse } from "axios";
 
 // 로그인 유저 정보
-const getSinginUser = async () => {
+const getSinginUser = async (): Promise<AxiosResponse<ResUs>> => {
   const result = await axios.get("user");
 
   return result;
 };
 
 // 유저 정보
-const getUserInfo = async (id: string) => {
+const getUserInfo = async (id: string): Promise<ResUs> => {
   const result = await axios.get(`user/${id}`);
 
   const { data } = result;
@@ -18,7 +19,7 @@ const getUserInfo = async (id: string) => {
 };
 
 // 로그인 유저 정보 수정
-const editUserInfo = async (body: EditUserData) => {
+const editUserInfo = async (body: EditUserData): Promise<ResUs> => {
   const result = await axios.put("user", body);
   const { data } = result;
 
@@ -26,7 +27,7 @@ const editUserInfo = async (body: EditUserData) => {
 };
 
 // 로그아웃
-const signout = async () => {
+const signout = async (): Promise<ResponseDTO> => {
   const result = await axios.post("auth/signout");
   const { data } = result;
 
@@ -34,7 +35,7 @@ const signout = async () => {
 };
 
 // 이미지 업로드
-const patchProfileImage = async (body: FormData) => {
+const patchProfileImage = async (body: FormData): Promise<ResImg> => {
   const result = await axios.post("user/image", body);
   const { data } = result;
 

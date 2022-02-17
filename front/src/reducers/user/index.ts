@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { asyncFulfilled, asyncPending, asyncRejected, reducerUtils } from "@lib/reducerUtils";
-import { IUserState } from "@src/types/reducers/user";
-import { IErrPayload } from "@src/types/reducers/init";
+import { IUserState } from "@type/reducers/user";
+import { IErrPayload } from "@type/reducers/init";
 
 import { editUserInfo, getSigninUser, getUserInfo, signout, uploadProfileImg } from "./action";
 
@@ -52,9 +52,11 @@ const user = createSlice({
       })
       .addCase(editUserInfo.fulfilled, (state, action) => {
         asyncFulfilled(state.editUserInfo);
-        state.me = action.payload.user;
+        if (action.payload) {
+          state.me = action.payload.user;
 
-        if (action.payload.user._id === state.userInfo?._id) state.userInfo = action.payload.user;
+          if (action.payload.user._id === state.userInfo?._id) state.userInfo = action.payload.user;
+        }
       })
       .addCase(editUserInfo.rejected, (state, action) => {
         asyncRejected(state.editUserInfo, action.payload as IErrPayload);
@@ -67,7 +69,7 @@ const user = createSlice({
       })
       .addCase(getUserInfo.fulfilled, (state, action) => {
         asyncFulfilled(state.getUserInfo);
-        state.userInfo = action.payload.user;
+        if (action.payload) state.userInfo = action.payload.user;
       })
       .addCase(getUserInfo.rejected, (state, action) => {
         asyncRejected(state.getUserInfo, action.payload as IErrPayload);
@@ -80,7 +82,7 @@ const user = createSlice({
       })
       .addCase(uploadProfileImg.fulfilled, (state, action) => {
         asyncFulfilled(state.uploadProfileImg);
-        if (state.me) state.me.profileImg = action.payload.image;
+        if (state.me && action.payload) state.me.profileImg = action.payload.image;
       })
       .addCase(uploadProfileImg.rejected, (state, action) => {
         asyncRejected(state.uploadProfileImg, action.payload as IErrPayload);

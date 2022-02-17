@@ -1,26 +1,26 @@
 import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "@src/store/configureStore";
+import { AppDispatch, useAppSelector } from "@store/configureStore";
 import { getUserReviews as getReview } from "@reducers/reviews/action";
 import { getUserCamps as getCamps } from "@reducers/camps/action";
-import MyPageProfile from "../../molecules/MypageProfile";
+import RowFrame from "@templates/RowFrame";
+import MyPageProfile from "@molecules/MypageProfile";
 import Tabs from "../Tabs";
 import MyReview from "./MyReview";
 import WishList from "./WishList";
 import Style from "./styles";
-import RowFrame from "../../templates/RowFrame";
 
 interface Props {
   userId: string;
 }
 
 const MyPage = ({ userId }: Props) => {
+  const dispatch: AppDispatch = useDispatch();
   const [tab, setTab] = useState<string>("내 리뷰");
   const { mainCamps, getUserCamps } = useAppSelector((state) => state.camps);
   const { loading: campLoading, error: campError } = getUserCamps;
   const { mainReviews, getUserReviews } = useAppSelector((state) => state.reviews);
   const { loading: reviewLoading, error: reviewError } = getUserReviews;
-  const dispatch = useDispatch();
   useEffect(() => {
     console.log(tab);
   }, [tab]);

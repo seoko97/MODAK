@@ -23,6 +23,7 @@ export interface ICamp {
   totalBookmark: number;
   createdAt: Date;
   updatedAt: Date;
+  firstImage: string;
 }
 
 export interface ICampState {

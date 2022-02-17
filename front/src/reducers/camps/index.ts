@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { asyncFulfilled, asyncPending, asyncRejected, reducerUtils } from "@src/lib/reducerUtils";
-import { ICampsState } from "@src/types/reducers/camp";
-import { IErrPayload } from "@src/types/reducers/init";
+import { asyncFulfilled, asyncPending, asyncRejected, reducerUtils } from "@lib/reducerUtils";
+import { ICampsState } from "@type/reducers/camp";
+import { IErrPayload } from "@type/reducers/init";
 import { getCamps, getCampsByKeyword, getMainCamps, getUserCamps } from "./action";
 
 export const initialState: ICampsState = {
@@ -32,13 +32,11 @@ const camps = createSlice({
       // 캠핑장 정보 불러오기
       .addCase(getCamps.pending, (state, action) => {
         asyncPending(state.getCamps);
-        if (!action.meta.arg.lastId) {
-          state.mainCamps = [];
-        }
+        if (!action.meta.arg.skip) state.mainCamps = [];
       })
       .addCase(getCamps.fulfilled, (state, action) => {
         asyncFulfilled(state.getCamps);
-        state.mainCamps = [...state.mainCamps, ...action.payload.camps];
+        if (action.payload) state.mainCamps = [...state.mainCamps, ...action.payload.camps];
       })
       .addCase(getCamps.rejected, (state, action) => {
         asyncRejected(state.getCamps, action.payload as IErrPayload);
@@ -51,7 +49,7 @@ const camps = createSlice({
       })
       .addCase(getMainCamps.fulfilled, (state, action) => {
         asyncFulfilled(state.getMainCamps);
-        state.mainCamps = action.payload.camps;
+        if (action.payload) state.mainCamps = action.payload.camps;
       })
       .addCase(getMainCamps.rejected, (state, action) => {
         asyncRejected(state.getMainCamps, action.payload as IErrPayload);
@@ -64,7 +62,7 @@ const camps = createSlice({
       })
       .addCase(getUserCamps.fulfilled, (state, action) => {
         asyncFulfilled(state.getUserCamps);
-        state.mainCamps = action.payload.camps;
+        if (action.payload) state.mainCamps = action.payload.camps;
       })
       .addCase(getUserCamps.rejected, (state, action) => {
         asyncRejected(state.getUserCamps, action.payload as IErrPayload);
@@ -77,7 +75,7 @@ const camps = createSlice({
       })
       .addCase(getCampsByKeyword.fulfilled, (state, action) => {
         asyncFulfilled(state.search);
-        state.searchCamps = action.payload.camps;
+        if (action.payload) state.searchCamps = action.payload.camps;
       })
       .addCase(getCampsByKeyword.rejected, (state, action) => {
         asyncRejected(state.search, action.payload as IErrPayload);

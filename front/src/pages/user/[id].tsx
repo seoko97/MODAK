@@ -1,17 +1,10 @@
-import React from "react";
-import { NextPage } from "next";
-import MyPage from "@src/components/UI/organisms/MyPage";
-import axios, { HeadersDefaults } from "axios";
-import { getSigninUser, getUserInfo } from "@src/reducers/user/action";
-import wrapper, { useAppSelector } from "@src/store/configureStore";
-import { AppProps } from "next/app";
-import { getUserReviews } from "@src/reducers/reviews/action";
+import axios from "axios";
+import { getSigninUser, getUserInfo } from "@reducers/user/action";
+import { getUserReviews } from "@reducers/reviews/action";
+import wrapper from "@store/configureStore";
+import { PayloadHeaders, RequestHeader } from "@src/types/apis";
 
-export { default } from "@organisms/MyPage";
-
-interface RequestHeader extends HeadersDefaults {
-  Cookie: string;
-}
+export { default } from "@src/components/UI/organisms/MyPage";
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
   const query = ctx?.query;
@@ -21,7 +14,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
 
   const signUserRes = await store.dispatch(getSigninUser());
 
-  const setCookies = (signUserRes.payload as any)?.headers?.["set-cookie"];
+  const setCookies = (signUserRes.payload as PayloadHeaders)?.headers?.["set-cookie"];
   if (setCookies) ctx.res.setHeader("Set-Cookie", setCookies);
   await store.dispatch(getUserInfo(query.id as string));
   await store.dispatch(getUserReviews({ userId: query.id as string }));

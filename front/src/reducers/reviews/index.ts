@@ -1,7 +1,8 @@
 import { reducerUtils, asyncPending, asyncFulfilled, asyncRejected } from "@lib/reducerUtils";
-import { createSlice } from "@reduxjs/toolkit";
-import { IErrPayload } from "@src/types/reducers/init";
-import { IReviewsState } from "@src/types/reducers/review";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ResRvLk } from "@src/types/apis/review";
+import { IErrPayload } from "@type/reducers/init";
+import { IReviewsState } from "@type/reducers/review";
 
 import { getCampReviews, getMainReviews, getUserReviews } from "./action";
 
@@ -31,25 +32,30 @@ const reviews = createSlice({
       const newReview = action.payload;
       state.mainReviews.push(newReview);
     },
-    likeReview: (state, action) => {
+    likedReview: (state, action: PayloadAction<ResRvLk>) => {
       const { userId, reviewId } = action.payload;
-      state.mainReviews.forEach(({ _id, likes, count }) => {
+      state.mainReviews = state.mainReviews.map((review) => {
+        const { _id } = review;
         if (_id === reviewId) {
-          const pp = count - 1;
-          likes.push(userId);
-          count = pp;
+          const newR = { ...review };
+          newR.count += 1;
+          newR.likes.push(userId);
+          return newR;
         }
+        return review;
       });
     },
-    unLikeReview: (state, action) => {
+    unLikedReview: (state, action: PayloadAction<ResRvLk>) => {
       const { userId, reviewId } = action.payload;
-      state.mainReviews.forEach(({ _id, likes, count }) => {
+      state.mainReviews = state.mainReviews.map((review) => {
+        const { _id } = review;
         if (_id === reviewId) {
-          const newLikes = likes.filter((like) => like !== userId);
-          const mm = count - 1;
-          likes = newLikes;
-          count = mm;
+          const newR = { ...review };
+          newR.count -= 1;
+          newR.likes = newR.likes.filter((like) => like !== userId);
+          return newR;
         }
+        return review;
       });
     },
   },
@@ -75,7 +81,7 @@ const reviews = createSlice({
       })
       .addCase(getUserReviews.fulfilled, (state, action) => {
         asyncFulfilled(state.getUserReviews);
-        state.mainReviews.push(...action.payload.reviews);
+        if (action.payload) state.mainReviews.push(...action.payload.reviews);
       })
       .addCase(getUserReviews.rejected, (state, action) => {
         asyncRejected(state.getUserReviews, action.payload as IErrPayload);
@@ -88,12 +94,13 @@ const reviews = createSlice({
       })
       .addCase(getCampReviews.fulfilled, (state, action) => {
         asyncFulfilled(state.getCampReviews);
-        state.mainReviews.push(...action.payload.reviews);
+        if (action.payload) state.mainReviews.push(...action.payload.reviews);
       })
       .addCase(getCampReviews.rejected, (state, action) => {
         asyncRejected(state.getCampReviews, action.payload as IErrPayload);
       }),
 });
 
-export const reviewActions = reviews.actions;
+export const { createReview, deleteReview, likedReview, unLikedReview, updateReview } =
+  reviews.actions;
 export default reviews.reducer;
