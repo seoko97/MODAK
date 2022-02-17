@@ -5,7 +5,6 @@ import { getCamps } from "@src/reducers/camps/action";
 import useScroll from "@src/hooks/useScroll";
 import useThrottle from "@src/hooks/useThrottle";
 import FilterCategory from "./FilterCategory";
-import { getCampQuery } from "../../../../apis/camp/index";
 import { useAppSelector } from "../../../../store/configureStore";
 
 interface QueryProps {

@@ -11,12 +11,9 @@ import wrapper, { useAppSelector } from "@src/store/configureStore";
 import { RequestHeader } from "@src/types/apis";
 import { getCamps } from "@reducers/camps/action";
 import { getSigninUser } from "@reducers/user/action";
-import useInput from "@src/hooks/useInput";
-import camp from "../../reducers/camp/index";
 
 const CampsiteListPage: NextPage = () => {
   const { mainCamps } = useAppSelector((state) => state.camps);
-  // console.log(mainCamps);
   const [sorted, setSorted] = useState("latest");
   const onChange = useCallback((e) => {
     setSorted(e.target.value);
