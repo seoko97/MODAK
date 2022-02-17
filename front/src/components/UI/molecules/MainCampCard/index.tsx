@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import Link from "@atoms/Link";
 
@@ -83,6 +83,7 @@ const ThemaWrapper = styled.div`
   width: 100%;
   padding: 12px 0;
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   min-height: 60px;
   font-size: 12px;
@@ -104,6 +105,13 @@ const IconWrapper = styled.div`
 const MainCampCard = ({ camp, url }: Props) => {
   const { name, address, thema, category, totalBookmark, views } = camp;
 
+  const tagList = useMemo(() => {
+    const set = new Set([...thema, ...category]);
+    const list: JSX.Element[] = [];
+    set.forEach((e) => list.push(<span key={e}>#{e}</span>));
+    return list;
+  }, [thema, category]);
+
   return (
     <Link href={url}>
       <Container>
@@ -120,14 +128,7 @@ const MainCampCard = ({ camp, url }: Props) => {
               <h2>{address}</h2>
             </LocationWrapper>
           </ContentHeader>
-          <ThemaWrapper>
-            {thema.map((el) => (
-              <span key={el}>#{el}</span>
-            ))}
-            {category.map((el) => (
-              <span key={el}>#{el}</span>
-            ))}
-          </ThemaWrapper>
+          <ThemaWrapper>{tagList}</ThemaWrapper>
           <ContentFooter>
             <IconWrapper>
               <BookmarkIcon size={16} />

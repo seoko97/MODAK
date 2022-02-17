@@ -41,7 +41,7 @@ const GridChooseCamp = () => {
           src="/spring.jpg"
         />
         <GridCampInfo
-          title="₩여름물놀이"
+          title="#여름물놀이"
           description=""
           to="/search?thema=여름물놀이"
           src="/summer.jpg"
