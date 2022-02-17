@@ -1,31 +1,76 @@
-import React, { useState, useCallback } from "react";
-import styled, { css } from "styled-components";
+import React, { useState, useCallback, useRef } from "react";
+import { useDispatch } from "react-redux";
 import Button from "@atoms/Button";
 import Logo from "@icons/Logo";
 import SmileIcon from "@icons/SmileIcon";
 import NormalIcon from "@icons/NormalIcon";
 import AngryIcon from "@icons/AngryIcon";
 import PhotoIcon from "@icons/PhotoIcon";
-import ModalLayout from "@src/components/modals/ModalLayout";
-// import { Smile, Noraml, Angry } from "@src/components/UI/molecules/ReviewCard/Rating";
+import ModalLayout from "@modals/ModalLayout";
+import { ICamp } from "@type/reducers/camp";
+import useInput from "@hooks/useInput";
+import { createReview, uploadImage } from "@reducers/review/action";
+import { AppDispatch } from "@store/configureStore";
+import { ResImgs } from "@type/apis";
 
-// 사진 추가, 클릭 시 rating 등이 toggle되게 기능 구현 필요(색 변경).
+import { url } from "@apis/.";
+import {
+  BouttonButtonWrapper,
+  CampsiteName,
+  Container,
+  ImageList,
+  ImageWrapper,
+  PhotoLabel,
+  RatingButtonWrapper,
+  ReviewContent,
+  ReviewContentWrapper,
+  RowIconWrapper,
+  WriteButton,
+} from "./styles";
+
 interface Props {
-  camp: string;
+  camp: ICamp;
   onClick: () => void;
 }
 
 const ReviewForm = ({ camp, onClick }: Props) => {
-  const [review, setReview] = useState("");
+  const [text, onChangeText] = useInput("");
+  const [images, setImages] = useState<string[]>([]);
   const [rating, setRating] = useState("");
-
-  const reviewHandler = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setReview(e.target.value);
-  }, []);
+  const imageRef = useRef<HTMLInputElement | null>(null);
+  const dispatch: AppDispatch = useDispatch();
 
   const ratingHandler = useCallback((value: string) => {
     setRating(value);
   }, []);
+
+  const onChangeImages = useCallback(
+    async (e) => {
+      if (images.length + e.target.files.length >= 5)
+        return alert("이미지는 5장을 넘길 수 없습니다.");
+
+      const imageFormData = new FormData();
+
+      [].forEach.call(e.target.files, (f) => {
+        if (f) imageFormData.append("img", f);
+      });
+
+      const res = await dispatch(uploadImage(imageFormData));
+
+      setImages([...images, ...(res.payload as ResImgs).images]);
+    },
+    [images],
+  );
+
+  const onClickImageBtn = useCallback(() => {
+    imageRef.current?.click();
+  }, [imageRef.current]);
+
+  const create = useCallback(async () => {
+    if (!text || !rating) return alert("필수정보를 입력하세요!");
+    await dispatch(createReview({ location: camp._id, content: text, photos: images, rating }));
+    onClick();
+  }, [text, rating, images]);
 
   return (
     <ModalLayout onClick={onClick}>
@@ -34,31 +79,39 @@ const ReviewForm = ({ camp, onClick }: Props) => {
         <span>캠핑장은 어떠셨나요?</span>
         <RatingButtonWrapper>
           <Smile onClick={ratingHandler} active={rating === "또 가고 싶어요"} />
-          <Noraml onClick={ratingHandler} active={rating === "평범합니다"} />
+          <Noraml onClick={ratingHandler} active={rating === "평범해요"} />
           <Angry onClick={ratingHandler} active={rating === "최악입니다"} />
         </RatingButtonWrapper>
-        <CampsiteName>{camp}</CampsiteName>
+        <CampsiteName>{camp.name}</CampsiteName>
         <ReviewContentWrapper>
-          <ReviewContent
-            value={review}
-            onChange={reviewHandler}
-            placeholder="후기를 작성해주세요!"
-          />
+          <ReviewContent value={text} onChange={onChangeText} placeholder="후기를 작성해주세요!" />
         </ReviewContentWrapper>
+        {images[0] && (
+          <ImageList>
+            {images.map((image) => (
+              <ImageWrapper key={image}>
+                <img src={`${url}/${image}`} alt="img" />
+              </ImageWrapper>
+            ))}
+          </ImageList>
+        )}
         <BouttonButtonWrapper>
-          <PhotoLabel htmlFor="input-file">
+          <input
+            type="file"
+            name="image"
+            multiple
+            hidden
+            ref={imageRef}
+            onChange={onChangeImages}
+            accept=".jpg, .jpeg, .png"
+            style={{ display: "none" }}
+          />
+          <PhotoLabel htmlFor="input-file" onClick={onClickImageBtn}>
             <PhotoIcon size={20} />
             Add Photo
-            <input
-              type="file"
-              id="input-file"
-              accept=".jpg, .jpeg, .png"
-              multiple
-              style={{ display: "none" }}
-            />
           </PhotoLabel>
           <WriteButton>
-            <Button name="완료" />
+            <Button name="완료" onClick={create} />
             <Button name="취소" onClick={onClick} />
           </WriteButton>
         </BouttonButtonWrapper>
@@ -68,67 +121,6 @@ const ReviewForm = ({ camp, onClick }: Props) => {
 };
 
 export default ReviewForm;
-
-const Container = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  width: 60vw;
-  max-width: 800px;
-  height: 80vh;
-  padding: 30px;
-  z-index: 1002;
-  box-sizing: border-box;
-  background-color: #f7f7f7;
-  color: #0c0c0c;
-  border-radius: 10px;
-
-  & > svg {
-    width: 180px;
-    align-self: center;
-  }
-
-  & > span {
-    width: 180px;
-    text-align: center;
-    align-self: center;
-    font-weight: bold;
-    color: #757575;
-  }
-
-  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    width: 100%;
-    height: 100%;
-    border-radius: 0;
-  }
-`;
-
-const RowIconWrapper = styled.div<{ active: boolean }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  color: #757575;
-  cursor: pointer;
-
-  svg {
-    fill: #757575;
-
-    & + span {
-      font-size: 14px;
-    }
-  }
-
-  ${(props) =>
-    props.active &&
-    `
-      color: #038c5a;
-      font-weight: bold;
-      svg {
-        fill: #038c5a;
-      }
-    `}
-`;
 
 interface Rate {
   active: boolean;
@@ -145,7 +137,7 @@ const Smile = ({ active, onClick }: Rate) => {
 };
 
 const Noraml = ({ active, onClick }: Rate) => {
-  const text = "평범합니다";
+  const text = "평범해요";
   return (
     <RowIconWrapper onClick={() => onClick(text)} active={active}>
       <NormalIcon size={40} />
@@ -163,90 +155,3 @@ const Angry = ({ active, onClick }: Rate) => {
     </RowIconWrapper>
   );
 };
-const CampsiteName = styled.h3`
-  font-size: 24px;
-  font-weight: bold;
-  color: #038c5a;
-`;
-
-const ReviewContentWrapper = styled.div`
-  flex: 1;
-`;
-const ReviewContent = styled.textarea`
-  width: 100%;
-  height: 100%;
-  border: none;
-  box-sizing: border-box;
-  resize: none;
-  padding: 10px;
-`;
-const ButtonWrapper = css`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-`;
-
-const RatingButtonWrapper = styled.div`
-  ${ButtonWrapper};
-
-  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
-    & > div {
-      svg {
-        width: 30px;
-        height: 30px;
-      }
-      span {
-        font-size: 12px;
-      }
-    }
-  }
-`;
-
-const BouttonButtonWrapper = styled.div`
-  ${ButtonWrapper};
-  justify-content: space-between;
-  margin-top: auto;
-`;
-
-const WriteButton = styled.div`
-  ${ButtonWrapper};
-  gap: 12px;
-
-  & > button {
-    background-color: #038c5a;
-    color: #fff;
-    padding: 8px 15px;
-    border-radius: 5px;
-  }
-  & > button:last-child {
-    background-color: #038c5a20;
-    color: #038c5a;
-  }
-
-  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    gap: 5px;
-
-    & > button {
-      padding: 6px 8px;
-    }
-  }
-`;
-
-const PhotoLabel = styled.label`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  padding: 8px 15px;
-  border-radius: 5px;
-  background-color: #038c5a20;
-  color: #038c5a;
-  cursor: pointer;
-
-  svg {
-    fill: #038c5a;
-    width: 20px;
-    height: 20px;
-  }
-`;
