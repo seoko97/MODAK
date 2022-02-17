@@ -33,7 +33,7 @@ export class ReviewService {
     const review = await this.reviewModel.create(data);
 
     await review.populate("author", "-refreshToken -source");
-    await review.populate("location");
+    await review.populate("location", "_id address name");
 
     return review;
   }

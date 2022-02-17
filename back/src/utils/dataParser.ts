@@ -19,6 +19,7 @@ export const getCampData = (camp: IAxiosSchduleDTO): ICampsiteDTO => {
     animalCmgCl,
     eqpmnLendCl,
     lctCl,
+    firstImageUrl,
   }: IAxiosSchduleDTO = camp;
 
   return {
@@ -36,5 +37,6 @@ export const getCampData = (camp: IAxiosSchduleDTO): ICampsiteDTO => {
     amenities: splitStr(sbrsCl),
     rental: splitStr(eqpmnLendCl),
     environment: splitStr(lctCl),
+    firstImage: firstImageUrl || "",
   };
 };

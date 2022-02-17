@@ -65,6 +65,9 @@ export const CampsiteSchema = new Schema<ICampsiteDocument, ICampsiteModel>(
       default: 0,
       index: true,
     },
+    firstImage: {
+      type: String,
+    },
   },
   {
     timestamps: true,

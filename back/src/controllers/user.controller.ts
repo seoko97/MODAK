@@ -29,12 +29,8 @@ export class UserController {
     res.status(200).json({ status: true, user });
   };
 
-  editUserInformation: RequestHandler = async (req, res, next) => {
+  editUserInformation: RequestHandler = async (req, res) => {
     const { _id } = req.user as ITokenUser;
-    const { id } = req.params;
-
-    if (!checkValid(id)) return next({ message: "존재하지 않는 유저입니다." });
-    if (_id !== id) return next({ message: "내 정보만 수정할 수 있습니다." });
 
     const data = req.body;
     const user = await this.userService.updateByQuery({ _id }, data);

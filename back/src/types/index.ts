@@ -13,6 +13,7 @@ export interface IAxiosSchduleDTO {
   sbrsCl: string; // 부대시설
   eqpmnLendCl: string; // 장비 대여 여부
   lctCl: string; // 입지
+  firstImageUrl: string;
 }
 
 export interface IKeyValueString {

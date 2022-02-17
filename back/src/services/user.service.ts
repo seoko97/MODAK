@@ -31,7 +31,7 @@ export class UserService {
   }
 
   async updateByQuery(where = {}, query = {}) {
-    return await this.userModel.updateOne(where, query);
+    return await this.userModel.findOneAndUpdate(where, query);
   }
 
   async verifyToken(payload: ITokenUser, prevToken: string) {

@@ -19,7 +19,7 @@ router.post(
 router.get("/:id", userController.getUserInfo);
 
 router.put(
-  "/:id",
+  "/",
   ExpriedJwtAuthGuard,
   RefreshJwtAuthGuard,
   asyncHandler(userController.editUserInformation),

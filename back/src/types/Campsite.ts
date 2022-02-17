@@ -18,6 +18,7 @@ export interface ICampsiteDTO extends ICampsite {
   amenities: string[];
   rental: string[];
   environment: string[];
+  firstImage: string;
 }
 
 export interface ICampsiteDocument extends ICampsiteDTO {

@@ -1,16 +1,13 @@
+import axios from "axios";
 import { CampsiteModel, UserModel } from "@models/.";
 
 import { IAxiosSchduleDTO, IKeyValueString } from "@src/types";
 import { ICampsiteDTO } from "@src/types/Campsite";
 import { APIURL } from "@utils/constants";
 import { getCampData } from "@utils/dataParser";
-import axios from "axios";
 
 export class CampsiteService {
-  constructor(
-    private readonly campsiteModel: typeof CampsiteModel,
-    private readonly userModel: typeof UserModel,
-  ) {}
+  constructor(private readonly campsiteModel: typeof CampsiteModel) {}
 
   async getCampById(id: string) {
     return await this.campsiteModel.findByIdAndUpdate(id, { $inc: { views: 1 } });
@@ -71,4 +68,4 @@ export class CampsiteService {
   }
 }
 
-export const campsiteService = new CampsiteService(CampsiteModel, UserModel);
+export const campsiteService = new CampsiteService(CampsiteModel);

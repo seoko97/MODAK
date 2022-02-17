@@ -67,7 +67,7 @@ export class ReviewController {
 
   create: RequestHandler = async (req, res) => {
     const { _id } = req.user as ITokenUser;
-    const { content, location, rating, photos } = req.body as Omit<IReviewDTO, "author">;
+    const { content, location, rating, photos, create } = req.body as Omit<IReviewDTO, "author">;
     const campId = location as unknown as string;
     const review = await this.reviewService.create({
       content,
@@ -75,6 +75,7 @@ export class ReviewController {
       rating,
       photos,
       author: _id,
+      create,
     });
 
     await this.userService.updateByQuery({ _id }, { $inc: { reviewCount: 1 } });

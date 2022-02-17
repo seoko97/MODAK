@@ -35,6 +35,10 @@ export const ReviewSchema = new Schema<IReviewDocument, IReviewModel>(
       default: 0,
       index: true,
     },
+    create: {
+      type: Date,
+      default: new Date(),
+    },
   },
   {
     timestamps: true,
