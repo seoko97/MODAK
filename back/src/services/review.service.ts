@@ -8,20 +8,22 @@ export class ReviewService {
     private readonly userModel: typeof UserModel,
   ) {}
 
-  async getReviewsByQuery(query = {}, target = {}, limit: number) {
+  async getReviewsByQuery(query = {}, target = {}, skip = 0, limit: number) {
     return await this.reviewModel
       .find(query)
       .sort(target)
       .populate("author", "-refreshToken -source")
       .populate("location", "_id name address")
+      .skip(skip)
       .limit(limit);
   }
 
-  async getReviewsByUserId(query = {}) {
+  async getReviewsByUserId(query = {}, skip: number) {
     return await this.reviewModel
-      .find(query)
+      .find(query, { _id: -1 })
       .populate("author", "-refreshToken -source")
       .populate("location")
+      .skip(skip)
       .limit(10);
   }
 

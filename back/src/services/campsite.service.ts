@@ -13,10 +13,11 @@ export class CampsiteService {
     return await this.campsiteModel.findByIdAndUpdate(id, { $inc: { views: 1 } });
   }
 
-  async getCampsByQuery(query = {}, target = {}, limit: number) {
+  async getCampsByQuery(query = {}, target = {}, skip = 0, limit: number) {
     return await this.campsiteModel
       .find(query)
-      .sort({ ...target, _id: -1 })
+      .sort({ ...target })
+      .skip(Number(skip) * 10)
       .limit(limit);
   }
 

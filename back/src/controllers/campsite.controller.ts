@@ -12,41 +12,33 @@ export class CampsiteController {
     const camps = await this.campsiteService.getCampsByQuery(
       {},
       { totalBookmark: -1, views: -1 },
+      0,
       6,
     );
 
     res.json({ status: true, camps });
   };
 
-  getCamps: RequestHandler = async (req, res, next) => {
-    const { sorted, lastId, ...data } = req.query;
+  getCamps: RequestHandler = async (req, res) => {
+    const { sorted, skip, ...data } = req.query;
     const query = campsQuery(data) as IKeyValueString;
-
-    if (lastId && !checkValid(lastId as string))
-      return next({ message: "유효하지 않은 정보입니다." });
 
     const target = {} as IKeyValueString;
     sorted && (target[`${sorted}`] = -1);
 
-    if (lastId) query._id = { $lt: lastId };
-
-    const camps = await this.campsiteService.getCampsByQuery(query, target, 10);
+    const camps = await this.campsiteService.getCampsByQuery(query, target, Number(skip), 10);
 
     res.json({ status: true, camps });
   };
 
-  getUserCamps: RequestHandler = async (req, res, next) => {
-    const { lastId } = req.query;
+  getUserCamps: RequestHandler = async (req, res) => {
+    const { skip } = req.query;
     const { userId } = req.params;
 
-    if (lastId && !checkValid(lastId as string))
-      return next({ message: "유효하지 않은 정보입니다." });
-
-    const query = lastId ? { _id: { $lt: lastId } } : {};
-
     const camps = await this.campsiteService.getCampsByQuery(
-      { ...query, bookmark: userId },
-      {},
+      { bookmark: userId },
+      { _id: -1 },
+      Number(skip),
       10,
     );
 
@@ -71,6 +63,7 @@ export class CampsiteController {
     const camp = await this.campsiteService.getCampsByQuery(
       { _id: campId, bookmark: { $in: userId } },
       {},
+      0,
       1,
     );
 
@@ -88,6 +81,7 @@ export class CampsiteController {
     const camp = await this.campsiteService.getCampsByQuery(
       { _id: campId, bookmark: { $in: userId } },
       {},
+      0,
       1,
     );
 
