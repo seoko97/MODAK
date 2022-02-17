@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { IUser } from "@src/types/reducers/user";
-import useModal from "@src/hooks/useModal";
-import SigninModal from "@src/components/modals/SigninModal";
+import { IUser } from "@type/reducers/user";
+import useModal from "@hooks/useModal";
+import SigninModal from "@modals/SigninModal";
 import NavItem from "./NavItem";
 import Button from "../../atoms/Button";
 import AvatarWrapper from "./AvatarWrapper";

@@ -10,10 +10,10 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 15px;
+  gap: 30px;
 
   @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
-    padding: 0;
+    padding: 10px;
   }
   & > div {
     width: 100%;
@@ -34,6 +34,9 @@ const Input = styled.input`
   border-radius: 6px 0 0 6px;
   font-size: 15px;
   padding: 3px 20px;
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    height: 30px;
+  }
 `;
 
 const Button = styled.button`
@@ -46,13 +49,17 @@ const Button = styled.button`
   font-weight: 500;
   color: #fff;
   cursor: pointer;
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    height: 30px;
+  }
 `;
 
 const TagWrraper = styled.div`
   gap: 10px;
   & > span {
+    font-size: 13px;
     background-color: #287b3a;
-    padding: 5px 8px;
+    padding: 3px 6px;
     border-radius: 5px;
     cursor: pointer;
   }

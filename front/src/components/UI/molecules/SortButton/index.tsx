@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from "react";
 import styled from "styled-components";
-import TriangleIcon from "@src/components/icons/TriangleIcon";
+import TriangleIcon from "@icons/TriangleIcon";
 
 interface Props {
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
@@ -11,9 +11,9 @@ const SortButton = ({ onChange }: Props) => {
     <BoxArea>
       <SelectBoxWrapper>
         <DropDownSelect onChange={onChange} defaultValue="최신순">
-          <DropDownOption value={"latest"}>최신순</DropDownOption>
-          <DropDownOption value={"asc-review"}>리뷰 많은 순</DropDownOption>
-          <DropDownOption value={"asc-bookmark"}>인기 많은 순</DropDownOption>
+          <DropDownOption value="_id">최신순</DropDownOption>
+          <DropDownOption value="totalReview">리뷰순</DropDownOption>
+          <DropDownOption value="totalBookmark">북마크순</DropDownOption>
         </DropDownSelect>
         <TriangleIcon />
       </SelectBoxWrapper>

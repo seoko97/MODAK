@@ -1,12 +1,11 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { getCamps } from "@src/reducers/camps/action";
-import useScroll from "@src/hooks/useScroll";
-import useThrottle from "@src/hooks/useThrottle";
+import { getCamps } from "@reducers/camps/action";
+import useScroll from "@hooks/useScroll";
+import useThrottle from "@hooks/useThrottle";
+import { AppDispatch, useAppSelector } from "@store/configureStore";
 import FilterCategory from "./FilterCategory";
-import { getCampQuery } from "../../../../apis/camp/index";
-import { useAppSelector } from "../../../../store/configureStore";
 
 interface QueryProps {
   [key: string]: string[];
@@ -19,7 +18,19 @@ interface Props {
 const categories = [
   {
     name: "지역",
-    options: ["서울", "부산", "대구", "인천", "광주", "대전", "울산", "세종", "경기", "강원"],
+    options: [
+      "전체",
+      "서울",
+      "부산",
+      "대구",
+      "인천",
+      "광주",
+      "대전",
+      "울산",
+      "세종",
+      "경기",
+      "강원",
+    ],
   },
   {
     name: "주변환경",
@@ -36,26 +47,27 @@ const categories = [
 ];
 
 const FilterFinder = ({ sorted }: Props) => {
-  const { mainCamps } = useAppSelector((state) => state.camps);
   const [query, setQuery] = useState<QueryProps>({});
-  const dispatch = useDispatch();
+  const [skip, setSkip] = useState<number>(0);
+  const { mainCamps } = useAppSelector((state) => state.camps);
   const [scrollHeight, clientHeight] = useScroll();
-  const onThrottle = useThrottle(async () => {
-    await dispatch(getCamps({ ...query, sorted, lastId: mainCamps[mainCamps.length - 1]._id }));
-  }, 1000);
+  const dispatch: AppDispatch = useDispatch();
 
-  useEffect(() => {
-    if (scrollHeight + 300 >= clientHeight) {
-      onThrottle();
-    }
-  }, [scrollHeight, clientHeight]);
+  const getMoreCamps = useCallback(async (query, camps, sorted, skip) => {
+    await dispatch(getCamps({ ...query, sorted, skip: `${skip + 1}` }));
+    setSkip(skip + 1);
+  }, []);
+
+  const onThrottle = useThrottle(getMoreCamps, 1000);
 
   const checked = useCallback(
-    (title, list) => {
+    (title: string, list: string[]) => {
       const newQuery = {
         ...query,
         [title]: list,
       };
+
+      if (list[0] === "전체") newQuery[title] = [];
       setQuery(newQuery);
     },
     [query],
@@ -65,13 +77,18 @@ const FilterFinder = ({ sorted }: Props) => {
     await dispatch(getCamps({ ...query, sorted }));
   }, [query, sorted]);
 
+  useEffect(() => {
+    if (scrollHeight + 300 >= clientHeight) {
+      onThrottle(query, mainCamps, sorted, skip);
+    }
+  }, [scrollHeight, clientHeight, query, mainCamps, sorted, skip]);
+
   return (
     <FinderContainer>
       {categories.map((category) => (
         <FilterCategory key={category.name} category={category} query={query} checked={checked} />
       ))}
       <ButtonContainer>
-        <input type="button" value="초기화" />
         <input type="button" value="검색" onClick={searchCamps} />
       </ButtonContainer>
     </FinderContainer>
@@ -81,6 +98,7 @@ const FilterFinder = ({ sorted }: Props) => {
 export default FilterFinder;
 
 const FinderContainer = styled.form`
+  width: 100%;
   margin-top: 1em;
   border: 1px solid #ebebeb;
   border-radius: 10px;
