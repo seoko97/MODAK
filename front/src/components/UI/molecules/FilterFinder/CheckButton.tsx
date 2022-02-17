@@ -11,7 +11,12 @@ const StyledCheckbox = ({ option, name, checkedOptionsHandler }: Props) => {
   return (
     <FilterItemContainer>
       <CheckboxWrapper>
-        <input type="checkbox" name={name} value={option} onClick={checkedOptionsHandler} />
+        <input
+          type={name === "지역" ? "radio" : "checkbox"}
+          name={name}
+          value={option}
+          onClick={checkedOptionsHandler}
+        />
         <p>{option}</p>
       </CheckboxWrapper>
     </FilterItemContainer>
@@ -23,7 +28,7 @@ export default StyledCheckbox;
 const FilterItemContainer = styled.li`
   display: flex;
   flex-wrap: wrap;
-  min-width: 80px;
+  /* min-width: 80px; */
 
   input {
     appearance: checkbox;

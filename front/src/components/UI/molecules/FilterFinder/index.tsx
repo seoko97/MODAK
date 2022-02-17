@@ -1,26 +1,25 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { getCamps } from "@src/reducers/camps/action";
+import useScroll from "@src/hooks/useScroll";
+import useThrottle from "@src/hooks/useThrottle";
 import FilterCategory from "./FilterCategory";
+import { getCampQuery } from "../../../../apis/camp/index";
+import { useAppSelector } from "../../../../store/configureStore";
 
 interface QueryProps {
   [key: string]: string[];
 }
 
+interface Props {
+  sorted: string;
+}
+
 const categories = [
   {
     name: "지역",
-    options: [
-      "서울시",
-      "부산시",
-      "대구시",
-      "인천시",
-      "광주시",
-      "대전시",
-      "울산시",
-      "세종시",
-      "경기도",
-      "강원도",
-    ],
+    options: ["서울", "부산", "대구", "인천", "광주", "대전", "울산", "세종", "경기", "강원"],
   },
   {
     name: "주변환경",
@@ -36,8 +35,20 @@ const categories = [
   },
 ];
 
-const FilterFinder = () => {
+const FilterFinder = ({ sorted }: Props) => {
+  const { mainCamps } = useAppSelector((state) => state.camps);
   const [query, setQuery] = useState<QueryProps>({});
+  const dispatch = useDispatch();
+  const [scrollHeight, clientHeight] = useScroll();
+  const onThrottle = useThrottle(async () => {
+    await dispatch(getCamps({ ...query, sorted, lastId: mainCamps[mainCamps.length - 1]._id }));
+  }, 1000);
+
+  useEffect(() => {
+    if (scrollHeight + 300 >= clientHeight) {
+      onThrottle();
+    }
+  }, [scrollHeight, clientHeight]);
 
   const checked = useCallback(
     (title, list) => {
@@ -50,7 +61,10 @@ const FilterFinder = () => {
     [query],
   );
 
-  console.log(query);
+  const searchCamps = useCallback(async () => {
+    await dispatch(getCamps({ ...query, sorted }));
+  }, [query, sorted]);
+
   return (
     <FinderContainer>
       {categories.map((category) => (
@@ -58,7 +72,7 @@ const FilterFinder = () => {
       ))}
       <ButtonContainer>
         <input type="button" value="초기화" />
-        <input type="button" value="검색" />
+        <input type="button" value="검색" onClick={searchCamps} />
       </ButtonContainer>
     </FinderContainer>
   );

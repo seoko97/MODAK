@@ -44,7 +44,7 @@ const FilterCategory = ({ category, checked, query }: Props) => {
         newOption.splice(index, 1);
       }
 
-      checked(title, newOption);
+      checked(title, title === "address" && isChecked ? [value] : newOption);
     },
     [query],
   );
@@ -87,6 +87,7 @@ const StyledFilterList = styled.div`
 
   ul {
     display: flex;
+    gap: 10px;
     flex-wrap: wrap;
     align-items: center;
   }

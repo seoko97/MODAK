@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { NextPage } from "next";
 
 import FilterFinder from "@src/components/UI/molecules/FilterFinder";
@@ -11,21 +11,22 @@ import wrapper, { useAppSelector } from "@src/store/configureStore";
 import { RequestHeader } from "@src/types/apis";
 import { getCamps } from "@reducers/camps/action";
 import { getSigninUser } from "@reducers/user/action";
+import useInput from "@src/hooks/useInput";
 import camp from "../../reducers/camp/index";
 
 const CampsiteListPage: NextPage = () => {
   const { mainCamps } = useAppSelector((state) => state.camps);
   // console.log(mainCamps);
+  const [sorted, setSorted] = useState("latest");
+  const onChange = useCallback((e) => {
+    setSorted(e.target.value);
+  }, []);
 
   return (
     <>
       <RowFrame>
-        <FilterFinder />
-        <SortButton />
-        {/* <CampSiteListBox />
-        <CampSiteListBox />
-        <CampSiteListBox />
-        <CampSiteListBox /> */}
+        <FilterFinder sorted={sorted} />
+        <SortButton onChange={onChange} />
         {mainCamps.map((camp) => (
           <CampSiteListBox camp={camp} key={camp._id} />
         ))}
@@ -38,7 +39,6 @@ export default CampsiteListPage;
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
   const cookies = ctx.req?.headers?.cookie;
-  const query = ctx?.query;
 
   if (cookies) (axios.defaults.headers as RequestHeader).Cookie = cookies;
 

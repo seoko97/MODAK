@@ -5,6 +5,7 @@ import Link from "@atoms/Link";
 import BookmarkIcon from "@src/components/icons/BookmarkIcon";
 import CommentIcon from "@src/components/icons/CommentIcon";
 import { ICamp } from "@src/types/reducers/camp";
+import { url } from "@src/apis";
 
 interface Props {
   camp: ICamp;
@@ -16,7 +17,7 @@ const CampSiteListBox = ({ camp }: Props) => {
     <Link href={`/camp/${_id}`}>
       <CardWrapper>
         <ImgWrapper>
-          <img src={photos} alt={`${name} 사진`} />
+          <img src={!photos[0] ? "/tent.jpg" : `${url}/${photos[0]}`} alt={`${name} 사진`} />
         </ImgWrapper>
         <CampSiteInfo>
           <CardInfoHeader>
@@ -24,11 +25,11 @@ const CampSiteListBox = ({ camp }: Props) => {
             <CountsWrapper>
               <CountContainer>
                 <BookmarkIcon size={20} />
-                <span>{totalBookmark}</span>
+                <span>{totalBookmark || 0}</span>
               </CountContainer>
               <CountContainer>
                 <CommentIcon size={20} />
-                <span>{totalReview}</span>
+                <span>{totalReview || 0}</span>
               </CountContainer>
             </CountsWrapper>
           </CardInfoHeader>
@@ -123,7 +124,7 @@ const CampSiteInfo = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  padding: 1em 0;
+  padding: 1em;
   font-size: 0.8em;
 `;
 
