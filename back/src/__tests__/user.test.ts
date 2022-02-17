@@ -41,28 +41,13 @@ describe("유저페이지 GET 테스트", () => {
 
 describe("유저페이지 PUT 테스트", () => {
   test("1. 로그인된 상태로 유저 정보를 수정하는 경우", async () => {
-    const res = await request(app)
-      .put(`/api/user/${userConfig.objectId}`)
-      .set("authorization", userConfig.token)
-      .send({
-        nickname: "이름 수정 테스트",
-        intro: "한줄소개 수정 테스트",
-      });
+    const res = await request(app).put("/api/user/").set("authorization", userConfig.token).send({
+      _id: userConfig.objectId,
+      nickname: "이름 수정 테스트2",
+      intro: "한줄소개 수정 테스트2",
+    });
 
     expect(res.statusCode).toEqual(201);
-  });
-
-  test("2. 로그인된 상태로 타 유저 정보를 수정하는 경우", async () => {
-    const res = await request(app)
-      .put(`/api/user/${anotherUserConfig.objectId}`)
-      .set("authorization", userConfig.token)
-      .send({
-        nickname: "이름 수정됨",
-        intro: "한줄소개 수정됨",
-      });
-
-    expect(res.statusCode).toEqual(401);
-    expect(res.text).toContain("내 정보만 수정할 수 있습니다.");
   });
 });
 
