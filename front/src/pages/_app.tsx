@@ -9,6 +9,9 @@ import DarkModeButton from "@molecules/DarkModeButton";
 import AppLayout from "@templates/AppLayout";
 import wrapper from "@src/store/configureStore";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 interface Props extends AppProps {
   mode: string;
 }

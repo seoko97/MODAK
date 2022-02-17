@@ -1,23 +1,10 @@
 import React, { memo, useMemo } from "react";
 import styled from "styled-components";
 import Slider, { Settings } from "react-slick";
-import Next from "@icons/ArrowIcon/Next";
-import Prev from "@icons/ArrowIcon/Prev";
 import TitleBox from "@molecules/TitleBox";
 
 import { useAppSelector } from "@src/store/configureStore";
-
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
-function NextArrow(props: any) {
-  const { className, onClick } = props;
-  return <Next className={className} onClick={onClick} />;
-}
-function PrevArrow(props: any) {
-  const { className, onClick } = props;
-  return <Prev className={`${className}`} onClick={onClick} />;
-}
+import { NextArrow, PrevArrow } from "./arrow";
 
 const Container = styled.article`
   padding: 20px 0;
@@ -62,7 +49,6 @@ const settings: Settings = {
   speed: 500,
   nextArrow: <PrevArrow />,
   prevArrow: <NextArrow />,
-  // autoplay: true,
   autoplaySpeed: 4000,
 
   responsive: [
