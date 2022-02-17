@@ -33,7 +33,7 @@ describe("리뷰 GET 테스트", () => {
 
     expect(res.statusCode).toEqual(200);
     expect(res.text).toContain("reviews");
-    if (res.text.length > 40) expect(res.text).toContain(`"author":"${user}"`);
+    if (res.text.length > 40) expect(res.text).toContain(user);
   });
 
   test("3. 존재하지 않는 사용자가 작성한 리뷰들을 받아오는 테스트", async () => {
