@@ -34,7 +34,7 @@ export class CampsiteService {
   }
 
   async update(id: string, data: IKeyValueString) {
-    return await this.campsiteModel.updateOne({ _id: id }, data);
+    return await this.campsiteModel.findOneAndUpdate({ _id: id }, data, { new: true });
   }
 
   async schedule() {
