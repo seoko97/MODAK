@@ -4,7 +4,7 @@ import { AppDispatch, useAppSelector } from "@store/configureStore";
 import { getUserReviews as getReview } from "@reducers/reviews/action";
 import { getUserCamps as getCamps } from "@reducers/camps/action";
 import RowFrame from "@templates/RowFrame";
-import MyPageProfile from "@molecules/MypageProfile";
+import MyPageProfile from "@src/components/UI/organisms/MypageProfile";
 import Tabs from "../Tabs";
 import MyReview from "./MyReview";
 import WishList from "./WishList";
