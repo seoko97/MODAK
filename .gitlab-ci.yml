@@ -1,0 +1,33 @@
+image: node:latest
+
+building:
+    stage: build
+    variables:
+        NODE_ENV: "development"
+    script:
+        - npm i
+        - npm run build
+    type:
+        build
+    tags:
+        - npm
+        - node
+    only:
+        - tags
+        - master
+
+testing:
+    stage: test
+    service:
+        - mongo: 
+    variables:
+        NODE_ENV: "development"
+    script:
+        - npm run test
+    tags:
+        - npm
+        - node
+        - test
+    only:
+        - tags
+        - master
