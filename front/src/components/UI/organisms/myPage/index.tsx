@@ -4,11 +4,11 @@ import { useAppSelector } from "@src/store/configureStore";
 import { getUserReviews as getReview } from "@reducers/reviews/action";
 import { getUserCamps as getCamps } from "@reducers/camps/action";
 import WishList from "@src/components/UI/organisms/WishList";
-import MyPageProfile from "../MyPageProfile";
 import Tabs from "../../molecules/MyProfileTabs";
 import Style from "./style";
 import RowFrame from "../../templates/RowFrame";
 import MyReview from "../MyReview";
+import MyPageProfile from "../MyPageProfile";
 
 interface Props {
   userId: string;

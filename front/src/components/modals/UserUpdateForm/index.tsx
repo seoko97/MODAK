@@ -1,12 +1,11 @@
-import React, { SetStateAction, useRef, Dispatch, useEffect, useState, useCallback } from "react";
+import React, { useRef, useState, useCallback } from "react";
 import ModalLayout from "@src/components/modals/ModalLayout";
 import TrashCanIcon from "@src/components/icons/TrashCanIcon";
 import ExitIcon from "@src/components/icons/ExitIcon";
 import { useAppSelector } from "@src/store/configureStore";
 import { EditUserData } from "@src/types/apis/user";
 import { useDispatch } from "react-redux";
-import { editUserInfo, getUserInfo, uploadProfileImg } from "@src/reducers/user/action";
-import { url } from "@src/apis";
+import { editUserInfo, uploadProfileImg } from "@src/reducers/user/action";
 import { checkUrl } from "@src/lib/checkUrl";
 import Style from "./style";
 
@@ -59,7 +58,6 @@ const UserUpdate = ({ onClick }: Props) => {
       alert("닉네임은 한 글자 이상 입력해주세요.");
       return;
     }
-
     await dispatch(editUserInfo({ nickname: name, profileImg: img, intro: desc }));
     onClick();
   };
