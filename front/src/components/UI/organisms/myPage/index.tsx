@@ -3,12 +3,12 @@ import { useDispatch } from "react-redux";
 import { useAppSelector } from "@src/store/configureStore";
 import { getUserReviews as getReview } from "@reducers/reviews/action";
 import { getUserCamps as getCamps } from "@reducers/camps/action";
-import MyPageProfile from "../../molecules/MypageProfile";
-import Tabs from "../Tabs";
-import MyReview from "./MyReview";
-import WishList from "./WishList";
-import Style from "./styles";
+import WishList from "@src/components/UI/organisms/WishList";
+import MyPageProfile from "../MyPageProfile";
+import Tabs from "../../molecules/MyProfileTabs";
+import Style from "./style";
 import RowFrame from "../../templates/RowFrame";
+import MyReview from "../MyReview";
 
 interface Props {
   userId: string;
@@ -21,17 +21,12 @@ const MyPage = ({ userId }: Props) => {
   const { mainReviews, getUserReviews } = useAppSelector((state) => state.reviews);
   const { loading: reviewLoading, error: reviewError } = getUserReviews;
   const dispatch = useDispatch();
-  useEffect(() => {
-    console.log(tab);
-  }, [tab]);
 
   const getComponentByTab = useMemo(() => {
     switch (tab) {
       case "내 리뷰":
-        // ? 유저 리뷰 리스트 : organism
         return mainReviews.map((review) => <MyReview key={review._id} review={review} />);
       case "찜한 캠핑장":
-        // ? 위시 리스트 : organism
         return mainCamps.map((camp) => <WishList key={camp._id} camp={camp} />);
       default:
         return null;
@@ -48,9 +43,7 @@ const MyPage = ({ userId }: Props) => {
   return (
     <RowFrame>
       <Style.Main>
-        {/* 마이페이지 프로필: organism */}
         <MyPageProfile />
-        {/* 탭스 : molucules */}
         <Tabs current={tab} onClick={handleClick}></Tabs>
         {getComponentByTab}
       </Style.Main>
