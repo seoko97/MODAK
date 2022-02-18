@@ -8,7 +8,7 @@ export interface IReviewDTO {
   author: PopulatedDoc<IUserDocument>;
   location: PopulatedDoc<ICampsiteDocument>;
   rating: string;
-  create: Date;
+  created: string;
 }
 
 export interface IReviewDocument extends IReviewDTO {
