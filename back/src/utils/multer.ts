@@ -17,10 +17,9 @@ const upload = multer({
       cb(null, "uploads");
     },
     filename(req, file, cb) {
+      const reg = /[\s\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
       const ext = path.extname(file.originalname);
-      const basenmae = encodeURIComponent(
-        path.basename(file.originalname.replace(/ /g, "").trim(), ext),
-      );
+      const basenmae = path.basename(file.originalname.replace(reg, "").trim(), ext);
       cb(null, basenmae + new Date().getTime().valueOf() + ext);
     },
   }),
