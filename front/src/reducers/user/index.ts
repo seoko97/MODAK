@@ -82,7 +82,6 @@ const user = createSlice({
       })
       .addCase(uploadProfileImg.fulfilled, (state, action) => {
         asyncFulfilled(state.uploadProfileImg);
-        if (state.me && action.payload) state.me.profileImg = action.payload.image;
       })
       .addCase(uploadProfileImg.rejected, (state, action) => {
         asyncRejected(state.uploadProfileImg, action.payload as IErrPayload);
