@@ -58,7 +58,13 @@ export class ReviewController {
 
     const query = { author: id } as IKeyValueString;
 
-    const reviews = await this.reviewService.getReviewsByUserId(query, Number(skip));
+    const reviews = await this.reviewService.getReviewsByQuery(
+      query,
+      { _id: -1 },
+      Number(skip),
+      10,
+    );
+    console.log(reviews);
 
     res.json({ status: true, reviews });
   };

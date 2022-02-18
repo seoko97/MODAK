@@ -18,15 +18,6 @@ export class ReviewService {
       .limit(limit);
   }
 
-  async getReviewsByUserId(query = {}, skip: number) {
-    return await this.reviewModel
-      .find(query, { _id: -1 })
-      .skip(skip * 10)
-      .populate("author", "-refreshToken -source")
-      .populate("location")
-      .limit(10);
-  }
-
   async delete(id: string) {
     return await this.reviewModel.findOneAndDelete({ _id: id });
   }
