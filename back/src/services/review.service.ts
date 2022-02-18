@@ -12,18 +12,18 @@ export class ReviewService {
     return await this.reviewModel
       .find(query)
       .sort(target)
+      .skip(skip * 10)
       .populate("author", "-refreshToken -source")
       .populate("location", "_id name address")
-      .skip(skip)
       .limit(limit);
   }
 
   async getReviewsByUserId(query = {}, skip: number) {
     return await this.reviewModel
       .find(query, { _id: -1 })
+      .skip(skip * 10)
       .populate("author", "-refreshToken -source")
       .populate("location")
-      .skip(skip)
       .limit(10);
   }
 
