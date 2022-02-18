@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import request from "supertest";
 import app from "@src/app";
 import { configs } from "@utils/constants";
-import { userConfig, anotherUserConfig, wrongUserConfig } from "./test.config";
+import { userConfig, wrongUserConfig } from "./test.config";
 
 beforeAll(async () => {
   await mongoose.connect(configs.DB_URL);
