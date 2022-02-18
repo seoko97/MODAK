@@ -14,6 +14,7 @@ export const Container = styled.form`
   background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.PRIMARY_COLOR};
   color: #0c0c0c;
   border-radius: 10px;
+  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
 
   & > span {
     width: 180px;
@@ -166,10 +167,31 @@ export const ImageList = styled.div`
 `;
 
 export const ImageWrapper = styled.div`
+  position: relative;
   width: 100px;
   height: 100px;
+  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
+
+  cursor: pointer;
+  & .hover {
+    display: none;
+  }
+  &:hover {
+    & .hover {
+      position: absolute;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3);
+      color: #fff;
+    }
+  }
 
   & > img {
+    object-fit: cover;
     width: 100%;
     height: 100%;
   }

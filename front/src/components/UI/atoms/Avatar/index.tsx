@@ -1,4 +1,4 @@
-import { checkUrl } from "@src/lib/checkUrl";
+import { checkUrl } from "@lib/checkUrl";
 import React, { FC } from "react";
 import styled from "styled-components";
 

@@ -33,6 +33,7 @@ const Img = styled.img`
 
 // --- 프로필 정보 ---
 const ProfileInfo = styled.figcaption`
+  width: 100%;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   & h2,
   p {
@@ -44,6 +45,7 @@ const UserName = styled.div`
   display: flex;
   align-items: baseline;
   gap: 6px;
+  font-size: 18px;
 `;
 
 const IconBox = styled.div`

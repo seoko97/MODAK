@@ -1,7 +1,7 @@
 import React from "react";
-import HeartIcon from "@src/components/icons/HeartIcon";
-import PencilIcon from "@src/components/icons/PencilIcon";
-import { ICamp } from "@src/types/reducers/camp";
+import HeartIcon from "@icons/HeartIcon";
+import PencilIcon from "@icons/PencilIcon";
+import { ICamp } from "@type/reducers/camp";
 import Style from "./style";
 
 interface Props {
@@ -23,7 +23,7 @@ const IconComponent = ({
 );
 
 const WishList = ({ camp }: Props) => {
-  const { _id, thema, intro, photos, name, totalBookmark, totalReview } = camp;
+  const { _id, thema, photos, name, totalBookmark, totalReview } = camp;
 
   return (
     <Style.WishCamp>

@@ -84,13 +84,12 @@ const CardWrapper = styled.div`
     cursor: pointer;
   }
 
-  @media screen and (max-width: ${({ theme }) => theme.BP.TABLET}) {
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     flex-direction: column;
     height: auto;
-    font-size: 1.5rem;
     padding-bottom: 0;
   }
-  @media screen and (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
     font-size: 1rem;
   }
 `;
@@ -99,6 +98,7 @@ const ImgWrapper = styled.div`
   width: 40%;
   margin-right: 1em;
   position: relative;
+  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
 
   &:before {
     content: "";
@@ -128,6 +128,9 @@ const CampSiteInfo = styled.div`
   position: relative;
   padding: 1em;
   font-size: 0.8em;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 const CardInfoHeader = styled.div`
@@ -180,7 +183,7 @@ const CountContainer = styled.div`
     margin-right: 2px;
     margin-left: 10px;
   }
-  @media screen and (max-width: ${({ theme }) => theme.BP.TABLET}) {
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     svg {
       margin-top: 2px;
       width: 15px;

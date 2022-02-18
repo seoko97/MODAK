@@ -1,4 +1,5 @@
-import { ResImgs } from "@src/types/apis";
+import axios from "axios";
+import { ResImgs } from "@type/apis";
 import {
   CampReviewProps,
   ResRv,
@@ -8,7 +9,6 @@ import {
   UpdateReviewData,
   UserReviewProps,
 } from "@type/apis/review";
-import axios from "axios";
 import { getCampQuery, KeyValueStr } from "../camp";
 
 // 메인 리뷰

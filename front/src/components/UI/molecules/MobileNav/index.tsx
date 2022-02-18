@@ -1,13 +1,15 @@
+import React, { useCallback, useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
+
 import TentIcon from "@icons/TentIcon";
 import SigninModal from "@modals/SigninModal";
 import useModal from "@hooks/useModal";
 import { signout } from "@reducers/user/action";
 import { AppDispatch, useAppSelector } from "@store/configureStore";
-import React, { useCallback, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
-import styled from "styled-components";
-import Avatar from "../../atoms/Avatar";
-import Link from "../../atoms/Link";
+import Avatar from "@atoms/Avatar";
+import Link from "@atoms/Link";
+import { checkUrl } from "@lib/checkUrl";
 
 interface Props {
   onClose: () => void;
@@ -57,6 +59,9 @@ const NavBox = styled.li`
   align-items: flex-start;
   justify-content: flex-start;
   gap: 10px;
+  & > span {
+    cursor: pointer;
+  }
 `;
 const UserBox = styled.li`
   width: 100%;
@@ -112,7 +117,7 @@ const MobileNav = ({ onClose, isOpen }: Props) => {
         </IconBox>
         {me ? (
           <UserBox>
-            <Avatar url={me.profileImg} alt="user_avatar" />
+            <Avatar url={checkUrl(me.profileImg)} alt="user_avatar" />
             <span>{me.nickname} 님</span>
           </UserBox>
         ) : (

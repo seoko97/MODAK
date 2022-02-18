@@ -10,10 +10,12 @@ export interface CampReviewProps {
   campId: string;
   rating?: string;
   skip?: string;
+  target?: string;
 }
 
 export type ReviewDTO = Pick<IReview, "content" | "rating" | "photos"> & {
   location: string;
+  created?: string;
 };
 
 export interface UpdateReviewData {

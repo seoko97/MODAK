@@ -95,6 +95,7 @@ const CampSiteContentBox = styled.div`
   flex-direction: column;
   box-sizing: border-box;
   padding: 5px 25px;
+  gap: 15px;
 
   & > p {
     font-weight: 500;

@@ -10,6 +10,9 @@ export default {
 
 export const Default = () => {
   const name = text("name", "default");
+  const onClick = () => {
+    return "test";
+  };
 
-  return <Button name={name} />;
+  return <Button name={name} onClick={onClick} />;
 };

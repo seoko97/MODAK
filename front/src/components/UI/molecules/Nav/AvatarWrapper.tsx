@@ -9,6 +9,7 @@ import Avatar from "@atoms/Avatar";
 import Button from "@atoms/Button";
 import Link from "@atoms/Link";
 import Overlay from "@atoms/Overlay";
+import { checkUrl } from "@lib/checkUrl";
 
 const StyledAvatar = styled.div<{ isOpen: boolean }>`
   display: flex;
@@ -73,7 +74,7 @@ const AvatarWrapper = () => {
     <>
       <StyledAvatar isOpen={isOpen}>
         <Inner onClick={onOpen}>
-          <Avatar url={me?.profileImg as string} alt="사진" />
+          <Avatar url={checkUrl(me?.profileImg as string)} alt="사진" />
         </Inner>
         <MenuBox isOpen={isOpen}>
           <MenuItem>

@@ -1,5 +1,8 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import styled, { css } from "styled-components";
+import Router from "next/router";
+import Link from "@atoms/Link";
+
 import Title from "@atoms/Title";
 import Button from "@atoms/Button";
 import LookIcon from "@icons/LookIcon";
@@ -11,7 +14,7 @@ import { ICamp } from "@type/reducers/camp";
 import { AppDispatch, useAppSelector } from "@store/configureStore";
 import { useDispatch } from "react-redux";
 import { bookmark, unbookmark } from "@reducers/camp/action";
-import Router from "next/router";
+import { url } from "@apis/.";
 
 const CampSiteCoverImg = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -85,7 +88,7 @@ const CampSiteCoverImg = () => {
               <Button onClick={onOpen} name="후기작성" />
               {isOpen && <ReviewForm onClick={onClose} camp={singleCamp as ICamp} />}
               <Button
-                name={bookMarkedUser ? "위시리스트 제거" : "위시리스트 추가"}
+                name={bookMarkedUser ? "북마크 제거" : "북마크 추가"}
                 onClick={bookMarkedUser ? onClickUnBookMark : onClickBookMark}
                 disabled={bmState.loading || ubmState.loading}
               />
@@ -93,16 +96,20 @@ const CampSiteCoverImg = () => {
           </IconContainer>
 
           {/* 테마 & 환경 */}
-          <ThemaBox>{makeTagList(thema)}</ThemaBox>
-          <ThemaBox>{makeTagList(environment)}</ThemaBox>
+          <ThemaBox>{makeTagList(thema, "thema")}</ThemaBox>
+          <ThemaBox>{makeTagList(environment, "environment")}</ThemaBox>
         </CampCoverImgContent>
       </CampCoverImgBox>
     </>
   );
 };
 
-function makeTagList(list: string[]) {
-  const lists = list.map((el, idx) => <Thema key={idx}># {el}</Thema>);
+function makeTagList(list: string[], type: string) {
+  const lists = list.map((el, idx) => (
+    <Link href={`/search?${type}=${el}`} key={idx}>
+      <span key={idx}># {el}</span>
+    </Link>
+  ));
   return lists;
 }
 
@@ -115,7 +122,7 @@ const CampCoverImgBox = styled.div<Pick<ICamp, "photos">>`
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
-  background-image: url(${({ photos }) => photos[0] || "/tent.jpg"});
+  background-image: url(${({ photos }) => (photos[0] ? `${url}/${photos[0]}` : "/tent.jpg")});
   background-size: cover;
   overflow: hidden;
 
@@ -239,16 +246,15 @@ const ThemaBox = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-`;
+  & > a {
+    font-weight: bold;
+    color: #fff;
+    background-color: #038c5a;
+    padding: 8px 10px;
+    border-radius: 12px;
 
-const Thema = styled.span`
-  font-weight: bold;
-  color: #fff;
-  background-color: #038c5a;
-  padding: 8px 10px;
-  border-radius: 12px;
-
-  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    padding: 6px 8px;
+    @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
+      padding: 6px 8px;
+    }
   }
 `;

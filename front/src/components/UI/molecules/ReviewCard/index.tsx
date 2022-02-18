@@ -1,5 +1,5 @@
+import React, { memo, useMemo, useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
-import React, { memo, useMemo, useCallback } from "react";
 import Link from "@atoms/Link";
 import SubTitle from "@atoms/SubTitle";
 import Avatar from "@atoms/Avatar";
@@ -8,18 +8,19 @@ import HeartIcon from "@icons/HeartIcon";
 import PencilIcon from "@icons/PencilIcon";
 import { IReview } from "@type/reducers/review";
 import { ResRvLk } from "@type/apis/review";
+import { ICamp } from "@type/reducers/camp";
+import ReviewForm from "@modals/ReviewForm";
+import ModalCaroucel from "@modals/ModalCarousel";
 import { AppDispatch, useAppSelector } from "@store/configureStore";
 import { likeReview, unLikeReview, deleteReview } from "@reducers/review/action";
 import { likedReview, unLikedReview, deleteReview as dR } from "@reducers/reviews";
-import { url } from "@apis/.";
 import useModal from "@hooks/useModal";
-import ModalCaroucel from "@modals/ModalCarousel";
+import { checkUrl } from "@lib/checkUrl";
 import Rating from "./Rating";
 import {
   StyledContainer,
   StyledProfileContainer,
   StyledReviewEvaluateBox,
-  StyledReviewPhotos,
   StyledProfile,
   StyledReviewCard,
   StyledReviewIconBox,
@@ -27,6 +28,7 @@ import {
   IconWrapper,
   LinkInner,
 } from "./style";
+import ReviewImage from "./ReviewImage";
 
 interface Props {
   review: IReview;
@@ -39,14 +41,18 @@ interface ResPayload {
 const ReviewCard = ({ review }: Props) => {
   const dispatch: AppDispatch = useDispatch();
   const { me } = useAppSelector((state) => state.user);
-  const { _id, content, photos, author, createdAt, rating, count, likes } = review;
+  const [moreContent, setMoreContent] = useState(false);
+  const { singleCamp } = useAppSelector((state) => state.camp);
+  const { _id, content, photos, author, rating, count, likes, created } = review;
   const { _id: userId, nickname, profileImg, reviewCount } = author;
-
   const [isOpen, onOpen, onClose] = useModal();
+  const [isEditForm, onEditForm, onCloseForm] = useModal();
+
+  const parsingText = useMemo(() => content.replace(/<br\s*\/?>/gim, "\n"), [content]);
 
   const likedUser = useMemo(() => {
     if (!me) return false;
-    return likes.includes(userId);
+    return likes.includes(me?._id);
   }, [me, likes]);
 
   const onClickLiked = useCallback(async () => {
@@ -66,9 +72,15 @@ const ReviewCard = ({ review }: Props) => {
   const onClickDelete = useCallback(async () => {
     if (me) {
       const res = await dispatch(deleteReview(_id));
-      dispatch(dR({ id: (res.payload as ResPayload).id }));
+
+      const isDeleted = confirm("삭제하시겠습니까?");
+      if (isDeleted) dispatch(dR({ id: (res.payload as ResPayload).id }));
     }
   }, [me, _id]);
+
+  const onMoreContent = useCallback(() => {
+    setMoreContent(!moreContent);
+  }, [moreContent]);
 
   return (
     <>
@@ -77,7 +89,7 @@ const ReviewCard = ({ review }: Props) => {
           <StyledProfile>
             <Link href={`/user/${userId}`}>
               <LinkInner>
-                <Avatar size={70} url={profileImg} alt="유저프로필" />
+                <Avatar size={70} url={checkUrl(profileImg)} alt="유저프로필" />
                 <Title size={14}>{nickname}</Title>
               </LinkInner>
             </Link>
@@ -95,21 +107,24 @@ const ReviewCard = ({ review }: Props) => {
           <Rating rating={rating} />
         </StyledProfileContainer>
         <StyledReviewCard>
-          <SubTitle>{createdAt}</SubTitle>
-          <p>{content.length > 1000 ? `${content.substring(0, 1000)}...더보기` : content}</p>
-          <StyledReviewPhotos>
-            {photos?.map((photo, idx) => (
-              <div key={idx} onClick={onOpen}>
-                <img src={`${url}/${photo}`} alt="reviewPhoto" />
-                <div className="hover">확대</div>
-              </div>
-            ))}
-          </StyledReviewPhotos>
-
+          <SubTitle>{created}</SubTitle>
+          <p>
+            {parsingText.length <= 1000 || moreContent ? (
+              parsingText
+            ) : (
+              <>
+                {parsingText.substring(0, 1000)}...
+                <span className="more" onClick={onMoreContent}>
+                  더보기
+                </span>
+              </>
+            )}
+          </p>
+          <ReviewImage images={photos} onClick={onOpen} />
           <StyledReviewEvaluateBox>
             {author._id === me?._id && (
               <>
-                <span>수정하기</span>
+                <span onClick={onEditForm}>수정하기</span>
                 <span onClick={onClickDelete}>삭제하기</span>
               </>
             )}
@@ -117,6 +132,9 @@ const ReviewCard = ({ review }: Props) => {
         </StyledReviewCard>
       </StyledContainer>
       {isOpen && <ModalCaroucel onClick={onClose} isOpen={isOpen} photos={photos} />}
+      {isEditForm && (
+        <ReviewForm onClick={onCloseForm} camp={singleCamp as ICamp} review={review} />
+      )}
     </>
   );
 };

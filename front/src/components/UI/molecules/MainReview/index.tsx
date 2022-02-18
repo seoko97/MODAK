@@ -8,6 +8,7 @@ import Avatar from "@atoms/Avatar";
 import LocationIcon from "@icons/LocationIcon";
 import CalendarIcon from "@icons/CalendarIcon";
 import HeartIcon from "@icons/HeartIcon";
+import { checkUrl } from "@lib/checkUrl";
 
 interface Props {
   review: IReview;
@@ -15,7 +16,7 @@ interface Props {
 const limitStr = (str: string) => (str.length >= 25 ? `${str.substring(0, 25)}...` : str);
 
 const MainReview = ({ review }: Props) => {
-  const { author, content, count, photos, createdAt, location } = review;
+  const { author, content, count, photos, created, location } = review;
   const { nickname, profileImg } = author;
 
   return (
@@ -31,7 +32,7 @@ const MainReview = ({ review }: Props) => {
           {/* 카드내용 : 유저정보, 리뷰정보로 구성 */}
           <StyledCardContentBox>
             <StyledUserInfo>
-              <Avatar url={profileImg} alt="사진" />
+              <Avatar url={checkUrl(profileImg)} alt="사진" />
               <span>{nickname}</span>
             </StyledUserInfo>
 
@@ -48,7 +49,7 @@ const MainReview = ({ review }: Props) => {
               <StyledDateLike>
                 <StyledReviewIconBox>
                   <CalendarIcon size={20} />
-                  <span>{String(createdAt).substring(0, 10)}</span>
+                  <span>{created}</span>
                 </StyledReviewIconBox>
 
                 <StyledReviewIconBox>

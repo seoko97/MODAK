@@ -7,9 +7,9 @@ import ProfileInfo from "./ProfileInfo";
 import Style from "./styles";
 
 const MyPageProfile = (): React.ReactElement => {
-  const { me } = useAppSelector((state) => state.user);
+  const { userInfo } = useAppSelector((state) => state.user);
   const [isOpen, onOpen, onClose] = useModal();
-  const { nickname, profileImg, intro } = me as EditUserData;
+  const { nickname, profileImg, intro } = userInfo as EditUserData;
 
   return (
     <Style.Profile>

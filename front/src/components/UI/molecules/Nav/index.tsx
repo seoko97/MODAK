@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { IUser } from "@type/reducers/user";
 import useModal from "@hooks/useModal";
 import SigninModal from "@modals/SigninModal";
+import Button from "@atoms/Button";
 import NavItem from "./NavItem";
-import Button from "../../atoms/Button";
 import AvatarWrapper from "./AvatarWrapper";
 
 interface Props {

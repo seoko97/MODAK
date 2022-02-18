@@ -27,3 +27,8 @@ export interface ResCpBms extends ResponseDTO {
 export interface ResCpSearch extends ResponseDTO {
   camps: Pick<ICamp, "_id" | "name" | "lineIntro">[];
 }
+
+export interface UserCampProps {
+  userId: string;
+  skip?: string;
+}

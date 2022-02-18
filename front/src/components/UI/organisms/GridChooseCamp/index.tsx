@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import GridCampInfo from "@molecules/GridCampInfo";
-import TitleBox from "../../molecules/TitleBox";
+import TitleBox from "@molecules/TitleBox";
 
 const Container = styled.div`
   padding: 20px 0;

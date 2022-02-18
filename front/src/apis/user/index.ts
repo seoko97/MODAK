@@ -1,4 +1,4 @@
-import { ResImg, ResponseDTO } from "@src/types/apis";
+import { ResImg, ResponseDTO } from "@type/apis";
 import { EditUserData, ResUs } from "@type/apis/user";
 import axios, { AxiosResponse } from "axios";
 

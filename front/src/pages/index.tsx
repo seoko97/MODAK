@@ -3,7 +3,7 @@ import wrapper from "@store/configureStore";
 import { getSigninUser } from "@reducers/user/action";
 import { getMainCamps } from "@reducers/camps/action";
 import { getMainReviews } from "@reducers/reviews/action";
-import { PayloadHeaders } from "@src/types/apis";
+import { PayloadHeaders } from "@type/apis";
 
 export { default } from "@pages/Home";
 

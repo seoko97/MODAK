@@ -58,33 +58,34 @@ const StyledReviewPhotos = styled.div`
   width: 100%;
 
   justify-content: flex-start;
-  flex-wrap: wrap;
   gap: 10px;
   margin-top: 20px;
 
   & > div {
-    width: 250px;
+    width: 180px;
     position: relative;
-    padding-bottom: 250px;
+    padding-bottom: 180px;
     cursor: pointer;
+    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
   }
-  & .hover {
-    display: none;
-  }
-  & > div:hover {
-    & .hover {
-      position: absolute;
+  & > div:last-of-type {
+    .over {
       display: flex;
-      align-items: flex-end;
-      justify-content: flex-end;
-      padding: 10px;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background-color: rgba(0, 0, 0, 0.3);
-      color: #fff;
     }
+  }
+
+  & .over {
+    position: absolute;
+    display: none;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 10px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #fff;
   }
 
   & img {
@@ -94,14 +95,12 @@ const StyledReviewPhotos = styled.div`
     object-fit: cover;
   }
 
-  @media (max-width: ${({ theme }) => theme.BP.PC}) {
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
     & > div {
-      width: 100%;
-      padding-bottom: 70%;
-      max-height: 320px;
-      + div {
-        display: none;
-      }
+      flex: 1;
+      max-width: 100px;
+
+      padding-bottom: 30%;
     }
   }
 `;
@@ -179,6 +178,20 @@ const StyledReviewCard = styled.div`
   gap: 10px;
   padding: 20px;
   width: 100%;
+  & > p {
+    margin-bottom: 20px;
+  }
+
+  .more {
+    cursor: pointer;
+    padding-left: 10px;
+    opacity: 0.8;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;
 
 export {

@@ -1,25 +1,41 @@
-import React, { memo } from "react";
+import React, { memo, useCallback, useState } from "react";
 import Style from "./Style";
 
 interface Props {
-  current: string;
-  onClick: (e: any) => void;
+  tabs: string[];
+  children: React.ReactNode[];
 }
 
-const tabs = ["내 리뷰", "찜한 캠핑장"];
-
-const Taps = ({ current, onClick }: Props) => {
+export const TabItem = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Style.Container role="tablist">
-      {tabs.map((tab, idx) => {
-        return (
-          <Style.EachTab key={idx} role="tab" active={current === tab} onClick={onClick}>
-            {tab}
-          </Style.EachTab>
-        );
-      })}
-    </Style.Container>
+    <>
+      <div>{children}</div>
+    </>
   );
 };
 
-export default memo(Taps);
+const Tabs = ({ tabs, children }: Props) => {
+  const [current, setCurrent] = useState(tabs[0]);
+  const idx = tabs.findIndex((tab) => current === tab);
+
+  const handleClick = useCallback(async (e) => {
+    setCurrent(e.target.innerText);
+  }, []);
+
+  return (
+    <>
+      <Style.Container role="tablist">
+        {tabs.map((tab, idx) => {
+          return (
+            <Style.EachTab key={idx} role="tab" active={current === tab} onClick={handleClick}>
+              {tab}
+            </Style.EachTab>
+          );
+        })}
+      </Style.Container>
+      {children[idx]}
+    </>
+  );
+};
+
+export default memo(Tabs);

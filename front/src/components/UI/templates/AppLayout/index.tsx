@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "@organisms/Header";
+import Footer from "@organisms/Footer";
 
 const StyledAppLayout = styled.div`
   width: 100%;
@@ -22,6 +23,7 @@ const AppLayout = ({ children }: Props) => {
       <StyledAppLayout>
         <Header />
         {children}
+        <Footer />
       </StyledAppLayout>
     </>
   );

@@ -7,11 +7,15 @@ import NormalIcon from "@icons/NormalIcon";
 import AngryIcon from "@icons/AngryIcon";
 import PhotoIcon from "@icons/PhotoIcon";
 import ModalLayout from "@modals/ModalLayout";
-import { ICamp } from "@type/reducers/camp";
-import useInput from "@hooks/useInput";
-import { createReview, uploadImage } from "@reducers/review/action";
-import { AppDispatch } from "@store/configureStore";
 import { ResImgs } from "@type/apis";
+import { ICamp } from "@type/reducers/camp";
+import { IReview } from "@type/reducers/review";
+import useInput from "@hooks/useInput";
+import { dateParser } from "@lib/dateParser";
+
+import { updateReview } from "@reducers/reviews";
+import { createReview, editReview, uploadImage } from "@reducers/review/action";
+import { AppDispatch } from "@store/configureStore";
 
 import { url } from "@apis/.";
 import {
@@ -32,12 +36,18 @@ import {
 interface Props {
   camp: ICamp;
   onClick: () => void;
+  review?: IReview;
 }
 
-const ReviewForm = ({ camp, onClick }: Props) => {
-  const [text, onChangeText] = useInput("");
-  const [images, setImages] = useState<string[]>([]);
-  const [rating, setRating] = useState("");
+interface PayloadReview {
+  status: boolean;
+  review: IReview;
+}
+
+const ReviewForm = ({ review, camp, onClick }: Props) => {
+  const [text, onChangeText] = useInput(review ? review.content : "");
+  const [images, setImages] = useState<string[]>(review ? review.photos : []);
+  const [rating, setRating] = useState(review ? review.rating : "");
   const imageRef = useRef<HTMLInputElement | null>(null);
   const dispatch: AppDispatch = useDispatch();
 
@@ -47,7 +57,7 @@ const ReviewForm = ({ camp, onClick }: Props) => {
 
   const onChangeImages = useCallback(
     async (e) => {
-      if (images.length + e.target.files.length >= 5)
+      if (images.length + e.target.files.length > 5)
         return alert("이미지는 5장을 넘길 수 없습니다.");
 
       const imageFormData = new FormData();
@@ -67,9 +77,37 @@ const ReviewForm = ({ camp, onClick }: Props) => {
     imageRef.current?.click();
   }, [imageRef.current]);
 
-  const create = useCallback(async () => {
+  const deleteImage = useCallback(
+    (currentImage: string) => {
+      setImages(images.filter((image) => image !== currentImage));
+    },
+    [images],
+  );
+
+  const reviewHandler = useCallback(async () => {
     if (!text || !rating) return alert("필수정보를 입력하세요!");
-    await dispatch(createReview({ location: camp._id, content: text, photos: images, rating }));
+    if (review) {
+      const cm = confirm("수정하시겠습니까?");
+      if (!cm) return;
+      const body = {
+        location: camp._id,
+        content: text.replace(/(?:\r\n|\r|\n)/g, "<br/>"),
+        photos: images,
+        rating,
+      };
+      const res = await dispatch(editReview({ id: review._id, body }));
+      dispatch(updateReview({ review: (res.payload as PayloadReview).review }));
+    } else
+      await dispatch(
+        createReview({
+          location: camp._id,
+          content: text.replace(/(?:\r\n|\r|\n)/g, "<br/>"),
+          photos: images,
+          rating,
+          created: dateParser(new Date()),
+        }),
+      );
+
     onClick();
   }, [text, rating, images]);
 
@@ -87,13 +125,19 @@ const ReviewForm = ({ camp, onClick }: Props) => {
         </RatingButtonWrapper>
         <CampsiteName>{camp.name}</CampsiteName>
         <ReviewContentWrapper>
-          <ReviewContent value={text} onChange={onChangeText} placeholder="후기를 작성해주세요!" />
+          <ReviewContent
+            wrap="hard"
+            value={text}
+            onChange={onChangeText}
+            placeholder="후기를 작성해주세요!"
+          />
         </ReviewContentWrapper>
         {images[0] && (
           <ImageList>
             {images.map((image) => (
-              <ImageWrapper key={image}>
+              <ImageWrapper key={image} onClick={() => deleteImage(image)}>
                 <img src={`${url}/${image}`} alt="img" />
+                <div className="hover">삭제</div>
               </ImageWrapper>
             ))}
           </ImageList>
@@ -114,7 +158,7 @@ const ReviewForm = ({ camp, onClick }: Props) => {
             Add Photo
           </PhotoLabel>
           <WriteButton>
-            <Button name="완료" onClick={create} />
+            <Button name="완료" onClick={reviewHandler} />
             <Button name="취소" onClick={onClick} />
           </WriteButton>
         </BouttonButtonWrapper>

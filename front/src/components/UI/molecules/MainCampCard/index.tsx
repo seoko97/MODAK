@@ -103,7 +103,7 @@ const IconWrapper = styled.div`
 `;
 
 const MainCampCard = ({ camp, url }: Props) => {
-  const { name, address, thema, category, totalBookmark, views } = camp;
+  const { name, address, thema, category, totalBookmark, views, firstImage } = camp;
 
   const tagList = useMemo(() => {
     const set = new Set([...thema, ...category]);
@@ -117,7 +117,7 @@ const MainCampCard = ({ camp, url }: Props) => {
       <Container>
         <ImageWrapper>
           <div>
-            <img src={"/tent.jpg"} alt="img" />
+            <img src={firstImage || "/tent.jpg"} alt="img" />
           </div>
         </ImageWrapper>
         <ContentWrapper>

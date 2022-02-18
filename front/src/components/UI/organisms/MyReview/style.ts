@@ -56,27 +56,49 @@ const PhotoBox = styled.div`
 `;
 
 const Review = styled.section`
-  padding-left: 10px;
-  padding-right: 10px;
+  width: 100%;
+  padding: 20px 0;
+  gap: 10px;
   & p {
     margin-bottom: 10px;
+  }
+  &:not(:last-of-type) {
+    border-bottom: 1px solid #ccc;
   }
 `;
 
 const ReviewPost = styled.div`
-  overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 9;
-  -webkit-box-orient: vertical;
-  word-wrap: break-word;
-  line-height: 160%;
+  color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
+  .more {
+    cursor: pointer;
+    font-weight: 600;
+    opacity: 0.8;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;
 
-const MorePhotos = styled.button`
-  border: none;
-  background: transparent;
-  cursor: pointer;
+const ReviewEvaluateBox = styled.div`
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 6px;
+  gap: 10px;
+  margin-top: auto;
+  & > span {
+    cursor: pointer;
+  }
+
+  & > span {
+    font-size: 12px;
+    color: #757575;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;
 
 export default {
@@ -88,5 +110,5 @@ export default {
   PhotoBox,
   Review,
   ReviewPost,
-  MorePhotos,
+  ReviewEvaluateBox,
 };

@@ -9,7 +9,7 @@ interface Props {
   images: string[];
 }
 const setting = {
-  dots: false,
+  dots: true,
   arrows: false,
   infinite: true,
   slidesToShow: 1,

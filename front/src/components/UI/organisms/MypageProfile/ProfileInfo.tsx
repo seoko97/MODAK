@@ -2,7 +2,7 @@ import HeartIcon from "@icons/HeartIcon";
 import PencilIcon from "@icons/PencilIcon";
 import UserUpdate from "@modals/UserUpdateForm";
 import React from "react";
-import Title from "../../atoms/Title";
+import Title from "@atoms/Title";
 import Style from "./styles";
 
 interface Props {
@@ -27,7 +27,7 @@ const IconComponent = () => (
 const ProfileInfo = ({ nickname, onOpen, isOpen, onClose, intro }: Props) => (
   <Style.ProfileInfo>
     <Style.UserName>
-      <Title size={14}>{nickname}</Title>
+      <Title size={18}>{nickname}</Title>
       <Style.EditProfile onClick={onOpen}>
         <PencilIcon size={13} />
       </Style.EditProfile>

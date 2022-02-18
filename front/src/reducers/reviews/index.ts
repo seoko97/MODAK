@@ -1,6 +1,6 @@
 import { reducerUtils, asyncPending, asyncFulfilled, asyncRejected } from "@lib/reducerUtils";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ResRvLk } from "@src/types/apis/review";
+import { ResRvLk } from "@type/apis/review";
 import { IErrPayload } from "@type/reducers/init";
 import { IReviewsState } from "@type/reducers/review";
 
@@ -22,7 +22,7 @@ const reviews = createSlice({
       state.mainReviews = state.mainReviews.filter(({ _id }) => _id !== id);
     },
     updateReview: (state, action) => {
-      const updatedReview = action.payload;
+      const updatedReview = action.payload.review;
       state.mainReviews = state.mainReviews.map((review) => {
         if (review._id === updatedReview._id) return updatedReview;
         return review;
@@ -30,7 +30,7 @@ const reviews = createSlice({
     },
     createReview: (state, action) => {
       const newReview = action.payload;
-      state.mainReviews.push(newReview);
+      state.mainReviews.unshift(newReview);
     },
     likedReview: (state, action: PayloadAction<ResRvLk>) => {
       const { userId, reviewId } = action.payload;
@@ -57,6 +57,9 @@ const reviews = createSlice({
         }
         return review;
       });
+    },
+    vacateReview: (state) => {
+      state.mainReviews = [];
     },
   },
   extraReducers: (builder) =>
@@ -101,6 +104,12 @@ const reviews = createSlice({
       }),
 });
 
-export const { createReview, deleteReview, likedReview, unLikedReview, updateReview } =
-  reviews.actions;
+export const {
+  createReview,
+  deleteReview,
+  likedReview,
+  unLikedReview,
+  updateReview,
+  vacateReview,
+} = reviews.actions;
 export default reviews.reducer;

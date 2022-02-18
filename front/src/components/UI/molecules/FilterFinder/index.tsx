@@ -53,12 +53,10 @@ const FilterFinder = ({ sorted }: Props) => {
   const [scrollHeight, clientHeight] = useScroll();
   const dispatch: AppDispatch = useDispatch();
 
-  const getMoreCamps = useCallback(async (query, camps, sorted, skip) => {
+  const onThrottle = useThrottle(async () => {
     await dispatch(getCamps({ ...query, sorted, skip: `${skip + 1}` }));
     setSkip(skip + 1);
-  }, []);
-
-  const onThrottle = useThrottle(getMoreCamps, 500);
+  }, 500);
 
   const checked = useCallback(
     (title: string, list: string[]) => {
@@ -79,7 +77,7 @@ const FilterFinder = ({ sorted }: Props) => {
 
   useEffect(() => {
     if (scrollHeight + 300 >= clientHeight) {
-      onThrottle(query, mainCamps, sorted, skip);
+      onThrottle();
     }
   }, [scrollHeight, clientHeight, query, mainCamps, sorted, skip]);
 

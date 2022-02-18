@@ -1,5 +1,12 @@
 import axios from "axios";
-import { CampQueryData, ResCps, ResCpBms, ResCpSearch, ResCp } from "@type/apis/camp";
+import {
+  CampQueryData,
+  ResCps,
+  ResCpBms,
+  ResCpSearch,
+  ResCp,
+  UserCampProps,
+} from "@type/apis/camp";
 
 export interface KeyValueStr {
   [key: string]: string | string[];
@@ -34,8 +41,9 @@ const getMainCamps = async (): Promise<ResCps> => {
   return data;
 };
 
-const getUserCamps = async (userId: string): Promise<ResCps> => {
-  const result = await axios.get(`camp/user/${userId}`);
+const getUserCamps = async ({ userId, skip }: UserCampProps): Promise<ResCps> => {
+  const query = skip ? `?skip=${skip}` : "";
+  const result = await axios.get(`camp/user/${userId}${query}`);
   const { data } = result;
 
   return data;

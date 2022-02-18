@@ -1,16 +1,21 @@
 import React, { useRef, useState, useCallback } from "react";
-import ModalLayout from "@src/components/modals/ModalLayout";
-import TrashCanIcon from "@src/components/icons/TrashCanIcon";
-import ExitIcon from "@src/components/icons/ExitIcon";
-import { useAppSelector } from "@src/store/configureStore";
-import { EditUserData } from "@src/types/apis/user";
 import { useDispatch } from "react-redux";
-import { editUserInfo, uploadProfileImg } from "@src/reducers/user/action";
-import { checkUrl } from "@src/lib/checkUrl";
+import ModalLayout from "@modals/ModalLayout";
+import TrashCanIcon from "@icons/TrashCanIcon";
+import ExitIcon from "@icons/ExitIcon";
+import { AppDispatch, useAppSelector } from "@store/configureStore";
+import { EditUserData } from "@type/apis/user";
+import { editUserInfo, uploadProfileImg } from "@reducers/user/action";
+import { checkUrl } from "@lib/checkUrl";
 import Style from "./style";
 
 interface Props {
   onClick: () => void;
+}
+
+interface ResPayload {
+  status: boolean;
+  image: string;
 }
 
 const UserUpdate = ({ onClick }: Props) => {
@@ -20,7 +25,7 @@ const UserUpdate = ({ onClick }: Props) => {
   const [desc, setDesc] = useState(intro);
   const [img, setImg] = useState(profileImg);
   const imageRef = useRef<HTMLInputElement | null>(null);
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const nameHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -42,9 +47,9 @@ const UserUpdate = ({ onClick }: Props) => {
     const data = new FormData();
     data.append("img", file);
 
-    const res: any = await dispatch(uploadProfileImg(data));
+    const res = await dispatch(uploadProfileImg(data));
 
-    setImg(res.payload.image);
+    setImg((res.payload as ResPayload).image);
   }, []);
 
   const deleteImage = () => {
@@ -77,7 +82,7 @@ const UserUpdate = ({ onClick }: Props) => {
             <Style.ImageInput
               ref={imageRef}
               type="file"
-              accept=".jpg .jpeg .png"
+              accept=".jpg, .jpeg, .png"
               name="file"
               onChange={imageHandler}
             />

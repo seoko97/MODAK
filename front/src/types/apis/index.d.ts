@@ -19,3 +19,7 @@ export interface ResImgs extends ResponseDTO {
 export interface ResImg extends ResponseDTO {
   image: string;
 }
+
+export interface ResponseRejected extends ResponseDTO {
+  message: string;
+}

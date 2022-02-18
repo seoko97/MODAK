@@ -20,6 +20,7 @@ export interface IReview {
   likes: string[];
   rating: string;
   count: number;
+  created: string;
   createdAt: Date;
   updatedAt: Date;
 }
