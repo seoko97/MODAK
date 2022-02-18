@@ -12,6 +12,8 @@ import { AppDispatch, useAppSelector } from "@store/configureStore";
 import { likeReview, unLikeReview, deleteReview } from "@reducers/review/action";
 import { likedReview, unLikedReview, deleteReview as dR } from "@reducers/reviews";
 import { url } from "@apis/.";
+import useModal from "@hooks/useModal";
+import ModalCaroucel from "@modals/ModalCarousel";
 import Rating from "./Rating";
 import {
   StyledContainer,
@@ -40,6 +42,8 @@ const ReviewCard = ({ review }: Props) => {
   const { _id, content, photos, author, createdAt, rating, count, likes } = review;
   const { _id: userId, nickname, profileImg, reviewCount } = author;
 
+  const [isOpen, onOpen, onClose] = useModal();
+
   const likedUser = useMemo(() => {
     if (!me) return false;
     return likes.includes(userId);
@@ -67,49 +71,53 @@ const ReviewCard = ({ review }: Props) => {
   }, [me, _id]);
 
   return (
-    <StyledContainer>
-      <StyledProfileContainer>
-        <StyledProfile>
-          <Link href="/user/1">
-            <LinkInner>
-              <Avatar size={70} url={profileImg} alt="유저프로필" />
-              <Title size={14}>{nickname}</Title>
-            </LinkInner>
-          </Link>
-          <StyledProfileIconBox>
-            <IconWrapper>
-              <PencilIcon size={13} />
-              <span>{reviewCount}</span>
-            </IconWrapper>
-            <StyledReviewIconBox onClick={likedUser ? onClickUnLiked : onClickLiked}>
-              <HeartIcon size={13} className={likedUser ? "liked" : ""} />
-              <span>{count}</span>
-            </StyledReviewIconBox>
-          </StyledProfileIconBox>
-        </StyledProfile>
-        <Rating rating={rating} />
-      </StyledProfileContainer>
-      <StyledReviewCard>
-        <SubTitle>{createdAt}</SubTitle>
-        <p>{content.length > 1000 ? `${content.substring(0, 1000)}...더보기` : content}</p>
-        <StyledReviewPhotos>
-          {photos?.map((photo, idx) => (
-            <div key={idx}>
-              <img src={`${url}/${photo}`} alt="reviewPhoto" />
-            </div>
-          ))}
-        </StyledReviewPhotos>
+    <>
+      <StyledContainer>
+        <StyledProfileContainer>
+          <StyledProfile>
+            <Link href={`/user/${userId}`}>
+              <LinkInner>
+                <Avatar size={70} url={profileImg} alt="유저프로필" />
+                <Title size={14}>{nickname}</Title>
+              </LinkInner>
+            </Link>
+            <StyledProfileIconBox>
+              <IconWrapper>
+                <PencilIcon size={13} />
+                <span>{reviewCount}</span>
+              </IconWrapper>
+              <StyledReviewIconBox onClick={likedUser ? onClickUnLiked : onClickLiked}>
+                <HeartIcon size={13} className={likedUser ? "liked" : ""} />
+                <span>{count}</span>
+              </StyledReviewIconBox>
+            </StyledProfileIconBox>
+          </StyledProfile>
+          <Rating rating={rating} />
+        </StyledProfileContainer>
+        <StyledReviewCard>
+          <SubTitle>{createdAt}</SubTitle>
+          <p>{content.length > 1000 ? `${content.substring(0, 1000)}...더보기` : content}</p>
+          <StyledReviewPhotos>
+            {photos?.map((photo, idx) => (
+              <div key={idx} onClick={onOpen}>
+                <img src={`${url}/${photo}`} alt="reviewPhoto" />
+                <div className="hover">확대</div>
+              </div>
+            ))}
+          </StyledReviewPhotos>
 
-        <StyledReviewEvaluateBox>
-          {author._id === me?._id && (
-            <>
-              <span>수정하기</span>
-              <span onClick={onClickDelete}>삭제하기</span>
-            </>
-          )}
-        </StyledReviewEvaluateBox>
-      </StyledReviewCard>
-    </StyledContainer>
+          <StyledReviewEvaluateBox>
+            {author._id === me?._id && (
+              <>
+                <span>수정하기</span>
+                <span onClick={onClickDelete}>삭제하기</span>
+              </>
+            )}
+          </StyledReviewEvaluateBox>
+        </StyledReviewCard>
+      </StyledContainer>
+      {isOpen && <ModalCaroucel onClick={onClose} isOpen={isOpen} photos={photos} />}
+    </>
   );
 };
 

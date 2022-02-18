@@ -1,8 +1,7 @@
 import React from "react";
-import Slick, { Settings } from "react-slick";
+import ImageSlider from "@organisms/ImageSlider";
+
 import styled from "styled-components";
-import { NextArrow, PrevArrow } from "@organisms/CardSlider/arrow";
-import { url } from "@apis/.";
 import ModalLayout from "../ModalLayout";
 
 interface Props {
@@ -11,68 +10,40 @@ interface Props {
   photos: string[];
 }
 
-const Container = styled.article`
-  position: fixed;
-  width: 90%;
-  height: 90%;
-  z-index: 300;
-  background-color: #fff;
+const Container = styled.div`
+  width: 1200px;
+  height: 500px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 
-  & .slick-arrow {
-    width: 14px;
-    display: block;
-  }
-  & .post-slide {
-    width: 50%;
-    padding: 20px 0;
-  }
-  & .slick-slide {
-    padding: 10px 0;
+  .slick-track {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
   }
 
-  & svg {
-    fill: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
+  .slick-active {
+    margin: 0 10px;
   }
 
-  @media (max-width: 1200px) {
+  @media (max-width: ${({ theme }) => theme.BP.HDPC}) {
     width: 100%;
-    height: 100%;
+
+    .slick-active {
+      margin: 0;
+    }
   }
 `;
 
-const ImageWrraper = styled.div`
-  width: 100%;
-  height: 100%;
-  & > img {
-    width: 100%;
-    height: 100%;
-  }
-`;
-
-const settings: Settings = {
-  infinite: true,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  speed: 500,
-  nextArrow: <PrevArrow />,
-  prevArrow: <NextArrow />,
-  dots: true,
-};
-
-const ModalCaroucel = ({ isOpen, onClick, photos }: Props) => {
+const ModalCaroucel = ({ onClick, photos }: Props) => {
   return (
     <>
       <ModalLayout onClick={onClick}>
         <Container>
-          <div className="post-slide">
-            <Slick {...settings}>
-              {photos.map((photo, i) => (
-                <ImageWrraper key={photo + i}>
-                  <img src={`${url}/${photo}`} alt="photos" />
-                </ImageWrraper>
-              ))}
-            </Slick>
-          </div>
+          <ImageSlider images={photos} />
         </Container>
       </ModalLayout>
     </>
