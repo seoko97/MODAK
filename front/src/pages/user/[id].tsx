@@ -7,7 +7,7 @@ import wrapper, { useAppSelector } from "@src/store/configureStore";
 import { AppProps } from "next/app";
 import { getUserReviews } from "@src/reducers/reviews/action";
 
-export { default } from "@organisms/MyPage";
+export { default } from "@src/components/UI/organisms/MyPage";
 
 interface RequestHeader extends HeadersDefaults {
   Cookie: string;
