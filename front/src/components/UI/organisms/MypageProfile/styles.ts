@@ -6,6 +6,10 @@ const Profile = styled.figure`
   gap: 30px;
   position: relative;
   margin-bottom: 10px;
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 // --- 프로필 이미지 ---
@@ -13,16 +17,13 @@ const ImageBoxStyle = css`
   width: 130px;
   height: 130px;
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
   }
 `;
 
 const ProfileImage = styled.div`
   ${ImageBoxStyle}
-  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
-    display: none;
-  }
 `;
 
 const Img = styled.img`
@@ -32,7 +33,7 @@ const Img = styled.img`
 
 // --- 프로필 정보 ---
 const ProfileInfo = styled.figcaption`
-  color: gray;
+  color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   & h2,
   p {
     margin-bottom: 10px;
@@ -57,10 +58,6 @@ const Icons = styled.div`
   justify-content: center;
   align-items: baseline;
   font-size: 14px;
-  cursor: pointer;
-  :hover {
-    font-weight: bold;
-  }
 `;
 
 const EditProfile = styled.button`
