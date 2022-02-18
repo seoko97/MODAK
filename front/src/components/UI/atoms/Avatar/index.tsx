@@ -1,3 +1,4 @@
+import { checkUrl } from "@src/lib/checkUrl";
 import React, { FC } from "react";
 import styled from "styled-components";
 
@@ -20,7 +21,7 @@ const StyledAvatar = styled.img<Pick<Props, "size">>`
 `;
 
 const Avatar: FC<Props> = ({ size, url, alt }) => (
-  <StyledAvatar alt={alt} width={size} height={size} src={url} size={size as number} />
+  <StyledAvatar alt={alt} width={size} height={size} src={checkUrl(url)} size={size as number} />
 );
 Avatar.defaultProps = {
   size: 30,
