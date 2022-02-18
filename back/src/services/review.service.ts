@@ -34,6 +34,9 @@ export class ReviewService {
   async update(id: string, data: Partial<IReviewDTO>) {
     const review = await this.reviewModel.findOneAndUpdate({ _id: id }, data, { new: true });
 
+    await review?.populate("author", "-refreshToken -source");
+    await review?.populate("location", "_id address name");
+
     return review;
   }
   async like(id: string, userId: string) {

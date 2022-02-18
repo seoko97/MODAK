@@ -29,7 +29,7 @@ export class ReviewController {
 
   getCampReviews: RequestHandler = async (req, res, next) => {
     const { location } = req.params;
-    const { rating, skip } = req.query;
+    const { skip, target, rating } = req.query;
 
     const findCamp = await this.campsiteService.getById(location);
 
@@ -38,12 +38,9 @@ export class ReviewController {
     const query = { location } as IKeyValueString;
     rating && (query.rating = rating);
 
-    const reviews = await this.reviewService.getReviewsByQuery(
-      query,
-      { count: -1, _id: -1 },
-      Number(skip),
-      10,
-    );
+    const sorted = { [target as string]: -1 };
+
+    const reviews = await this.reviewService.getReviewsByQuery(query, sorted, Number(skip), 10);
 
     res.json({ status: true, reviews });
   };
@@ -70,23 +67,21 @@ export class ReviewController {
 
   create: RequestHandler = async (req, res) => {
     const { _id } = req.user as ITokenUser;
-    const { content, location, rating, photos, create } = req.body as Omit<IReviewDTO, "author">;
-    const campId = location as unknown as string;
+    const { content, location, rating, photos, created } = req.body;
     const review = await this.reviewService.create({
       content,
       location,
       rating,
       photos,
       author: _id,
-      create,
+      created,
     });
 
     await this.userService.updateByQuery({ _id }, { $inc: { reviewCount: 1 } });
-    await this.campsiteService.update(campId, {
-      $push: { photo: { $each: photos } },
+    await this.campsiteService.update(location, {
+      $push: { photos: { $each: photos } },
       $inc: { totalReview: 1 },
     });
-
     res.send({ status: true, review });
   };
   update: RequestHandler = async (req, res, next) => {
