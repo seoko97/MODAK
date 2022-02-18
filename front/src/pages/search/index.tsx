@@ -27,9 +27,10 @@ const Search = ({ query }: Props) => {
   const [scrollHeight, clientHeight] = useScroll();
 
   const onThrottle = useThrottle(async () => {
-    await dispatch(getCamps({ ...query, skip: skip + 1 }));
+    console.log(query, skip);
+    await dispatch(getCamps({ ...query, skip: String(skip + 1) }));
     setSkip((prev) => prev + 1);
-  }, 1000);
+  }, 500);
 
   useEffect(() => {
     if (scrollHeight + 300 >= clientHeight) {

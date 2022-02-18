@@ -8,7 +8,7 @@ type CampQueryDTO = Pick<
 
 export interface CampQueryData extends Partial<CampQueryDTO> {
   sorted?: string;
-  skip?: number;
+  skip?: string;
 }
 
 export interface ResCp extends ResponseDTO {

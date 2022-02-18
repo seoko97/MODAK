@@ -40,7 +40,7 @@ const CampsiteReviewBox = () => {
     setSkip(skip + 1);
   }, []);
 
-  const onThrolttle = useThrottle(getMoreReview, 1000);
+  const onThrolttle = useThrottle(getMoreReview, 500);
 
   const handleClickTab = useCallback(
     (tab: string) => {

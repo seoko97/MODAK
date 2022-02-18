@@ -58,7 +58,7 @@ const FilterFinder = ({ sorted }: Props) => {
     setSkip(skip + 1);
   }, []);
 
-  const onThrottle = useThrottle(getMoreCamps, 1000);
+  const onThrottle = useThrottle(getMoreCamps, 500);
 
   const checked = useCallback(
     (title: string, list: string[]) => {
