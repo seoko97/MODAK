@@ -39,6 +39,9 @@ const StyledReviewEvaluateBox = styled.div`
   padding: 6px;
   gap: 10px;
   margin-top: auto;
+  & > span {
+    cursor: pointer;
+  }
 
   & > span {
     font-size: 12px;
@@ -63,6 +66,25 @@ const StyledReviewPhotos = styled.div`
     width: 250px;
     position: relative;
     padding-bottom: 250px;
+    cursor: pointer;
+  }
+  & .hover {
+    display: none;
+  }
+  & > div:hover {
+    & .hover {
+      position: absolute;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding: 10px;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, 0.3);
+      color: #fff;
+    }
   }
 
   & img {

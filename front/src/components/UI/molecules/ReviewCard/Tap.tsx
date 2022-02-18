@@ -35,6 +35,7 @@ const Container = styled.div`
 const EachTab = styled.span<{ active: boolean }>`
   font-size: 14px;
   opacity: 0.8;
+  cursor: pointer;
 
   ${(props) =>
     props.active &&
