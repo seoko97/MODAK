@@ -26,6 +26,8 @@ export class UserController {
     if (!checkValid(id)) return next({ message: "존재하지 않는 유저입니다." });
     const user = await this.userService.getById(id, { refreshToken: 0 });
 
+    console.log(user);
+
     res.status(200).json({ status: true, user });
   };
 

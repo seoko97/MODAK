@@ -64,7 +64,6 @@ export class ReviewController {
       Number(skip),
       10,
     );
-    console.log(reviews);
 
     res.json({ status: true, reviews });
   };

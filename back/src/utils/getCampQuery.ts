@@ -42,7 +42,5 @@ export const campsQuery = (data: Partial<ICampsiteDTO>) => {
     query.animal = animal === "true" ? /^((?!불가능).)*$/ : /불가능/;
   if (and[0]) query.$and = and;
 
-  console.log(query);
-
   return query;
 };
