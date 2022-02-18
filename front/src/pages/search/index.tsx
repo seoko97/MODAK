@@ -1,10 +1,16 @@
 import axios from "axios";
-import React, { useEffect } from "react";
-import wrapper, { useAppSelector } from "@store/configureStore";
-import { PayloadHeaders, RequestHeader } from "@type/apis";
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
+import wrapper, { useAppSelector } from "@src/store/configureStore";
+import CampSiteListBox from "@src/components/UI/molecules/CampsiteListBox";
+import { PayloadHeaders, RequestHeader } from "@src/types/apis";
 import { getCamps } from "@reducers/camps/action";
 import { getSigninUser } from "@reducers/user/action";
-import { useRouter } from "next/router";
+import RowFrame from "@src/components/UI/templates/RowFrame";
+import useScroll from "@src/hooks/useScroll";
+import useThrottle from "@src/hooks/useThrottle";
 
 interface Props {
   query: {
@@ -15,17 +21,33 @@ interface Props {
 const Search = ({ query }: Props) => {
   const values = Object.values(query);
   const router = useRouter();
+  const [skip, setSkip] = useState(0);
   const { mainCamps } = useAppSelector((state) => state.camps);
-  console.log(mainCamps);
+  const dispatch = useDispatch();
+  const [scrollHeight, clientHeight] = useScroll();
+
+  const onThrottle = useThrottle(async () => {
+    await dispatch(getCamps({ ...query, skip: skip + 1 }));
+    setSkip((prev) => prev + 1);
+  }, 1000);
+
+  useEffect(() => {
+    if (scrollHeight + 300 >= clientHeight) {
+      onThrottle();
+    }
+  }, [scrollHeight, clientHeight]);
 
   useEffect(() => {
     if (values.length !== 1) router.replace("/");
   }, [values.length]);
 
   return (
-    <>
-      <div>asd</div>
-    </>
+    <RowFrame>
+      <StyledHeader>{values} 검색결과</StyledHeader>
+      {mainCamps.map((camp) => (
+        <CampSiteListBox camp={camp} key={camp._id} />
+      ))}
+    </RowFrame>
   );
 };
 
@@ -49,3 +71,12 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
     },
   };
 });
+
+const StyledHeader = styled.h2`
+  font-size: 25px;
+  font-weight: 700;
+  margin-top: 15px;
+  color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
+  @media screen and (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    margin-top: 0;
+`;

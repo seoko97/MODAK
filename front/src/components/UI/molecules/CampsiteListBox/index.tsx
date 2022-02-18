@@ -72,8 +72,8 @@ export default CampSiteListBox;
 const CardWrapper = styled.div`
   width: 100%;
   display: flex;
-  margin: 30px auto 0;
-  padding-bottom: 30px;
+  margin: 1em auto 0;
+  padding-bottom: 1em;
   border-bottom: 1px dotted #c0c0c0;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   transition: 0.3s transform;
@@ -88,6 +88,7 @@ const CardWrapper = styled.div`
     flex-direction: column;
     height: auto;
     font-size: 1.5rem;
+    padding-bottom: 0;
   }
   @media screen and (max-width: ${({ theme }) => theme.BP.MOBILE}) {
     font-size: 1rem;

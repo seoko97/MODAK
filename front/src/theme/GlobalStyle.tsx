@@ -32,10 +32,10 @@ const GlobalStyle = createGlobalStyle`
         outline: none;
       }
       & * {
-        font-family:'NanumBarunGothic' sans-serif !important;
+        font-family:'NanumBarunGothic'!important;
         font-family:'NanumBarunGothicLight' !important;
-        font-family:'NanumBarunGothicBold' !important;
-        font-family: 'NanumBarunGothicExtraLight' !important; 
+        font-family:'NanumBarunGothicBold'  !important;
+        font-family: 'NanumBarunGothicExtraLight', 'Apple SD Gothic Neo' !important; 
         box-sizing: border-box;
       }
 
