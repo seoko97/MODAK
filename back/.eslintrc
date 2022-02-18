@@ -1,17 +1,18 @@
 {
-	"env": {
-		"browser": true,
-		"es2021": true
-	},
-	"parser": "@typescript-eslint/parser",
-	"extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
-	"parserOptions": {
-		"project": "tsconfig.json",
-		"sourceType": "module"
-	},
-	"plugins": ["@typescript-eslint"],
-	"ignorePatterns": ["dist/", "node_modules/"],
-	"rules": {
-		"no-undef": 0
-	}
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  "parserOptions": {
+    "project": "tsconfig.json",
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint"],
+  "ignorePatterns": ["dist/", "node_modules/"],
+  "rules": {
+    "no-undef": 0,
+    "no-useless-escape": 0
+  }
 }
