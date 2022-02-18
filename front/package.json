@@ -3,8 +3,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3060",
-    "build": "cross-env NODE_ENV=production ANALYZE=true next build",
-    "start": "cross-env NODE_ENV=production next start",
+    "build": "cross-env ANALYZE=true next build",
+    "start": "cross-env NODE_ENV=production next start -p 3060",
+    "pm2-start": "pm2 start npm --name front -- start",
+    "prestart": "rm -rf ./next && npm run build",
     "lint": "next lint",
     "test": "jest --detectOpenHandles --forceExit --coverage",
     "storybook": "start-storybook -p 6006 -c .storybook",

@@ -137,9 +137,9 @@ const MobileNav = ({ onClose, isOpen }: Props) => {
             <span onClick={onSignout}>로그아웃</span>
           </NavBox>
         ) : (
-          <li onClick={onShowForm}>
+          <NavBox onClick={onShowForm}>
             <span>로그인</span>
-          </li>
+          </NavBox>
         )}
       </Container>
       {isOpen && <Overlay onClick={onClose} />}
