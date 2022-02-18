@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import RowFrame from "@templates/RowFrame";
 import { ICamp } from "@type/reducers/camp";
 import { useAppSelector } from "@store/configureStore";
 
@@ -10,42 +9,40 @@ const CampSiteInfo = () => {
   const { address, intro, tel, animal, category, rental, firstImage } = singleCamp as ICamp;
   return (
     <>
-      <RowFrame>
-        <CampSiteContainer>
-          <CampSiteImage>
-            <img alt="캠핑장 소개 사진" src={firstImage || "/tent.jpg"} />
-          </CampSiteImage>
+      <CampSiteContainer>
+        <CampSiteImage>
+          <img alt="캠핑장 소개 사진" src={firstImage || "/tent.jpg"} />
+        </CampSiteImage>
 
-          <CampSiteContentBox>
-            {/* 소개글 */}
-            <p>{intro}</p>
+        <CampSiteContentBox>
+          {/* 소개글 */}
+          <p>{intro}</p>
 
-            {/* 상세정보(주소, 전화번호) */}
-            <CampSiteDetailBox>
-              <CampSiteDetail>
-                <span>야영장 구분</span>
-                <p>{makeList(category)}</p>
-              </CampSiteDetail>
-              <CampSiteDetail>
-                <span>연락처</span>
-                <p>{tel}</p>
-              </CampSiteDetail>
-              <CampSiteDetail>
-                <span>주소</span>
-                <p>{address}</p>
-              </CampSiteDetail>
-              <CampSiteDetail>
-                <span>대여</span>
-                <p>{makeList(rental)}</p>
-              </CampSiteDetail>
-              <CampSiteDetail>
-                <span>반려동물출입</span>
-                <p>{animal}</p>
-              </CampSiteDetail>
-            </CampSiteDetailBox>
-          </CampSiteContentBox>
-        </CampSiteContainer>
-      </RowFrame>
+          {/* 상세정보(주소, 전화번호) */}
+          <CampSiteDetailBox>
+            <CampSiteDetail>
+              <span>야영장 구분</span>
+              <p>{makeList(category)}</p>
+            </CampSiteDetail>
+            <CampSiteDetail>
+              <span>연락처</span>
+              <p>{tel}</p>
+            </CampSiteDetail>
+            <CampSiteDetail>
+              <span>주소</span>
+              <p>{address}</p>
+            </CampSiteDetail>
+            <CampSiteDetail>
+              <span>대여</span>
+              <p>{makeList(rental)}</p>
+            </CampSiteDetail>
+            <CampSiteDetail>
+              <span>반려동물출입</span>
+              <p>{animal}</p>
+            </CampSiteDetail>
+          </CampSiteDetailBox>
+        </CampSiteContentBox>
+      </CampSiteContainer>
     </>
   );
 };
@@ -63,6 +60,11 @@ const CampSiteContainer = styled.div`
   width: 100%;
   display: flex;
   box-sizing: border-box;
+  align-items: flex-start;
+  justify-content: center;
+  & * {
+    color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
+  }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     flex-direction: column;
@@ -72,6 +74,7 @@ const CampSiteContainer = styled.div`
 const CampSiteImage = styled.div`
   position: relative;
   width: 50%;
+  min-height: 300px;
 
   img {
     position: absolute;
@@ -91,11 +94,14 @@ const CampSiteContentBox = styled.div`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  padding: 20px;
-  gap: 25px;
+  padding: 5px 25px;
 
   & > p {
-    font-weight: bold;
+    font-weight: 500;
+  }
+
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    padding: 25px 5px;
   }
 `;
 
@@ -119,6 +125,5 @@ const CampSiteDetail = styled.div`
 
   & > p {
     flex: 4;
-    color: #757575;
   }
 `;

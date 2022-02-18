@@ -75,9 +75,9 @@ const reviews = createSlice({
       })
 
       // 유저 리뷰 목록
-      .addCase(getUserReviews.pending, (state) => {
+      .addCase(getUserReviews.pending, (state, action) => {
         asyncPending(state.getUserReviews);
-        state.mainReviews = [];
+        if (!action.meta.arg.skip) state.mainReviews = [];
       })
       .addCase(getUserReviews.fulfilled, (state, action) => {
         asyncFulfilled(state.getUserReviews);
@@ -88,13 +88,13 @@ const reviews = createSlice({
       })
 
       // 캠핑장 리뷰 목록
-      .addCase(getCampReviews.pending, (state) => {
+      .addCase(getCampReviews.pending, (state, action) => {
         asyncPending(state.getCampReviews);
-        state.mainReviews = [];
+        if (!action.meta.arg.skip) state.mainReviews = [];
       })
       .addCase(getCampReviews.fulfilled, (state, action) => {
         asyncFulfilled(state.getCampReviews);
-        if (action.payload) state.mainReviews.push(...action.payload.reviews);
+        if (action.payload) state.mainReviews = [...state.mainReviews, ...action.payload.reviews];
       })
       .addCase(getCampReviews.rejected, (state, action) => {
         asyncRejected(state.getCampReviews, action.payload as IErrPayload);

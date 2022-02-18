@@ -3,9 +3,11 @@ import styled, { css } from "styled-components";
 const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
-  padding: 30px;
+  padding: 20px 10px;
   box-sizing: border-box;
   border-bottom: 1px solid #aaa;
+  width: 100%;
+  min-height: 300px;
 
   + div {
     margin-top: 10px;
@@ -36,6 +38,7 @@ const StyledReviewEvaluateBox = styled.div`
   align-items: center;
   padding: 6px;
   gap: 10px;
+  margin-top: auto;
 
   & > span {
     font-size: 12px;
@@ -49,13 +52,32 @@ const StyledReviewEvaluateBox = styled.div`
 
 const StyledReviewPhotos = styled.div`
   display: flex;
-  justify-content: space-between;
+  width: 100%;
+
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
   margin-top: 20px;
+
+  & > div {
+    width: 250px;
+    position: relative;
+    padding-bottom: 250px;
+  }
+
   & img {
-    width: 30%;
-    @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: ${({ theme }) => theme.BP.PC}) {
+    & > div {
       width: 100%;
-      + img {
+      padding-bottom: 70%;
+      max-height: 320px;
+      + div {
         display: none;
       }
     }
@@ -67,12 +89,14 @@ const StyledProfile = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
 `;
 
 const LinkInner = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
 `;
 const StyledProfileIconBox = styled.div`
   display: flex;
@@ -132,6 +156,7 @@ const StyledReviewCard = styled.div`
   flex-direction: column;
   gap: 10px;
   padding: 20px;
+  width: 100%;
 `;
 
 export {

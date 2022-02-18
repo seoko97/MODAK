@@ -15,11 +15,6 @@ export const Container = styled.form`
   color: #0c0c0c;
   border-radius: 10px;
 
-  & > svg {
-    width: 180px;
-    align-self: center;
-  }
-
   & > span {
     width: 180px;
     text-align: center;
@@ -34,6 +29,14 @@ export const Container = styled.form`
     max-height: 100%;
 
     border-radius: 0;
+  }
+`;
+export const LogoWrapper = styled.div`
+  width: 100%;
+  text-align: center;
+  & > svg {
+    width: 180px;
+    align-self: center;
   }
 `;
 
@@ -76,7 +79,7 @@ export const ReviewContentWrapper = styled.div`
 `;
 export const ReviewContent = styled.textarea`
   width: 100%;
-  height: 100%;
+  min-height: 300px;
   border: none;
   box-sizing: border-box;
   resize: none;

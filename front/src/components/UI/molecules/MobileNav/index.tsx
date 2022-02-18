@@ -124,9 +124,6 @@ const MobileNav = ({ onClose, isOpen }: Props) => {
           <Link href="/camp">
             <span>Campsite</span>
           </Link>
-          <Link href="/review">
-            <span>Review</span>
-          </Link>
         </NavBox>
 
         {me ? (

@@ -36,8 +36,9 @@ const Inner = styled.div`
   text-align: center;
 
   & > h2 {
-    font-size: 25px;
+    font-size: 22px;
     font-weight: bold;
+    margin-bottom: 20px;
   }
 
   @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {

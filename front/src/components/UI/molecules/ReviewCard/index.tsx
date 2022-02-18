@@ -9,8 +9,8 @@ import PencilIcon from "@icons/PencilIcon";
 import { IReview } from "@type/reducers/review";
 import { ResRvLk } from "@type/apis/review";
 import { AppDispatch, useAppSelector } from "@store/configureStore";
-import { likeReview, unLikeReview } from "@reducers/review/action";
-import { likedReview, unLikedReview } from "@reducers/reviews";
+import { likeReview, unLikeReview, deleteReview } from "@reducers/review/action";
+import { likedReview, unLikedReview, deleteReview as dR } from "@reducers/reviews";
 import { url } from "@apis/.";
 import Rating from "./Rating";
 import {
@@ -28,6 +28,10 @@ import {
 
 interface Props {
   review: IReview;
+}
+interface ResPayload {
+  status: boolean;
+  id: string;
 }
 
 const ReviewCard = ({ review }: Props) => {
@@ -52,6 +56,13 @@ const ReviewCard = ({ review }: Props) => {
     if (me) {
       const review = await dispatch(unLikeReview(_id));
       dispatch(unLikedReview(review.payload as ResRvLk));
+    }
+  }, [me, _id]);
+
+  const onClickDelete = useCallback(async () => {
+    if (me) {
+      const res = await dispatch(deleteReview(_id));
+      dispatch(dR({ id: (res.payload as ResPayload).id }));
     }
   }, [me, _id]);
 
@@ -83,12 +94,19 @@ const ReviewCard = ({ review }: Props) => {
         <p>{content.length > 1000 ? `${content.substring(0, 1000)}...더보기` : content}</p>
         <StyledReviewPhotos>
           {photos?.map((photo, idx) => (
-            <img key={idx} src={`${url}/${photo}`} alt="reviewPhoto" />
+            <div key={idx}>
+              <img src={`${url}/${photo}`} alt="reviewPhoto" />
+            </div>
           ))}
         </StyledReviewPhotos>
 
         <StyledReviewEvaluateBox>
-          <span>신고하기</span>
+          {author._id === me?._id && (
+            <>
+              <span>수정하기</span>
+              <span onClick={onClickDelete}>삭제하기</span>
+            </>
+          )}
         </StyledReviewEvaluateBox>
       </StyledReviewCard>
     </StyledContainer>

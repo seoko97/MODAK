@@ -20,6 +20,7 @@ import {
   Container,
   ImageList,
   ImageWrapper,
+  LogoWrapper,
   PhotoLabel,
   RatingButtonWrapper,
   ReviewContent,
@@ -75,12 +76,14 @@ const ReviewForm = ({ camp, onClick }: Props) => {
   return (
     <ModalLayout onClick={onClick}>
       <Container>
-        <Logo />
+        <LogoWrapper>
+          <Logo />
+        </LogoWrapper>
         <span>캠핑장은 어떠셨나요?</span>
         <RatingButtonWrapper>
           <Smile onClick={ratingHandler} active={rating === "또 가고 싶어요"} />
           <Noraml onClick={ratingHandler} active={rating === "평범해요"} />
-          <Angry onClick={ratingHandler} active={rating === "최악입니다"} />
+          <Angry onClick={ratingHandler} active={rating === "별로에요"} />
         </RatingButtonWrapper>
         <CampsiteName>{camp.name}</CampsiteName>
         <ReviewContentWrapper>
@@ -147,7 +150,7 @@ const Noraml = ({ active, onClick }: Rate) => {
 };
 
 const Angry = ({ active, onClick }: Rate) => {
-  const text = "최악입니다";
+  const text = "별로에요";
   return (
     <RowIconWrapper onClick={() => onClick(text)} active={active}>
       <AngryIcon size={40} />

@@ -29,12 +29,12 @@ const Container = styled.div`
   justify-content: flex-end;
   align-items: center;
   gap: 10px;
-  margin: 10px 0;
+  margin: 40px 0 30px;
 `;
 
 const EachTab = styled.span<{ active: boolean }>`
   font-size: 14px;
-  color: #757575;
+  opacity: 0.8;
 
   ${(props) =>
     props.active &&
@@ -42,5 +42,5 @@ const EachTab = styled.span<{ active: boolean }>`
       color: #038c5a;
       font-weight: bold;
       box-shadow: inset 0px -2px 0px #038c5a;
-    `}
+    `};
 `;

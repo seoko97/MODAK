@@ -29,7 +29,7 @@ const StyledInner = styled.div`
 
 const CampInfoInner = ({ title, description }: Props) => (
   <StyledInner>
-    <Title size={25}>{title}</Title>
+    <Title size={22}>{title}</Title>
     <p>{description}</p>
   </StyledInner>
 );

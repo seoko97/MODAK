@@ -38,7 +38,7 @@ const reviewImageUpload = async (body: FormData): Promise<ResImgs> => {
 
 // 캠핑장 페이지 리뷰
 const getCampReviews = async ({ campId, ...params }: CampReviewProps): Promise<ResRvs> => {
-  const query = getCampQuery(params as KeyValueStr);
+  const query = `?${getCampQuery(params as KeyValueStr)}`;
 
   const result = await axios.get(`review/camp/${campId}${query}`);
   const { data } = result;
@@ -63,8 +63,8 @@ const updateReivew = async ({ id, body }: UpdateReviewData): Promise<ResRv> => {
 };
 
 // 리뷰 삭제
-const deleteReivew = async (id: string): Promise<ResRv> => {
-  const result = await axios.put(`review/${id}`);
+const deleteReivew = async (id: string): Promise<{ status: boolean; id: string }> => {
+  const result = await axios.delete(`review/${id}`);
   const { data } = result;
 
   return data;
