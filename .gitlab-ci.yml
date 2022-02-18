@@ -1,0 +1,12 @@
+image: node:latest
+
+stages:
+  - build
+
+build:
+  stage: build
+
+  script:
+    - cd back
+    - npm install
+    - npm run build
