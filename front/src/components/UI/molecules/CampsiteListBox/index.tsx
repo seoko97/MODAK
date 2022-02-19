@@ -5,19 +5,19 @@ import Link from "@atoms/Link";
 import BookmarkIcon from "@icons/BookmarkIcon";
 import CommentIcon from "@icons/CommentIcon";
 import { ICamp } from "@type/reducers/camp";
-import { url } from "@apis/.";
 
 interface Props {
   camp: ICamp;
 }
 
 const CampSiteListBox = ({ camp }: Props) => {
-  const { _id, name, address, tel, totalBookmark, totalReview, photos, environment, thema } = camp;
+  const { _id, name, address, tel, totalBookmark, totalReview, environment, thema, firstImage } =
+    camp;
   return (
     <Link href={`/camp/${_id}`}>
       <CardWrapper>
         <ImgWrapper>
-          <img src={!photos[0] ? "/tent.jpg" : `${url}/image/${photos[0]}`} alt={`${name} 사진`} />
+          <img src={firstImage || "/tent.jpg"} alt={`${name} 사진`} />
         </ImgWrapper>
         <CampSiteInfo>
           <CardInfoHeader>
