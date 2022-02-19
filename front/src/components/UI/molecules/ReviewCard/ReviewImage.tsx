@@ -13,7 +13,7 @@ const ReviewImage = ({ images, onClick }: Props) => {
     <StyledReviewPhotos>
       {images?.slice(0, 3).map((image, idx) => (
         <div key={idx} onClick={onClick}>
-          <img src={`${url}/${image}`} alt="reviewPhoto" />
+          <img src={`${url}/image/${image}`} alt="reviewPhoto" />
           {len > 3 && <div className="over">+{len - 3}</div>}
         </div>
       ))}

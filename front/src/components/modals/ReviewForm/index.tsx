@@ -136,7 +136,7 @@ const ReviewForm = ({ review, camp, onClick }: Props) => {
           <ImageList>
             {images.map((image) => (
               <ImageWrapper key={image} onClick={() => deleteImage(image)}>
-                <img src={`${url}/${image}`} alt="img" />
+                <img src={`${url}/image/${image}`} alt="img" />
                 <div className="hover">삭제</div>
               </ImageWrapper>
             ))}

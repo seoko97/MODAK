@@ -29,7 +29,7 @@ const Slide = ({ images }: Props) => {
           {images.map((v, i) => {
             return (
               <MainSlickItems key={`${v}_${i}`}>
-                <img src={`${url}/${v}`} alt="img" />
+                <img src={`${url}/image/${v}`} alt="img" />
               </MainSlickItems>
             );
           })}

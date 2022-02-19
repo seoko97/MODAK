@@ -122,7 +122,7 @@ const CampCoverImgBox = styled.div<Pick<ICamp, "photos">>`
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
-  background-image: url(${({ photos }) => (photos[0] ? `${url}/${photos[0]}` : "/tent.jpg")});
+  background-image: url(${({ photos }) => (photos[0] ? `${url}/image/${photos[0]}` : "/tent.jpg")});
   background-size: cover;
   overflow: hidden;
 

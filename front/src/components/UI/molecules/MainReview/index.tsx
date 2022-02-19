@@ -25,7 +25,7 @@ const MainReview = ({ review }: Props) => {
         <StyledMainReviewContainer>
           <StyledCardImage>
             <div>
-              <img alt="Mountains" src={photos[0] ? `${url}/${photos[0]}` : "/tent.jpg"} />
+              <img alt="Mountains" src={photos[0] ? `${url}/image/${photos[0]}` : "/tent.jpg"} />
             </div>
           </StyledCardImage>
 
