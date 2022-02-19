@@ -29,10 +29,12 @@ export const configs = {
 export const passportGoogleConfig = {
   clientID: process.env.GOOGLE_CLIENT_ID as string,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-  callbackURL: `${url}/${process.env.GOOGLE_CALLBACK_URL}` as string,
+  callbackURL: `${prod ? process.env.PRUDUCT_URL : "http://localhost:3065"}/${
+    process.env.GOOGLE_CALLBACK_URL
+  }` as string,
 };
 export const passportKakaoConfig = {
   clientID: process.env.KAKAO_CLIENT_ID as string,
   clientSecret: process.env.KAKAO_CLIENT_SECRET as string,
-  callbackURL: `${url}/${process.env.KAKAO_CALLBACK_URL}` as string,
+  callbackURL: `${prod ? process.env.PRUDUCT_URL : "http://localhost:3065"}` as string,
 };
