@@ -20,5 +20,5 @@
 # local env files
 .env
 
-# front
-back/*
+# back/*
+# front/*
