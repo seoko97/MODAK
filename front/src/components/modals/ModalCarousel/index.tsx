@@ -40,14 +40,14 @@ const Container = styled.div`
 `;
 
 const CloseButton = styled.div`
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 10px;
+  right: 10px;
   z-index: 1000;
   & > svg {
-    fill: #fff;
+    fill: #aeaeae;
     width: 100%;
     height: 100%;
   }
