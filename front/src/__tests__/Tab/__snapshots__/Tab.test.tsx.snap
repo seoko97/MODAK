@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tab 테스트 렌더 확인 1`] = `
+<div
+  className="sc-bdvvtL jZanzH"
+>
+  <span
+    className="sc-gsDKAQ bITfVn"
+    onClick={[Function]}
+  >
+    내 리뷰
+  </span>
+  <span
+    className="sc-gsDKAQ hFbhMX"
+    onClick={[Function]}
+  >
+    나의 캠핑 기록
+  </span>
+  <span
+    className="sc-gsDKAQ hFbhMX"
+    onClick={[Function]}
+  >
+    찜한 캠핑장
+  </span>
+</div>
+`;
