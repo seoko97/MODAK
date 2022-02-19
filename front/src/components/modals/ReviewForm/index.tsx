@@ -15,6 +15,7 @@ import { dateParser } from "@lib/dateParser";
 
 import { updateReview } from "@reducers/reviews";
 import { createReview, editReview, uploadImage } from "@reducers/review/action";
+import { createReview as createAction } from "@reducers/reviews/.";
 import { AppDispatch } from "@store/configureStore";
 
 import { url } from "@apis/.";
@@ -97,8 +98,8 @@ const ReviewForm = ({ review, camp, onClick }: Props) => {
       };
       const res = await dispatch(editReview({ id: review._id, body }));
       dispatch(updateReview({ review: (res.payload as PayloadReview).review }));
-    } else
-      await dispatch(
+    } else {
+      const newReview = await dispatch(
         createReview({
           location: camp._id,
           content: text.replace(/(?:\r\n|\r|\n)/g, "<br/>"),
@@ -107,6 +108,7 @@ const ReviewForm = ({ review, camp, onClick }: Props) => {
           created: dateParser(new Date()),
         }),
       );
+    }
 
     onClick();
   }, [text, rating, images]);

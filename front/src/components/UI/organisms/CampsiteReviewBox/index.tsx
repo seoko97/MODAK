@@ -36,13 +36,12 @@ const BoxHeader = styled.div`
   justify-content: space-between;
   background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.RGBA};
   backdrop-filter: saturate(180%) blur(20px);
-  z-index: 10;
+  z-index: 1;
 `;
 
 const CampsiteReviewBox = () => {
   const dispatch: AppDispatch = useDispatch();
   const { mainReviews, getCampReviews: CRState } = useAppSelector((state) => state.reviews);
-  const { create } = useAppSelector((state) => state.review);
   const { singleCamp } = useAppSelector((state) => state.camp);
   const [currTab, setCurrTab] = useState("전체");
   const [skip, setSkip] = useState(0);
@@ -84,10 +83,6 @@ const CampsiteReviewBox = () => {
       onThrolttle();
     }
   }, [scrollHeight, clientHeight]);
-
-  useEffect(() => {
-    if (create.done) setSorted("_id");
-  }, [create.done]);
 
   const onChange = useCallback(async (e) => {
     const query = {

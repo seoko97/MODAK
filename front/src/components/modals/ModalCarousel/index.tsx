@@ -12,9 +12,8 @@ interface Props {
 
 const Container = styled.div`
   position: relative;
-  width: 1200px;
-  height: 500px;
-  padding: 10px;
+  width: 100%;
+  padding: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,11 +30,16 @@ const Container = styled.div`
   }
 
   @media (max-width: ${({ theme }) => theme.BP.HDPC}) {
-    width: 100%;
+    padding: 20px;
 
     .slick-active {
       margin: 0;
     }
+  }
+
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    width: 95%;
+    padding: 0;
   }
 `;
 
@@ -45,7 +49,9 @@ const CloseButton = styled.div`
   position: absolute;
   top: 10px;
   right: 10px;
-  z-index: 1000;
+  z-index: 10000;
+  border-radius: 50%;
+  cursor: pointer;
   & > svg {
     fill: #aeaeae;
     width: 100%;

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
+import { useAppSelector } from "@store/configureStore";
 
 interface Props {
   current: string;
@@ -9,8 +10,14 @@ interface Props {
 const tabs = ["전체", "또 가고 싶어요", "평범해요", "별로에요"];
 
 const Tap = ({ current, onClick }: Props) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const { create } = useAppSelector((state) => state.review);
+  useEffect(() => {
+    if (create.done) onClick((ref.current?.firstChild as Element).innerHTML);
+  }, [create.done]);
+
   return (
-    <Container>
+    <Container ref={ref}>
       {tabs.map((tab, idx) => {
         return (
           <EachTab key={idx} active={current === tab} onClick={() => onClick(tab)}>

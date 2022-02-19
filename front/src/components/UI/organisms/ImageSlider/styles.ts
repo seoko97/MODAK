@@ -34,9 +34,23 @@ export const MainSlickItems = styled.div`
   ${defaultItemStyle};
 
   img {
-    max-width: 100%;
-    object-fit: contain;
-    max-height: 100%;
+    max-width: 60%;
+    max-height: 50%;
+    object-fit: scale-down;
+  }
+
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    img {
+      max-width: 70%;
+      object-fit: scale-down;
+    }
+  }
+
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    img {
+      max-width: 90%;
+      object-fit: scale-down;
+    }
   }
 `;
 
