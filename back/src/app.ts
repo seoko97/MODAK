@@ -29,7 +29,7 @@ app.use(
   }),
 );
 app.use(logger(prod ? "combined" : "dev"));
-app.use("/", express.static(path.join("uploads")));
+app.use("/image", express.static(path.join("uploads")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
