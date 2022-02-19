@@ -35,6 +35,8 @@ export const MainSlickItems = styled.div`
 
   img {
     max-width: 100%;
+    object-fit: contain;
+    max-height: 100%;
   }
 `;
 
