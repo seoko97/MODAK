@@ -36,5 +36,7 @@ export const passportGoogleConfig = {
 export const passportKakaoConfig = {
   clientID: process.env.KAKAO_CLIENT_ID as string,
   clientSecret: process.env.KAKAO_CLIENT_SECRET as string,
-  callbackURL: `${prod ? process.env.PRUDUCT_URL : "http://localhost:3065"}` as string,
+  callbackURL: `${prod ? process.env.PRUDUCT_URL : "http://localhost:3065"}/${
+    process.env.KAKAO_CALLBACK_URL
+  }` as string,
 };
