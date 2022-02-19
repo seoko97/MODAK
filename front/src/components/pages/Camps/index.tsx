@@ -30,7 +30,7 @@ const ListWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   min-height: 600px;
 
@@ -45,6 +45,7 @@ const ErrorText = styled.p`
   text-align: center;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   opacity: 0.8;
+  padding: 10px;
 `;
 
 const CampsiteListPage: NextPage = () => {
@@ -66,12 +67,14 @@ const CampsiteListPage: NextPage = () => {
             <SortButton onChange={onChange} />
           </div>
           <ListWrapper>
-            {mainCamps[0] ? (
-              mainCamps.map((camp, i) => <CampSiteListBox camp={camp} key={camp._id + i} />)
-            ) : (
-              <ErrorText>검색 결과가 없습니다.</ErrorText>
+            {mainCamps[0]
+              ? mainCamps.map((camp, i) => <CampSiteListBox camp={camp} key={camp._id + i} />)
+              : !getCamps.loading && <ErrorText>검색 결과가 없습니다.</ErrorText>}
+            {getCamps.loading && (
+              <ErrorText>
+                <ClipLoader color="#ccc" />
+              </ErrorText>
             )}
-            {getCamps.loading && <ClipLoader color="ccc" />}
           </ListWrapper>
         </Wrraper>
       </RowFrame>
