@@ -21,7 +21,7 @@ export const APIURL = `http://api.visitkorea.or.kr/openapi/service/rest/GoCampin
 export const configs = {
   DB_ID: process.env.DB_ID as string,
   DB_PASSWORD: process.env.DB_PASSWORD as string,
-  DB_URL: process.env.DB_URL as string,
+  DB_URL: (prod ? process.env.PROD_DB_URL : process.env.DB_URL) as string,
   PORT: (process.env.PORT || "3065") as string,
   TEST: process.env.NODE_ENV === "test",
 };
