@@ -1,11 +1,10 @@
 import { Router } from "express";
 import scheduler from "node-schedule";
-import dotenv from "dotenv";
 import { campsiteController } from "@controllers/campsite.controller";
-import { campsiteService } from "@src/services/campsite.service";
-import { ExpriedJwtAuthGuard, RefreshJwtAuthGuard } from "@src/passport/guards/jwt.guard";
+import { campsiteService } from "@services/campsite.service";
+import { ExpriedJwtAuthGuard, RefreshJwtAuthGuard } from "@passport/guards/jwt.guard";
+import { prod } from "@utils/constants";
 
-dotenv.config();
 const router = Router();
 
 // 캠핑장 리스트
@@ -39,7 +38,6 @@ router.patch(
   campsiteController.unBookmark,
 );
 
-if (process.env.NODE_ENV !== "test")
-  scheduler.scheduleJob("1 * *", async () => await campsiteService.schedule());
+if (prod) scheduler.scheduleJob("1 * *", async () => await campsiteService.schedule());
 
 export default router;
