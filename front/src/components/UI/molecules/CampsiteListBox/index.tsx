@@ -11,8 +11,18 @@ interface Props {
 }
 
 const CampSiteListBox = ({ camp }: Props) => {
-  const { _id, name, address, tel, totalBookmark, totalReview, environment, thema, firstImage } =
-    camp;
+  const {
+    _id,
+    name,
+    address,
+    tel,
+    totalBookmark,
+    totalReview,
+    environment,
+    thema,
+    firstImage,
+    lineIntro,
+  } = camp;
   return (
     <Link href={`/camp/${_id}`}>
       <CardWrapper>
@@ -22,6 +32,7 @@ const CampSiteListBox = ({ camp }: Props) => {
         <CampSiteInfo>
           <CardInfoHeader>
             <h3>{name}</h3>
+
             <CountsWrapper>
               <CountContainer>
                 <BookmarkIcon size={20} />
@@ -33,24 +44,38 @@ const CampSiteListBox = ({ camp }: Props) => {
               </CountContainer>
             </CountsWrapper>
           </CardInfoHeader>
+          {lineIntro && (
+            <Intro>
+              <p>{lineIntro}</p>
+            </Intro>
+          )}
+
           <InfoTable>
             <tbody>
-              <tr>
-                <th>주소</th>
-                <td>{address}</td>
-              </tr>
-              <tr>
-                <th>연락처</th>
-                <td>{tel}</td>
-              </tr>
+              {address && (
+                <tr>
+                  <th>주소</th>
+                  <td>{address}</td>
+                </tr>
+              )}
+              {tel && (
+                <tr>
+                  <th>연락처</th>
+                  <td>{tel}</td>
+                </tr>
+              )}
             </tbody>
           </InfoTable>
           <TagsContainer>
             {environment.map((tag) => (
-              <li key={tag}>{tag}</li>
+              <Link href={`/search?environment=${tag}`} key={tag}>
+                <li key={tag}>{tag}</li>
+              </Link>
             ))}
             {thema.map((tag) => (
-              <li key={tag}>{tag}</li>
+              <Link href={`/search?thema=${tag}`} key={tag}>
+                <li key={tag}>{tag}</li>
+              </Link>
             ))}
           </TagsContainer>
         </CampSiteInfo>
@@ -73,7 +98,7 @@ const CardWrapper = styled.div`
   width: 100%;
   display: flex;
   margin: 1em auto 0;
-  padding-bottom: 1em;
+  padding: 1em
   border-bottom: 1px dotted #c0c0c0;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   transition: 0.3s transform;
@@ -126,7 +151,7 @@ const CampSiteInfo = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  padding: 1em;
+  padding: 15px 10px;
   font-size: 0.8em;
   display: flex;
   flex-direction: column;
@@ -137,7 +162,6 @@ const CardInfoHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
 
   h3 {
     font-size: 1.2em;
@@ -148,6 +172,7 @@ const CardInfoHeader = styled.div`
 const InfoTable = styled.table`
   border-collapse: separate;
   border-spacing: 0 5px;
+  margin-bottom: 12px;
 
   & th {
     text-align: left;
@@ -163,12 +188,17 @@ const TagsContainer = styled.ul`
   display: flex;
   flex-wrap: wrap;
 
-  & > li {
+  & li {
     margin-right: 15px;
+    opacity: 0.6;
 
     &::before {
       content: "#";
     }
+  }
+
+  & li:hover {
+    opacity: 1;
   }
 `;
 
@@ -190,4 +220,10 @@ const CountContainer = styled.div`
       height: 15px;
     }
   }
+`;
+
+const Intro = styled.div`
+  width: 100%;
+  opacity: 0.8;
+  margin-bottom: 20px;
 `;

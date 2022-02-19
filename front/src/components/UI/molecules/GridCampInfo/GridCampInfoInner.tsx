@@ -25,6 +25,12 @@ const StyledInner = styled.div`
   & > p {
     text-align: center;
   }
+
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    h2 {
+      font-size: 16px;
+    }
+  }
 `;
 
 const CampInfoInner = ({ title, description }: Props) => (

@@ -12,12 +12,12 @@ interface Props {
 
 const Container = styled.div`
   position: relative;
-  width: 100%;
-  padding: 60px;
+  width: 80%;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  min-width: 40%;
 
   .slick-track {
     display: flex !important;

@@ -47,8 +47,8 @@ const UserCamps = () => {
 
   return (
     <Container>
-      {mainCamps.map((camp) => (
-        <CampSiteListBox camp={camp} key={camp._id} />
+      {mainCamps.map((camp, i) => (
+        <CampSiteListBox camp={camp} key={camp._id + i} />
       ))}
 
       {loading && <ClipLoader color="ccc" />}

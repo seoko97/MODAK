@@ -26,12 +26,25 @@ const Wrraper = styled.div`
   }
 `;
 
+const ListWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 600px;
+
+  padding-top: 30px;
+  & > a {
+    width: 100%;
+  }
+`;
+
 const ErrorText = styled.p`
   width: 100%;
   text-align: center;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   opacity: 0.8;
-  margin-top: 100px;
 `;
 
 const CampsiteListPage: NextPage = () => {
@@ -52,12 +65,14 @@ const CampsiteListPage: NextPage = () => {
           <div>
             <SortButton onChange={onChange} />
           </div>
-          {mainCamps[0] ? (
-            mainCamps.map((camp) => <CampSiteListBox camp={camp} key={camp._id} />)
-          ) : (
-            <ErrorText>검색 결과가 없습니다.</ErrorText>
-          )}
-          {getCamps.loading && <ClipLoader color="ccc" />}
+          <ListWrapper>
+            {mainCamps[0] ? (
+              mainCamps.map((camp, i) => <CampSiteListBox camp={camp} key={camp._id + i} />)
+            ) : (
+              <ErrorText>검색 결과가 없습니다.</ErrorText>
+            )}
+            {getCamps.loading && <ClipLoader color="ccc" />}
+          </ListWrapper>
         </Wrraper>
       </RowFrame>
     </>

@@ -39,6 +39,15 @@ const BoxHeader = styled.div`
   z-index: 1;
 `;
 
+const ListWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 600px;
+`;
+
 const CampsiteReviewBox = () => {
   const dispatch: AppDispatch = useDispatch();
   const { mainReviews, getCampReviews: CRState } = useAppSelector((state) => state.reviews);
@@ -79,10 +88,10 @@ const CampsiteReviewBox = () => {
   );
 
   useEffect(() => {
-    if (scrollHeight + 300 >= clientHeight) {
+    if (mainReviews.length >= 10 && scrollHeight + 300 >= clientHeight) {
       onThrolttle();
     }
-  }, [scrollHeight, clientHeight]);
+  }, [scrollHeight, clientHeight, mainReviews]);
 
   const onChange = useCallback(async (e) => {
     const query = {
@@ -98,19 +107,21 @@ const CampsiteReviewBox = () => {
         <SortedReview onChange={onChange} />
         <Tab current={currTab} onClick={handleClickTab} />
       </BoxHeader>
-      {mainReviews[0] ? (
-        mainReviews.map((review) => <ReviewCard key={review._id} review={review} />)
-      ) : (
-        <>
-          {CRState.loading ? (
-            <NoneReview>
-              <ClipLoader color="#ccc" />
-            </NoneReview>
-          ) : (
-            <NoneReview>리뷰가 존재하지 않습니다.</NoneReview>
-          )}
-        </>
-      )}
+      <ListWrapper>
+        {mainReviews[0] ? (
+          mainReviews.map((review, i) => <ReviewCard key={review._id + i} review={review} />)
+        ) : (
+          <>
+            {CRState.loading ? (
+              <NoneReview>
+                <ClipLoader color="#ccc" />
+              </NoneReview>
+            ) : (
+              <NoneReview>리뷰가 존재하지 않습니다.</NoneReview>
+            )}
+          </>
+        )}
+      </ListWrapper>
     </StyledContainer>
   );
 };

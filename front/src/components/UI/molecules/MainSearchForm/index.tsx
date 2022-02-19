@@ -35,7 +35,8 @@ const Input = styled.input`
   font-size: 15px;
   padding: 3px 20px;
   @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
-    height: 30px;
+    font-size: 12px;
+    height: 25px;
   }
 `;
 
@@ -50,7 +51,9 @@ const Button = styled.button`
   color: #fff;
   cursor: pointer;
   @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
-    height: 30px;
+    width: 70px;
+    font-size: 12px;
+    height: 25px;
   }
 `;
 
@@ -65,6 +68,12 @@ const TagWrraper = styled.div`
   }
   & .checked {
     background-color: #0f461b;
+  }
+
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    & > span {
+      font-size: 11px;
+    }
   }
 `;
 

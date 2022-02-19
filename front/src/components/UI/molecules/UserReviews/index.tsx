@@ -47,8 +47,8 @@ const UserCamps = () => {
 
   return (
     <Container>
-      {mainReviews.map((review) => (
-        <MyReview key={review._id} review={review} />
+      {mainReviews.map((review, i) => (
+        <MyReview key={review._id + i} review={review} />
       ))}
 
       {loading && <ClipLoader color="ccc" />}

@@ -16,6 +16,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
   const setCookies = (signUserRes.payload as PayloadHeaders)?.headers?.["set-cookie"];
   if (setCookies) ctx.res.setHeader("Set-Cookie", setCookies);
 
+  if (query.name) query.lineIntro = query.name;
+
   await store.dispatch(getCamps(query || {}));
 
   return {

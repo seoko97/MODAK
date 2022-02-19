@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { useRouter } from "next/router";
 import ClipLoader from "react-spinners/ClipLoader";
 
 import { useAppSelector } from "@store/configureStore";
@@ -45,7 +44,6 @@ const Loader = styled.div`
 
 const Search = ({ query }: Props) => {
   const values = Object.values(query);
-  const router = useRouter();
   const [skip, setSkip] = useState(0);
   const { mainCamps, getCamps: GCState } = useAppSelector((state) => state.camps);
   const dispatch = useDispatch();
@@ -62,24 +60,20 @@ const Search = ({ query }: Props) => {
     }
   }, [scrollHeight, clientHeight]);
 
-  useEffect(() => {
-    if (values.length !== 1) router.replace("/");
-  }, [values.length]);
-
   const onChange = useCallback(async (e) => {
-    await dispatch(getCamps({ sorted: e.target.value }));
+    await dispatch(getCamps({ sorted: e.target.value, ...query }));
   }, []);
 
   return (
     <RowFrame>
       <StyledHeader>
-        <div>{values} 검색결과</div>
+        <div>{values[0]} 검색결과</div>
         <div>
           <SortButton onChange={onChange} />
         </div>
       </StyledHeader>
-      {mainCamps.map((camp) => (
-        <CampSiteListBox camp={camp} key={camp._id} />
+      {mainCamps.map((camp, i) => (
+        <CampSiteListBox camp={camp} key={camp._id + i} />
       ))}
 
       {GCState.loading && (

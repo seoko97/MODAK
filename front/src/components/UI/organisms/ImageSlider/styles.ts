@@ -20,8 +20,8 @@ export const Inner = styled.div`
   }
 `;
 export const defaultItemStyle = css`
-  width: 100%;
-  text-align: center;
+  width: 50%;
+
   img {
     height: 100%;
     vertical-align: top;
@@ -31,25 +31,39 @@ export const MainSlickItems = styled.div`
   display: flex !important;
   align-items: center;
   justify-content: center;
+
   ${defaultItemStyle};
 
   img {
-    max-width: 60%;
-    max-height: 50%;
-    object-fit: scale-down;
+    max-width: 600px;
+    max-height: 500px;
+    object-fit: contain;
   }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     img {
-      max-width: 70%;
-      object-fit: scale-down;
+      /* max-width: 70%; */
+      max-height: 70%;
+
+      object-fit: contain;
     }
   }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     img {
-      max-width: 90%;
-      object-fit: scale-down;
+      max-width: 80%;
+      max-height: 60%
+
+      object-fit: contain;
+    }
+  }
+
+   @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    img {
+      max-width: 95%;
+      max-height: 60%
+
+      object-fit: contain;
     }
   }
 `;
@@ -77,6 +91,10 @@ export const defaultButtonStyle = css`
   & > svg {
     width: 100%;
     height: 100%;
+  }
+
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    display: none;
   }
 `;
 export const PrevButton = styled.button`

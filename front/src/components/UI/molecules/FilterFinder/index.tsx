@@ -1,10 +1,11 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { getCamps } from "@reducers/camps/action";
 import useScroll from "@hooks/useScroll";
 import useThrottle from "@hooks/useThrottle";
 import { AppDispatch, useAppSelector } from "@store/configureStore";
+import { categories } from "@lib/categories";
 import FilterCategory from "./FilterCategory";
 
 interface QueryProps {
@@ -15,45 +16,18 @@ interface Props {
   sorted: string;
 }
 
-const categories = [
-  {
-    name: "지역",
-    options: [
-      "전체",
-      "서울",
-      "부산",
-      "대구",
-      "인천",
-      "광주",
-      "대전",
-      "울산",
-      "세종",
-      "경기",
-      "강원",
-    ],
-  },
-  {
-    name: "주변환경",
-    options: ["해변", "산", "숲", "계곡", "강", "호수", "도심"],
-  },
-  {
-    name: "부대시설",
-    options: ["전기", "wifi", "온수", "수영장", "산책로", "편의점"],
-  },
-  {
-    name: "테마",
-    options: ["낚시", "일출명소", "일몰명소", "물놀이", "액티비티"],
-  },
-];
-
 const FilterFinder = ({ sorted }: Props) => {
   const [query, setQuery] = useState<QueryProps>({});
   const [skip, setSkip] = useState<number>(0);
   const { mainCamps } = useAppSelector((state) => state.camps);
   const [scrollHeight, clientHeight] = useScroll();
+  const [lastId, setLastId] = useState("");
   const dispatch: AppDispatch = useDispatch();
 
+  const getLastId = useMemo(() => mainCamps[mainCamps.length - 1]._id, []);
+
   const onThrottle = useThrottle(async () => {
+    setLastId(getLastId);
     await dispatch(getCamps({ ...query, sorted, skip: `${skip + 1}` }));
     setSkip(skip + 1);
   }, 500);
@@ -76,10 +50,10 @@ const FilterFinder = ({ sorted }: Props) => {
   }, [query, sorted]);
 
   useEffect(() => {
-    if (scrollHeight + 300 >= clientHeight) {
+    if (scrollHeight + 300 >= clientHeight && getLastId !== lastId) {
       onThrottle();
     }
-  }, [scrollHeight, clientHeight, query, mainCamps, sorted, skip]);
+  }, [scrollHeight, clientHeight, query, mainCamps, sorted, skip, mainCamps, getLastId]);
 
   return (
     <FinderContainer>

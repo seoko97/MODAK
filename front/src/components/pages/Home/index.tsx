@@ -42,9 +42,9 @@ const Inner = styled.div`
   }
 
   @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
-    padding: 120px 10px;
+    padding: 70px 10px;
     & > h2 {
-      font-size: 20px;
+      font-size: 18px;
     }
   }
 `;

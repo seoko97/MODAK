@@ -74,7 +74,7 @@ const CampSiteContainer = styled.div`
 const CampSiteImage = styled.div`
   position: relative;
   width: 50%;
-  min-height: 300px;
+  min-height: 400px;
 
   img {
     position: absolute;

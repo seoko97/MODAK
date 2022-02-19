@@ -13,9 +13,6 @@ const nextConfig = {
   // babel -> SWC
   swcMinify: true,
 
-  experimental: {
-    styledComponents: true,
-  },
   compiler: {
     styledComponents: true,
   },
