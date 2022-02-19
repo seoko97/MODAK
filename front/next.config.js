@@ -24,6 +24,9 @@ const nextConfig = {
       ...config,
       mode: prod ? "production" : "development",
       devtool: prod ? "hidden-source-map" : "eval",
+      env: {
+        PRODUCTION_URL: process.env.PRODUCTION_URL,
+      },
     };
   },
 };
