@@ -18,7 +18,7 @@ const getArrayInfo = (key: string, data: string) => {
 export const campsQuery = (data: Partial<ICampsiteDTO>) => {
   if (Object.keys(data).length === 0) return {};
 
-  const { animal, address, name, ...op } = data;
+  const { animal, address, name, lineIntro, ...op } = data;
   const query = {} as IKeyValueString;
   const and = [];
 
@@ -36,7 +36,12 @@ export const campsQuery = (data: Partial<ICampsiteDTO>) => {
       and.push(d);
     }
   }
-  if (name && !(<StrArr>name instanceof Array)) query.name = { $regex: name };
+  if (name && !(<StrArr>name instanceof Array)) {
+    if (lineIntro && !(<StrArr>lineIntro instanceof Array)) {
+      const or = [{ name: { $regex: name } }, { lineIntro: { $regex: name } }];
+      query.$or = or;
+    } else query.name = { $regex: name };
+  }
   if (address && !(<StrArr>address instanceof Array)) query.address = { $regex: address };
   if (animal && !(<StrArr>animal instanceof Array))
     query.animal = animal === "true" ? /^((?!불가능).)*$/ : /불가능/;
