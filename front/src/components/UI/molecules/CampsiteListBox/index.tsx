@@ -17,7 +17,7 @@ const CampSiteListBox = ({ camp }: Props) => {
     <Link href={`/camp/${_id}`}>
       <CardWrapper>
         <ImgWrapper>
-          <img src={firstImage || "/tent.jpg"} alt={`${name} 사진`} />
+          <img src={firstImage || "/tent.jpeg"} alt={`${name} 사진`} />
         </ImgWrapper>
         <CampSiteInfo>
           <CardInfoHeader>

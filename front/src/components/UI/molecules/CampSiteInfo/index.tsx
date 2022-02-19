@@ -11,7 +11,7 @@ const CampSiteInfo = () => {
     <>
       <CampSiteContainer>
         <CampSiteImage>
-          <img alt="캠핑장 소개 사진" src={firstImage || "/tent.jpg"} />
+          <img alt="캠핑장 소개 사진" src={firstImage || "/tent.jpeg"} />
         </CampSiteImage>
 
         <CampSiteContentBox>

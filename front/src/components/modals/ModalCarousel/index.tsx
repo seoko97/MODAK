@@ -1,7 +1,7 @@
 import React from "react";
-import ImageSlider from "@organisms/ImageSlider";
-
 import styled from "styled-components";
+import ImageSlider from "@organisms/ImageSlider";
+import ExitIcon from "@icons/ExitIcon";
 import ModalLayout from "../ModalLayout";
 
 interface Props {
@@ -11,6 +11,7 @@ interface Props {
 }
 
 const Container = styled.div`
+  position: relative;
   width: 1200px;
   height: 500px;
   padding: 10px;
@@ -18,6 +19,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  background: #fff;
 
   .slick-track {
     display: flex !important;
@@ -38,10 +40,27 @@ const Container = styled.div`
   }
 `;
 
+const CloseButton = styled.div`
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  & > svg {
+    fill: #fff;
+    width: 100%;
+    height: 100%;
+  }
+`;
+
 const ModalCaroucel = ({ onClick, photos }: Props) => {
   return (
     <>
       <ModalLayout onClick={onClick}>
+        <CloseButton onClick={onClick}>
+          <ExitIcon />
+        </CloseButton>
         <Container>
           <ImageSlider images={photos} />
         </Container>

@@ -56,7 +56,7 @@ const Home: NextPage = () => {
   return (
     <RowFrame>
       <MainHeader>
-        <Image priority={true} src="/tent.jpg" alt="cover" layout="fill" objectFit="cover" />
+        <Image priority={true} src="/tent.jpeg" alt="cover" layout="fill" objectFit="cover" />
         <Inner>
           <h2>캠핑장 정보 어디에서 찾으세요?</h2>
           <MainSearchForm />

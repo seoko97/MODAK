@@ -38,25 +38,25 @@ const GridChooseCamp = () => {
           title="#봄꽃여행"
           description=""
           to="/search?thema=봄꽃여행"
-          src="/spring.jpg"
+          src="/spring.jpeg"
         />
         <GridCampInfo
           title="#여름물놀이"
           description=""
           to="/search?thema=여름물놀이"
-          src="/summer.jpg"
+          src="/summer.jpeg"
         />
         <GridCampInfo
           title="#가을단풍명소"
           description=""
           to="/search?thema=가을단풍명소"
-          src="/autumn.jpg"
+          src="/autumn.jpeg"
         />
         <GridCampInfo
           title="#겨울눈꽃명소"
           description=""
           to="/search?thema=겨울눈꽃명소"
-          src="/winter.jpg"
+          src="/winter.jpeg"
         />
       </StyledCamp>
     </Container>

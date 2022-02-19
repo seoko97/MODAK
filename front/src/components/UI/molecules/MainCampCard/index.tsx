@@ -117,7 +117,7 @@ const MainCampCard = ({ camp, url }: Props) => {
       <Container>
         <ImageWrapper>
           <div>
-            <img src={firstImage || "/tent.jpg"} alt="img" />
+            <img src={firstImage || "/tent.jpeg"} alt="img" />
           </div>
         </ImageWrapper>
         <ContentWrapper>
