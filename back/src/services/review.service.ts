@@ -3,10 +3,7 @@ import { ReviewModel, UserModel } from "@src/models";
 import { IReviewDTO } from "@src/types/Review";
 
 export class ReviewService {
-  constructor(
-    private readonly reviewModel: typeof ReviewModel,
-    private readonly userModel: typeof UserModel,
-  ) {}
+  constructor(private readonly reviewModel: typeof ReviewModel) {}
 
   async getReviewsByQuery(query = {}, target = {}, skip = 0, limit: number) {
     return await this.reviewModel
@@ -47,7 +44,6 @@ export class ReviewService {
         $inc: { count: 1 },
       },
     );
-    await this.userModel.updateOne({ _id: userId }, { $inc: { totalLike: 1 } });
   }
 
   async unLike(id: string, userId: string) {
@@ -55,8 +51,7 @@ export class ReviewService {
       { _id: id },
       { $pull: { likes: userId }, $inc: { count: -1 } },
     );
-    await this.userModel.updateOne({ _id: userId }, { $inc: { totalLike: -1 } });
   }
 }
 
-export const reviewService = new ReviewService(ReviewModel, UserModel);
+export const reviewService = new ReviewService(ReviewModel);

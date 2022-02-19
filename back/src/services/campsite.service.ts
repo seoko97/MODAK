@@ -7,7 +7,10 @@ import { APIURL } from "@utils/constants";
 import { getCampData } from "@utils/dataParser";
 
 export class CampsiteService {
-  constructor(private readonly campsiteModel: typeof CampsiteModel) {}
+  constructor(
+    private readonly campsiteModel: typeof CampsiteModel,
+    private readonly userModel: typeof UserModel,
+  ) {}
 
   async getCampById(id: string) {
     return await this.campsiteModel.findByIdAndUpdate(id, { $inc: { views: 1 } });
@@ -49,19 +52,27 @@ export class CampsiteService {
   }
 
   async bookmark(userId: string, campId: string) {
-    return await this.campsiteModel.findOneAndUpdate(
+    const camp = await this.campsiteModel.findOneAndUpdate(
       { _id: campId },
       { $push: { bookmark: userId }, $inc: { totalBookmark: 1 } },
       { new: true },
     );
+
+    await this.userModel.updateOne({ _id: userId }, { $inc: { totalLike: 1 } });
+
+    return camp;
   }
 
   async unBookmark(userId: string, campId: string) {
-    return await this.campsiteModel.findByIdAndUpdate(
+    const camp = await this.campsiteModel.findByIdAndUpdate(
       { _id: campId },
       { $pull: { bookmark: userId }, $inc: { totalBookmark: -1 } },
       { new: true },
     );
+
+    await this.userModel.updateOne({ _id: userId }, { $inc: { totalLike: -1 } });
+
+    return camp;
   }
 
   async getById(id: string, obj = {}): Promise<ICampsiteDTO | null> {
@@ -69,4 +80,4 @@ export class CampsiteService {
   }
 }
 
-export const campsiteService = new CampsiteService(CampsiteModel);
+export const campsiteService = new CampsiteService(CampsiteModel, UserModel);
