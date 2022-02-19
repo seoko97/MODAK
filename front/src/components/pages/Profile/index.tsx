@@ -3,7 +3,7 @@ import RowFrame from "@templates/RowFrame";
 import UserReviews from "@molecules/UserReviews";
 import UserCamps from "@molecules/UserCamps";
 import Tabs, { TabItem } from "@molecules/MyProfileTabs";
-import MyPageProfile from "@organisms/MyPageProfile";
+import MyPageProfile from "@src/components/UI/organisms/UserProfile";
 import { useAppSelector } from "@store/configureStore";
 import { useRouter } from "next/router";
 import Style from "./style";
