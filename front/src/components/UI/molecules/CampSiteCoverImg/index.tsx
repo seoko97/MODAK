@@ -54,15 +54,20 @@ const CampSiteCoverImg = () => {
     if (me) {
       const res = await dispatch(bookmark(_id));
       dispatch(bookmarked(res));
-    }
+    } else alert("로그인 후 이용 가능합니다.");
   }, [_id]);
 
   const onClickUnBookMark = useCallback(async () => {
     if (me) {
       const res = await dispatch(unbookmark(_id));
       dispatch(unBookmarked(res));
-    }
+    } else alert("로그인 후 이용 가능합니다.");
   }, [_id, bookMarkedUser]);
+
+  const onClickCreateBtn = useCallback(() => {
+    if (!me) return alert("로그인 후 이용 가능합니다.");
+    onOpen();
+  }, [me]);
 
   return (
     <>
@@ -92,7 +97,7 @@ const CampSiteCoverImg = () => {
             </IconBox>
 
             <ButtonBox>
-              <Button onClick={onOpen} name="후기작성" />
+              <Button onClick={onClickCreateBtn} name="후기작성" />
               {isOpen && <ReviewForm onClick={onClose} camp={singleCamp as ICamp} />}
               <Button
                 name={bookMarkedUser ? "북마크 제거" : "북마크 추가"}
