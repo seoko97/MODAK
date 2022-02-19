@@ -26,7 +26,6 @@ export default SortButton;
 const BoxArea = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-top: 20px;
 `;
 
 const SelectBoxWrapper = styled.div`

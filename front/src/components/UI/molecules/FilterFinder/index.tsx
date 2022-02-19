@@ -21,13 +21,9 @@ const FilterFinder = ({ sorted }: Props) => {
   const [skip, setSkip] = useState<number>(0);
   const { mainCamps } = useAppSelector((state) => state.camps);
   const [scrollHeight, clientHeight] = useScroll();
-  const [lastId, setLastId] = useState("");
   const dispatch: AppDispatch = useDispatch();
 
-  const getLastId = useMemo(() => mainCamps[mainCamps.length - 1]._id, []);
-
   const onThrottle = useThrottle(async () => {
-    setLastId(getLastId);
     await dispatch(getCamps({ ...query, sorted, skip: `${skip + 1}` }));
     setSkip(skip + 1);
   }, 500);
@@ -50,10 +46,10 @@ const FilterFinder = ({ sorted }: Props) => {
   }, [query, sorted]);
 
   useEffect(() => {
-    if (scrollHeight + 300 >= clientHeight && getLastId !== lastId) {
+    if (scrollHeight + 300 >= clientHeight && mainCamps.length >= 10) {
       onThrottle();
     }
-  }, [scrollHeight, clientHeight, query, mainCamps, sorted, skip, mainCamps, getLastId]);
+  }, [scrollHeight, clientHeight, query, mainCamps, sorted, skip]);
 
   return (
     <FinderContainer>
@@ -77,7 +73,7 @@ const FinderContainer = styled.form`
   box-shadow: 3px 4px 5px rgba(0, 0, 0, 0.1);
   padding: 30px 50px;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-
+  margin-bottom: 20px;
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     padding: 20px;
   }

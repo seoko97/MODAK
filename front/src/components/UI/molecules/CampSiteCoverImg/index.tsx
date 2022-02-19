@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from "react";
+import { useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
 import Router from "next/router";
 import Link from "@atoms/Link";
@@ -12,8 +13,8 @@ import useModal from "@hooks/useModal";
 import ReviewForm from "@modals/ReviewForm";
 import { ICamp } from "@type/reducers/camp";
 import { AppDispatch, useAppSelector } from "@store/configureStore";
-import { useDispatch } from "react-redux";
 import { bookmark, unbookmark } from "@reducers/camp/action";
+import { bookmarked, unBookmarked } from "@reducers/camps";
 import { url } from "@apis/.";
 
 const CampSiteCoverImg = () => {
@@ -50,11 +51,17 @@ const CampSiteCoverImg = () => {
   }, [me?._id, bmList]);
 
   const onClickBookMark = useCallback(async () => {
-    if (me) await dispatch(bookmark(_id));
+    if (me) {
+      const res = await dispatch(bookmark(_id));
+      dispatch(bookmarked(res));
+    }
   }, [_id]);
 
   const onClickUnBookMark = useCallback(async () => {
-    if (me) await dispatch(unbookmark(_id));
+    if (me) {
+      const res = await dispatch(unbookmark(_id));
+      dispatch(unBookmarked(res));
+    }
   }, [_id, bookMarkedUser]);
 
   return (

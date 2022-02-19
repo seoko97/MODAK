@@ -11,20 +11,11 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
   intro: string;
+  reviews: number;
+  likes: number;
 }
 
-const IconComponent = () => (
-  <Style.IconBox>
-    <Style.Icons>
-      <PencilIcon size={13} /> 10
-    </Style.Icons>
-    <Style.Icons>
-      <HeartIcon size={13} /> 10
-    </Style.Icons>
-  </Style.IconBox>
-);
-
-const ProfileInfo = ({ nickname, onOpen, isOpen, onClose, intro }: Props) => (
+const ProfileInfo = ({ nickname, onOpen, isOpen, onClose, intro, likes, reviews }: Props) => (
   <Style.ProfileInfo>
     <Style.UserName>
       <Title size={18}>{nickname}</Title>
@@ -34,7 +25,14 @@ const ProfileInfo = ({ nickname, onOpen, isOpen, onClose, intro }: Props) => (
       {isOpen && <UserUpdate onClick={onClose} />}
     </Style.UserName>
     <p>{intro}</p>
-    <IconComponent />
+    <Style.IconBox>
+      <Style.Icons>
+        <PencilIcon size={13} /> {reviews}
+      </Style.Icons>
+      <Style.Icons>
+        <HeartIcon size={13} /> {likes}
+      </Style.Icons>
+    </Style.IconBox>
   </Style.ProfileInfo>
 );
 

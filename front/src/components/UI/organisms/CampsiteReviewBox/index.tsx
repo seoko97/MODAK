@@ -13,7 +13,6 @@ import { getCampReviews } from "@reducers/reviews/action";
 
 const StyledContainer = styled.section`
   width: 100%;
-  min-height: 1000px;
   & * {
     color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   }
@@ -25,7 +24,6 @@ const NoneReview = styled.div`
   align-items: center;
   justify-content: center;
   opacity: 0.7;
-  margin-top: 40px;
 `;
 const BoxHeader = styled.div`
   position: sticky;
@@ -37,6 +35,7 @@ const BoxHeader = styled.div`
   background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.RGBA};
   backdrop-filter: saturate(180%) blur(20px);
   z-index: 1;
+  padding: 10px 0;
 `;
 
 const ListWrapper = styled.div`
@@ -45,7 +44,11 @@ const ListWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 600px;
+  min-height: 300px;
+
+  & > *:last-of-type {
+    border-bottom: 0;
+  }
 `;
 
 const CampsiteReviewBox = () => {

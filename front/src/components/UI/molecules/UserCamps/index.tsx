@@ -38,8 +38,8 @@ const UserCamps = () => {
   }, 500);
 
   useEffect(() => {
-    if (scrollHieght + 300 >= clientHeight) onThrottle();
-  }, [scrollHieght, clientHeight]);
+    if (scrollHieght + 300 >= clientHeight && mainCamps.length >= 10) onThrottle();
+  }, [scrollHieght, clientHeight, mainCamps]);
 
   useEffect(() => {
     dispatch(getUserCamps({ userId: userInfo?._id as string }));

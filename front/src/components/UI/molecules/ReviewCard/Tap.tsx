@@ -35,8 +35,7 @@ const Container = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 10px;
-  margin: 40px 0 30px;
+  gap: 0 10px;
 `;
 
 const EachTab = styled.span<{ active: boolean }>`

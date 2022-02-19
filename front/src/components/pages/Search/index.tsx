@@ -55,10 +55,10 @@ const Search = ({ query }: Props) => {
   }, 500);
 
   useEffect(() => {
-    if (scrollHeight + 300 >= clientHeight) {
+    if (scrollHeight + 300 >= clientHeight && mainCamps.length >= 10) {
       onThrottle();
     }
-  }, [scrollHeight, clientHeight]);
+  }, [scrollHeight, clientHeight, mainCamps]);
 
   const onChange = useCallback(async (e) => {
     await dispatch(getCamps({ sorted: e.target.value, ...query }));

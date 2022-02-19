@@ -25,6 +25,30 @@ const camps = createSlice({
       state.search.done = false;
       state.search.loading = false;
     },
+    bookmarked(state, action) {
+      const { campId } = action.payload;
+      state.mainCamps = state.mainCamps.map((camp) => {
+        const { _id } = camp;
+        if (_id === campId) {
+          const newR = { ...camp };
+          newR.totalBookmark += 1;
+          return newR;
+        }
+        return camp;
+      });
+    },
+    unBookmarked(state, action) {
+      const { campId } = action.payload;
+      state.mainCamps = state.mainCamps.map((camp) => {
+        const { _id } = camp;
+        if (_id === campId) {
+          const newR = { ...camp };
+          newR.totalBookmark -= 1;
+          return newR;
+        }
+        return camp;
+      });
+    },
   },
 
   extraReducers: (builder) =>
@@ -82,5 +106,5 @@ const camps = createSlice({
       }),
 });
 
-export const { search, clearSearchCamps } = camps.actions;
+export const { search, clearSearchCamps, bookmarked, unBookmarked } = camps.actions;
 export default camps.reducer;

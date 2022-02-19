@@ -42,8 +42,8 @@ const UserCamps = () => {
   }, 500);
 
   useEffect(() => {
-    if (scrollHieght + 300 >= clientHeight) onThrottle();
-  }, [scrollHieght, clientHeight]);
+    if (scrollHieght + 300 >= clientHeight && mainReviews.length >= 10) onThrottle();
+  }, [scrollHieght, clientHeight, mainReviews]);
 
   return (
     <Container>
