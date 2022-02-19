@@ -16,6 +16,9 @@ const nextConfig = {
   experimental: {
     styledComponents: true,
   },
+  env: {
+    PRODUCTION_URL: process.env.PRODUCTION_URL,
+  },
 
   webpack(config, { webpack }) {
     const prod = process.env.NODE_ENV === "production";
@@ -24,9 +27,6 @@ const nextConfig = {
       ...config,
       mode: prod ? "production" : "development",
       devtool: prod ? "hidden-source-map" : "eval",
-      env: {
-        PRODUCTION_URL: process.env.PRODUCTION_URL,
-      },
     };
   },
 };
