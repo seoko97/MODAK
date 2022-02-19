@@ -16,6 +16,9 @@ const nextConfig = {
   experimental: {
     styledComponents: true,
   },
+  compiler: {
+    styledComponents: true,
+  },
   env: {
     PRODUCTION_URL: process.env.PRODUCTION_URL,
   },
