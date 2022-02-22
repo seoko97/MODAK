@@ -1,12 +1,16 @@
-import mongoose from "mongoose";
 import request from "supertest";
 import app from "@src/app";
-import { configs } from "@utils/constants";
-import { campsiteConfig, wrongCampsiteConfig, userConfig, wrongUserConfig } from "./test.config";
+import {
+  campsiteConfig,
+  wrongCampsiteConfig,
+  userConfig,
+  wrongUserConfig,
+} from "./config/contants";
+import db from "./config/db";
 
-beforeAll(async () => {
-  await mongoose.connect(configs.DB_URL);
-});
+beforeAll(async () => await db.connect());
+afterEach(async () => await db.clear());
+afterAll(async () => await db.close());
 
 describe("캠핑장 GET 테스트", () => {
   test("1. 캠핑장 리스트를 받아오는 테스트 ", async () => {
@@ -77,9 +81,4 @@ describe("캠핑장 PATCH 테스트", () => {
 
     expect(res.statusCode).toEqual(200);
   });
-});
-
-afterAll(async () => {
-  await mongoose.connection.close();
-  await mongoose.disconnect();
 });

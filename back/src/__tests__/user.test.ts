@@ -1,12 +1,12 @@
-import mongoose from "mongoose";
 import request from "supertest";
 import app from "@src/app";
-import { configs } from "@utils/constants";
-import { userConfig, wrongUserConfig } from "./test.config";
+import { userConfig, wrongUserConfig } from "./config/contants";
 
-beforeAll(async () => {
-  await mongoose.connect(configs.DB_URL);
-});
+import db from "./config/db";
+
+beforeAll(async () => await db.connect());
+afterEach(async () => await db.clear());
+afterAll(async () => await db.close());
 
 describe("유저페이지 GET 테스트", () => {
   test("1. 로그인된 상태로 유저페이지에 접근하는 경우", async () => {
@@ -49,9 +49,4 @@ describe("유저페이지 PUT 테스트", () => {
 
     expect(res.statusCode).toEqual(201);
   });
-});
-
-afterAll(async () => {
-  await mongoose.connection.close();
-  await mongoose.disconnect();
 });

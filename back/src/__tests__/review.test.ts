@@ -1,20 +1,19 @@
-import mongoose from "mongoose";
 import request from "supertest";
 import app from "@src/app";
-import { configs } from "@utils/constants";
 import {
   campsiteConfig,
   wrongCampsiteConfig,
   userConfig,
   wrongUserConfig,
   anotherUserConfig,
-} from "./test.config";
+} from "./config/contants";
+import db from "./config/db";
 
 let testReviewObjectId = "";
 
-beforeAll(async () => {
-  await mongoose.connect(configs.DB_URL);
-});
+beforeAll(async () => await db.connect());
+afterEach(async () => await db.clear());
+afterAll(async () => await db.close());
 
 describe("리뷰 GET 테스트", () => {
   test("1. 리뷰 메인페이지를 확인하는 테스트입니다.", async () => {
@@ -136,9 +135,4 @@ describe("리뷰 DELETE 테스트", () => {
 
     expect(res.statusCode).toEqual(200);
   });
-});
-
-afterAll(async () => {
-  await mongoose.connection.close();
-  await mongoose.disconnect();
 });
