@@ -58,10 +58,6 @@
 
 ## 4. 프로젝트 구성도
 
-### 아키텍처
-
-![Architecture](/uploads/ac5a8c006041b8215655f104480d3df2/Architecture.png)
-
 ### 와이어프레임
 
 - [피그마(와이어 프레임)](https://www.figma.com/file/4IuP5rkdTNYy0jsJJ8txH1/Wireframing-in-Figma?node-id=0%3A1)
