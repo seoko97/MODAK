@@ -11,7 +11,7 @@
   | ------ | ------------------- |
   | Front | React, NextJs, Redux-toolkit, Redux-saga, Styled-Components |
   | Back | Express, MongoDB |
-  | 배포 | Azure, Docker, Nginx |
+  | 배포 | Azure, Nginx |
   | 테스팅 | Jest, Storybook |
 - 웹서비스에 대한 자세한 개요
 
