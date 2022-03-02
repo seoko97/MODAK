@@ -8,9 +8,7 @@ export class UserService {
   async findOrCreate(userInfo: IUserDTO) {
     const currentUser = await this.userModel.findOne({ email: userInfo.email });
 
-    if (currentUser) {
-      return currentUser;
-    }
+    if (currentUser) return currentUser;
 
     const newUser = await this.userModel.create({
       email: userInfo?.email,

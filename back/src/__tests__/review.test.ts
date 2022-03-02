@@ -8,11 +8,27 @@ import {
   anotherUserConfig,
 } from "./config/contants";
 import db from "./config/db";
+import { IUserDocument } from "@src/types/User";
+import { userService } from "@src/services/user.service";
+import { authService } from "@src/services/auth.service";
 
-let testReviewObjectId = "";
+const testReviewObjectId = "";
+let access_token: string;
+let refresh_token: string;
+let user: IUserDocument;
 
 beforeAll(async () => await db.connect());
 afterEach(async () => await db.clear());
+beforeEach(async () => {
+  user = await userService.findOrCreate({
+    email: "test@test.com",
+    nickname: "test",
+    profileImg: "test.jpg",
+    source: "Google",
+  });
+
+  [access_token, refresh_token] = await authService.signin({ _id: user._id });
+});
 afterAll(async () => await db.close());
 
 describe("리뷰 GET 테스트", () => {
@@ -23,40 +39,31 @@ describe("리뷰 GET 테스트", () => {
     expect(res.text).toContain("reviews");
     expect(res.text.length).toBeGreaterThan(1000);
   });
-
   test("2. 특정 사용자가 작성한 리뷰들을 받아오는 테스트", async () => {
     const res = await request(app).get(`/api/review/user/${userConfig.objectId}`).send();
-
     expect(res.statusCode).toEqual(200);
     expect(res.text).toContain("reviews");
     if (res.text.length > 40) expect(res.text).toContain(userConfig.objectId);
   });
-
   test("3. 존재하지 않는 사용자가 작성한 리뷰들을 받아오는 테스트", async () => {
     const res = await request(app).get(`/api/review/user/${wrongUserConfig.objectId}`).send();
-
     expect(res.statusCode).toEqual(401);
     expect(res.text).toContain("존재하지 않는 사용자입니다.");
     expect(res.text.length).toBeLessThan(50);
   });
-
   test("4. 특정 캠핑장에 작성된 리뷰들을 받아오는 테스트", async () => {
     const res = await request(app).get(`/api/review/camp/${campsiteConfig.objectId}`).send();
-
     expect(res.statusCode).toEqual(200);
     expect(res.text).toContain("reviews");
     if (res.text.length > 40) expect(res.text).toContain(campsiteConfig.name);
   });
-
   test("5. 존재하지 않는 캠핑장에 작성된 리뷰들을 받아오는 테스트", async () => {
     const res = await request(app).get(`/api/review/camp/${wrongCampsiteConfig.objectId}`).send();
-
     expect(res.statusCode).toEqual(401);
     expect(res.text).toContain("존재하지 않는 캠핑장입니다.");
     expect(res.text.length).toBeLessThan(50);
   });
 });
-
 describe("리뷰 POST 테스트", () => {
   test("1. 리뷰 작성 테스트", async () => {
     const res = await request(app)
@@ -70,14 +77,11 @@ describe("리뷰 POST 테스트", () => {
         photos: [],
         author: userConfig.objectId,
       });
-
     testReviewObjectId = JSON.parse(res.text).review._id;
-
     expect(res.statusCode).toEqual(200);
     expect(res.text).toContain(campsiteConfig.name);
   });
 });
-
 describe("리뷰 PUT 테스트", () => {
   test("1. 리뷰 수정 테스트", async () => {
     const res = await request(app)
@@ -90,49 +94,40 @@ describe("리뷰 PUT 테스트", () => {
         photos: [],
         id: testReviewObjectId,
       });
-
     expect(res.statusCode).toEqual(200);
     expect(res.text).toContain("별로에요");
   });
-
   test("2. 비 로그인 시, 리뷰 수정 테스트", async () => {
     const res = await request(app)
       .delete(`/api/review/${testReviewObjectId}`)
       .set("authorization", wrongUserConfig.token)
       .send();
-
     expect(res.statusCode).toEqual(401);
     expect(res.text).toContain("로그인이 필요합니다.");
   });
 });
-
 describe("리뷰 PATCH 테스트", () => {
   test("1. 리뷰 좋아요 테스트", async () => {
     const res = await request(app)
       .patch(`/api/review/${testReviewObjectId}/like`)
       .set("authorization", anotherUserConfig.token)
       .send();
-
     expect(res.statusCode).toEqual(200);
   });
-
   test("2. 리뷰 좋아요 취소 테스트", async () => {
     const res = await request(app)
       .patch(`/api/review/${testReviewObjectId}/unlike`)
       .set("authorization", anotherUserConfig.token)
       .send();
-
     expect(res.statusCode).toEqual(200);
   });
 });
-
 describe("리뷰 DELETE 테스트", () => {
   test("1. 리뷰 삭제 테스트", async () => {
     const res = await request(app)
       .delete(`/api/review/${testReviewObjectId}`)
       .set("authorization", userConfig.token)
       .send();
-
     expect(res.statusCode).toEqual(200);
   });
 });
