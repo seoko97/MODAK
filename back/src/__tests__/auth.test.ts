@@ -1,5 +1,10 @@
 import request from "supertest";
 import app from "@src/app";
+import db from "./config/db";
+
+beforeAll(async () => await db.connect());
+afterEach(async () => await db.clear());
+afterAll(async () => await db.close());
 
 describe("OAuth login test", () => {
   test("Google OAuth login page", async () => {
