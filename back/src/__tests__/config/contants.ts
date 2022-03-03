@@ -7,13 +7,6 @@ export const wrongUserConfig = {
   token: "" as string,
 };
 
-export const campsiteConfig = {
-  objectId: "62062139f6007b0f615edb13" as string,
-  name: "당평오토캠핑장" as string,
-
-  searchKeyword: encodeURI("당진") as string,
-};
-
 export const wrongCampsiteConfig = {
   objectId: "07b0f615e62062139f60db09" as string,
   name: "" as string,

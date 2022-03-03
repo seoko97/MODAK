@@ -6,7 +6,7 @@ import { IUserDocument } from "@type/User";
 import { ICampsiteDocument } from "@type/Campsite";
 import { campsiteService } from "@services/campsite.service";
 import { decryptValue } from "@utils/crypto";
-import { wrongCampsiteConfig, wrongUserConfig, userInfo, campInfo } from "./config/contants";
+import { wrongCampsiteConfig, userInfo, campInfo } from "./config/contants";
 import db from "./config/db";
 
 let access_token: string;
@@ -73,7 +73,7 @@ describe("캠핑장 PATCH 테스트", () => {
   test("1. 비 로그인 상태로 북마크 테스트", async () => {
     const res = await request(app)
       .patch(`/api/camp/${camps[0]._id}/bookmark`)
-      .set("authorization", wrongUserConfig.token)
+      .set("authorization", "")
       .send();
     const data = JSON.parse(res.text);
 
@@ -83,7 +83,7 @@ describe("캠핑장 PATCH 테스트", () => {
   test("2. 비 로그인 상태로 북마크 취소 테스트", async () => {
     const res = await request(app)
       .patch(`/api/camp/${camps[0]._id}/unBookmark`)
-      .set("authorization", wrongUserConfig.token)
+      .set("authorization", "")
       .send();
     const data = JSON.parse(res.text);
 

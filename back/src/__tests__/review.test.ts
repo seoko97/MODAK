@@ -7,10 +7,10 @@ import { ICampsiteDocument } from "@type/Campsite";
 import { IReviewDocument } from "@type/Review";
 import { campsiteService } from "@services/campsite.service";
 import { reviewService } from "@services/review.service";
-import { wrongCampsiteConfig, wrongUserConfig, reviewInfo, campInfo } from "./config/contants";
+import { decryptValue } from "@utils/crypto";
+import { wrongUserConfig, reviewInfo, campInfo, wrongCampsiteConfig } from "./config/contants";
 import db from "./config/db";
 
-// let testReviewObjectId = "";
 let access_token: string;
 let refresh_token: string;
 let user: IUserDocument;
@@ -63,86 +63,106 @@ describe("리뷰 GET 테스트", () => {
   test("3. 존재하지 않는 사용자가 작성한 리뷰들을 받아오는 테스트", async () => {
     const res = await request(app).get(`/api/review/user/${wrongUserConfig.objectId}`).send();
     const data = JSON.parse(res.text);
-    expect(data.status).toEqual(true);
+
+    expect(data.status).toEqual(false);
     expect(data.message).toContain("존재하지 않는 사용자입니다.");
   });
-  // test("4. 특정 캠핑장에 작성된 리뷰들을 받아오는 테스트", async () => {
-  //   const res = await request(app).get(`/api/review/camp/${campsiteConfig.objectId}`).send();
-  //   expect(res.statusCode).toEqual(200);
-  //   expect(res.text).toContain("reviews");
-  //   if (res.text.length > 40) expect(res.text).toContain(campsiteConfig.name);
-  // });
-  // test("5. 존재하지 않는 캠핑장에 작성된 리뷰들을 받아오는 테스트", async () => {
-  //   const res = await request(app).get(`/api/review/camp/${wrongCampsiteConfig.objectId}`).send();
-  //   expect(res.statusCode).toEqual(401);
-  //   expect(res.text).toContain("존재하지 않는 캠핑장입니다.");
-  //   expect(res.text.length).toBeLessThan(50);
-  // });
+  test("4. 특정 캠핑장에 작성된 리뷰들을 받아오는 테스트", async () => {
+    const res = await request(app).get(`/api/review/camp/${camp._id}`).send();
+
+    const data = JSON.parse(res.text);
+
+    expect(data.status).toEqual(true);
+    for (let i = 0; i < data.reviews.length; i++)
+      expect(data.reviews[i].location._id).toEqual(String(camp._id));
+  });
+  test("5. 존재하지 않는 캠핑장에 작성된 리뷰들을 받아오는 테스트", async () => {
+    const res = await request(app).get(`/api/review/camp/${wrongCampsiteConfig.objectId}`).send();
+
+    const data = JSON.parse(res.text);
+
+    expect(data.status).toEqual(false);
+    expect(data.message).toContain("존재하지 않는 캠핑장입니다.");
+  });
 });
-// describe("리뷰 POST 테스트", () => {
-//   test("1. 리뷰 작성 테스트", async () => {
-//     const res = await request(app)
-//       .post("/api/review/")
-//       .set("authorization", userConfig.token)
-//       .expect("Content-Type", /json/)
-//       .send({
-//         content: "test",
-//         location: campsiteConfig.objectId,
-//         rating: "평범해요",
-//         photos: [],
-//         author: userConfig.objectId,
-//       });
-//     testReviewObjectId = JSON.parse(res.text).review._id;
-//     expect(res.statusCode).toEqual(200);
-//     expect(res.text).toContain(campsiteConfig.name);
-//   });
-// });
-// describe("리뷰 PUT 테스트", () => {
-//   test("1. 리뷰 수정 테스트", async () => {
-//     const res = await request(app)
-//       .put(`/api/review/${testReviewObjectId}`)
-//       .set("authorization", userConfig.token)
-//       .send({
-//         content: "test - updated",
-//         location: campsiteConfig.objectId,
-//         rating: "별로에요",
-//         photos: [],
-//         id: testReviewObjectId,
-//       });
-//     expect(res.statusCode).toEqual(200);
-//     expect(res.text).toContain("별로에요");
-//   });
-//   test("2. 비 로그인 시, 리뷰 수정 테스트", async () => {
-//     const res = await request(app)
-//       .delete(`/api/review/${testReviewObjectId}`)
-//       .set("authorization", wrongUserConfig.token)
-//       .send();
-//     expect(res.statusCode).toEqual(401);
-//     expect(res.text).toContain("로그인이 필요합니다.");
-//   });
-// });
-// describe("리뷰 PATCH 테스트", () => {
-//   test("1. 리뷰 좋아요 테스트", async () => {
-//     const res = await request(app)
-//       .patch(`/api/review/${testReviewObjectId}/like`)
-//       .set("authorization", anotherUserConfig.token)
-//       .send();
-//     expect(res.statusCode).toEqual(200);
-//   });
-//   test("2. 리뷰 좋아요 취소 테스트", async () => {
-//     const res = await request(app)
-//       .patch(`/api/review/${testReviewObjectId}/unlike`)
-//       .set("authorization", anotherUserConfig.token)
-//       .send();
-//     expect(res.statusCode).toEqual(200);
-//   });
-// });
-// describe("리뷰 DELETE 테스트", () => {
-//   test("1. 리뷰 삭제 테스트", async () => {
-//     const res = await request(app)
-//       .delete(`/api/review/${testReviewObjectId}`)
-//       .set("authorization", userConfig.token)
-//       .send();
-//     expect(res.statusCode).toEqual(200);
-//   });
-// });
+describe("리뷰 POST 테스트", () => {
+  test("1. 리뷰 작성 테스트", async () => {
+    const res = await request(app)
+      .post("/api/review/")
+      .expect("Content-Type", /json/)
+      .set("authorization", `Bearer ${decryptValue(access_token)}`)
+      .send({
+        author: user._id,
+        location: camp._id,
+        ...reviewInfo,
+      });
+
+    const data = JSON.parse(res.text);
+    expect(data.status).toEqual(true);
+    expect(data.review.content).toEqual(reviewInfo.content);
+  });
+});
+describe("리뷰 PUT 테스트", () => {
+  test("1. 리뷰 수정 테스트", async () => {
+    const res = await request(app)
+      .put(`/api/review/${reviews[0]._id}`)
+      .set("authorization", `Bearer ${decryptValue(access_token)}`)
+      .send({
+        content: "test - updated",
+        location: camp._id,
+        rating: "별로에요",
+        photos: [],
+      });
+    const data = JSON.parse(res.text);
+
+    expect(data.status).toEqual(true);
+    expect(data.review.content).toContain("test - updated");
+  });
+
+  test("2. 비 로그인 시, 리뷰 수정 테스트", async () => {
+    const res = await request(app)
+      .delete(`/api/review/${reviews[0]._id}`)
+      .set("authorization", "")
+      .send();
+    const data = JSON.parse(res.text);
+
+    expect(data.status).toEqual(false);
+    expect(data.message).toContain("로그인이 필요합니다.");
+  });
+});
+describe("리뷰 PATCH 테스트", () => {
+  test("1. 리뷰 좋아요 테스트", async () => {
+    const resByLike = await request(app)
+      .patch(`/api/review/${reviews[0]._id}/like`)
+      .set("authorization", `Bearer ${decryptValue(access_token)}`)
+      .send();
+    const dataByLike = JSON.parse(resByLike.text);
+
+    expect(dataByLike.status).toEqual(true);
+    expect(dataByLike.userId).toEqual(String(user._id));
+    expect(dataByLike.reviewId).toEqual(String(reviews[0]._id));
+
+    const resByUnLike = await request(app)
+      .patch(`/api/review/${reviews[0]._id}/unlike`)
+      .set("authorization", `Bearer ${decryptValue(access_token)}`)
+      .send();
+
+    const dataByUnLike = JSON.parse(resByUnLike.text);
+    expect(dataByUnLike.status).toEqual(true);
+    expect(dataByUnLike.userId).toEqual(String(user._id));
+    expect(dataByUnLike.reviewId).toEqual(String(reviews[0]._id));
+  });
+});
+
+describe("리뷰 DELETE 테스트", () => {
+  test("1. 리뷰 삭제 테스트", async () => {
+    const res = await request(app)
+      .delete(`/api/review/${reviews[0]._id}`)
+      .set("authorization", `Bearer ${decryptValue(access_token)}`)
+      .send();
+
+    const data = JSON.parse(res.text);
+    expect(data.status).toEqual(true);
+    expect(data.id).toEqual(String(reviews[0]._id));
+  });
+});
