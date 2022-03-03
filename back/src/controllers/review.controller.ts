@@ -1,12 +1,12 @@
 import { NextFunction, RequestHandler } from "express";
 import fs from "fs";
-import { ITokenUser } from "~types/User";
-import { IReviewDTO } from "~types/Review";
+import { ITokenUser } from "@type/User";
+import { IReviewDTO } from "@type/Review";
 import { ReviewService, reviewService } from "@services/review.service";
 import { userService, UserService } from "@services/user.service";
 import { CampsiteService, campsiteService } from "@services/campsite.service";
 import resizeImage from "@utils/resizeImage";
-import { IKeyValueString } from "~types/.";
+import { IKeyValueString } from "@type/.";
 
 try {
   fs.accessSync("uploads");

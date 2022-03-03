@@ -1,16 +1,16 @@
 {
-	"compilerOptions": {
-		"baseUrl": ".",
-		"paths": {
-			"@src/*": ["src/*"],
-			"@controllers/*": ["src/controllers/*"],
-			"@services/*": ["src/services/*"],
-			"@passport/*": ["src/passport/*"],
-			"@routes/*": ["src/routes/*"],
-			"@models/*": ["src/models/*"],
-			"@middlewares/*": ["src/middlewares/*"],
-			"@utils/*": ["src/utils/*"],
-			"~types/*": ["src/types/*"]
-		}
-	}
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["src/*"],
+      "@controllers/*": ["src/controllers/*"],
+      "@services/*": ["src/services/*"],
+      "@passport/*": ["src/passport/*"],
+      "@routes/*": ["src/routes/*"],
+      "@models/*": ["src/models/*"],
+      "@middlewares/*": ["src/middlewares/*"],
+      "@utils/*": ["src/utils/*"],
+      "@type/*": ["src/types/*"]
+    }
+  }
 }

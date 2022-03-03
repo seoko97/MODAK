@@ -1,7 +1,7 @@
 import { verify } from "jsonwebtoken";
 import { Schema } from "mongoose";
 import { jwtContents } from "@utils/constants";
-import { IUserDocument, IUserModel } from "~types/User";
+import { IUserDocument, IUserModel } from "@type/User";
 
 export const UserSchema = new Schema<IUserDocument, IUserModel>(
   {

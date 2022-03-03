@@ -1,4 +1,4 @@
-import { Model, Types } from "mongoose";
+import { Document, Model, Types } from "mongoose";
 import { IUserDocument } from "./User";
 
 export interface ICampsite {
@@ -21,7 +21,7 @@ export interface ICampsiteDTO extends ICampsite {
   firstImage: string;
 }
 
-export interface ICampsiteDocument extends ICampsiteDTO {
+export interface ICampsiteDocument extends ICampsiteDTO, Document {
   photos: string[];
   bookmark: Types.DocumentArray<IUserDocument>[];
   totalReview: number;
@@ -30,5 +30,5 @@ export interface ICampsiteDocument extends ICampsiteDTO {
 }
 
 export interface ICampsiteModel extends Model<ICampsiteDocument> {
-  findOrCreate(camsite: ICampsiteDTO): Promise<ICampsiteDTO>;
+  findOrCreate(camsite: ICampsiteDTO): Promise<ICampsiteDocument>;
 }

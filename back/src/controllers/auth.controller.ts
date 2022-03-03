@@ -2,7 +2,7 @@ import { Request, Response, RequestHandler } from "express";
 import { jwtContents, url } from "@utils/constants";
 import { AuthService, authService } from "@services/auth.service";
 import { userService, UserService } from "@services/user.service";
-import { ITokenUser } from "~types/User";
+import { ITokenUser } from "@type/User";
 
 const EXPIRED = {
   access: 1000 * 60 * 60,
