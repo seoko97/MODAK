@@ -92,5 +92,4 @@
 
 ## 7. 문서
 
-- [노션](https://www.notion.so/elice/4-866f216023ba43dcb6b4a5e5876e8401)
-- [Wiki](https://kdt-gitlab.elice.io/sw_track/class_01/project_2/team4/project-template/-/wikis/%EA%B8%B0%ED%9A%8D%EC%84%9C)
+- [노션](https://ripe-basket-c1c.notion.site/MODAK-406777c6cb57426fab2d8395df3ab841)
