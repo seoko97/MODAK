@@ -9,7 +9,7 @@
 - 기술 스택
   | 분류 | 기술 |
   | ------ | ------------------- |
-  | Front | React, NextJs, Redux-toolkit, Redux-saga, Styled-Components |
+  | Front | React, NextJs, Redux-toolkit, Styled-Components |
   | Back | Express, MongoDB |
   | 배포 | Azure, Nginx |
   | 테스팅 | Jest, Storybook |
